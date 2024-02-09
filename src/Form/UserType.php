@@ -3,9 +3,7 @@
 namespace App\Form;
 
 use App\Common\Constants\UserConstants;
-use App\Entity\LocalArea;
 use App\Entity\User;
-use App\Form\AddressType ;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -135,25 +133,7 @@ class UserType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('localArea', EntityType::class, [
-                'class' => LocalArea::class,
-                'label' => 'Zone',
-                'choice_label' => 'name',
-                'multiple' => false,
-                'expanded' => false,
-                'required' => true,
-                'attr'  => [
-                    'class'    => "form-control"
-                ],            
-                'query_builder' => function (EntityRepository $er) use ($options){
-
-                    $query = $er->createQueryBuilder('la') 
-                    
-                        ->orderBy('la.name', 'ASC');
-                        
-                    return $query;
-                },
-            ])
+            
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
@@ -163,12 +143,7 @@ class UserType extends AbstractType
                     'class'     => 'col-md-4 mb-8'
                 ],
             ])
-            ->add('address', AddressType::class,[
-                'mapped' => false,
-                'required' => false,
-                'label' => false,
-                'data_class' => 'App\Entity\Address',
-            ])
+            
         ;
 
         if(!empty($isProfil)){

@@ -4,7 +4,7 @@ namespace App\Controller\Admin\User;
 
 use App\Common\Constants\UserConstants;
 use App\DataTable\UserDataTableType;
-use App\Entity\User;
+use App\Entity\Account\User;
 use App\Form\UserType;
 use App\Manager\UserManager;
 use App\Services\Common\DataTableService ;
@@ -75,7 +75,6 @@ class UserController extends AbstractController
     }
     
     #[Route('/team/', name: '.team.index', defaults: ['type' => 'team'])]
-    #[Route('/client/', name: '.client.index', defaults: ['type' => 'client'])]
     public function listUser(Request $_request, DataTableService $_dataTableService): Response
     {   
         
@@ -99,13 +98,12 @@ class UserController extends AbstractController
             return $table->getResponse();
         }
         
-        return $this->render('User/index.html.twig', [
+        return $this->render('Admin/User/index.html.twig', [
             'datatable' => $table,
         ]);
     }
 
     #[Route('/team/new', name: '.team.new', defaults: ['type' => 'team'])]
-    #[Route('/client/new', name: '.client.new', defaults: ['type' => 'client'])]
     public function addUser(Request $_request, EntityManagerInterface $_em): Response
     {
 
@@ -133,38 +131,32 @@ class UserController extends AbstractController
                 $user->setPhoto($profileFileName);
             }
             
-            $address = $form->get('address')->getData();
             $validations = $this->userManager->validation($form, $user, $_request) ;
             $error       = $validations['error'];
             $form        = $validations['form'];
 
             if(empty($error)){
-                if ($address instanceof Address) {
-                    $address->addUser($user);
-                    $_em->persist($address);
-                }
+                
                 
                 $user = $this->userManager->savePassword($form, $user, $_request) ;
 
                 $_em->persist($user);
                 $_em->flush();
 
-                $redirection = $isClient == true ? 'app.admin.user.client.index' : 'app.admin.user.team.index' ;
+                $redirection = 'app.admin.user.team.index' ;
                 return $this->redirectToRoute($redirection);
             }
         }
         
-        return $this->render('User/action.html.twig', [
+        return $this->render('Admin/User/action.html.twig', [
             'form'      => $form->createView(),
             'user'      => $user,
             'isProfil'  => $isProfil ,
-            'isClient'  => $isClient 
         ]);
     }
 
     #[Route('/team/edit/{id}', name: '.team.edit', defaults: ['type' => 'team', 'action' => 'edit'])]
     #[Route('/profil', name: '.team.profil', defaults: ['type' => 'team', 'action' => 'profil'])]
-    #[Route('/client/edit/{id}', name: '.client.edit', defaults: ['type' => 'client'])]
     public function editUser(Request $_request, EntityManagerInterface $_em, User $_user = null): Response
     {
 
@@ -178,17 +170,9 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserType::class, $_user, [
             'validation_groups' => ['update'],
-            'isClient'          => $isClient,
             'isProfil'          => $isProfil
         ]);
 
-        $addresses = $_user->getAddresses() ;
-        if(count($addresses) > 0){
-            $address = $addresses['0'];
-            $form->get('address')->get('address')->setData($address->getAddress()) ;
-            $form->get('address')->get('city')->setData($address->getCity()) ;
-            $form->get('address')->get('zip')->setData($address->getZip()) ;
-        }
 
         $form->handleRequest($_request);
         
@@ -210,11 +194,6 @@ class UserController extends AbstractController
             $form        = $validations['form'];
             
             if(empty($error)){
-                if ($address instanceof Address) {
-                    
-                    $_user->getAddresses()->clear();
-                    $_user->addAddress($address);
-                }
 
                 $user = $this->userManager->savePassword($form, $_user, $_request) ;
 
@@ -230,72 +209,13 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('User/action.html.twig', [
+        return $this->render('Admin/User/action.html.twig', [
             'form' => $form->createView(),
             'user' => $_user,
             'isClient'  => $isClient ,
             'isProfil'  => $isProfil ,
-            'addresses' => $_user->getAddresses()
         ]);
     }
 
     
-
-    
-    #[Route('/client/search', name: '.client.search.ajax', defaults: [])]
-    public function clientSearch(Request $_request): Response
-    {   
-        $results     = [] ;
-        $type        = $_request->get('type', 'all') ;
-        $isCount     = $_request->get('isCount', '') ;
-        $dateStart   = $_request->get('dateStart', '') ;
-        $dateEnd     = $_request->get('dateEnd', '') ;
-        $clientId    = $_request->get('client', '') ;
-        $localAreaId = $_request->get('localArea', '') ;
-        
-
-        $params  = [] ;
-        $params['role'] = UserConstants::USER_ROLE_CUSTOMER ;
-        if(!empty($dateStart)){
-            list($day, $month, $year) = explode('/', $dateStart) ;
-            $params['dateStart'] = new \Datetime($year.'-'.$month.'-'.$day) ;
-        }
-
-        if(!empty($dateEnd)){
-            list($day, $month, $year) = explode('/', $dateEnd) ;
-            $params['dateEnd'] = new \Datetime($year.'-'.$month.'-'.$day) ;
-        }
-
-        if(!empty($localAreaId)){
-            $localArea = $this->localAreaRepository->find($localAreaId) ;
-            if(!empty($localArea)){
-                $params['localArea'] = $localArea ;
-            }
-        }
-
-        if($type == 'all'){
-            unset($params['dateStart']) ;
-            unset($params['dateEnd']) ;
-        }
-
-        if(!empty($clientId)){
-            unset($params['dateStart']) ;
-            unset($params['dateEnd']) ;
-            unset($params['localArea']) ;
-            $params['id'] = $clientId ;
-        }
-        
-        if(!empty($isCount)){
-
-            $params['count'] = true ;
-            $users = $this->userManager->search($params) ;
-            
-            $results['count'] = $users['count'];
-        }
-
-
-        
-        
-        return new JsonResponse($results) ;
-    }
 }

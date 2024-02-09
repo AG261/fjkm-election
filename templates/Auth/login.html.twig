@@ -73,7 +73,8 @@
                                     {{ form_row(form.password) }}
                                 </div>
 
-                                
+                                <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
 
                                 <button class="btn btn-primary w-100" type="submit" tabindex="4">Se connecter</button>
                             {{ form_end(form) }}
