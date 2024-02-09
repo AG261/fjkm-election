@@ -1,0 +1,133 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ parent() }} {% if isClient == false %}Utilisateurs{% else %}Clients{% endif %}{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    {{ include('Element/datatable-style.html.twig') }}
+    <style>
+        .field-d-none + .form-check-label{
+            display:none;
+        }
+
+        .field-pwd{
+            float:left;
+            margin-right:50px;
+        }
+        .photo-profile{
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+                <div class="content-wrapper container-xxl p-0">
+                    <div class="content-header row">
+                        <div class="content-header-left col-md-9 col-12 mb-2">
+                            <div class="row breadcrumbs-top">
+                                <div class="col-12">
+                                    <div class="breadcrumb-wrapper">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
+                                            </li>
+                                            {% if isClient == false %}
+                                                <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateurs</a></li>
+                                            {% else %}
+                                                <li class="breadcrumb-item"><a href="{{ path('app.admin.user.client.index') }}">Clients</a></li>
+                                            {% endif %}
+                                           
+                                            <li class="breadcrumb-item active">{{ user.id != "" ? "Edition" : "Ajout"}}
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Information</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <div class="mb-1">
+                                            {{ form_label(form.photo) }}
+                                            {% set photo = "" %}
+                                                {% if user.photo != "" %}
+                                                    {% set photo = 'upload/profil/' ~ user.photo %}
+                                                {% else %}
+                                                    {% set photo = 'images/illustration/no-image.png' %}
+                                                {% endif %}
+                                            <div>
+                                                
+                                                <img class="photo-profile" src="{{ asset(photo) }}" alt="Photo">
+                                            </div>
+                                            {{ form_widget(form.photo) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            {{ form_row(form.civility) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            {{ form_row(form.firstName) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            {{ form_row(form.lastName) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            {{ form_row(form.email) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            {{ form_row(form.phone) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="mb-1">
+                                            {{ form_row(form.localArea) }}
+                                        </div>
+                                        <div class="mb-1">
+                                            <div class="mb-1">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        {{ form_row(form.address.address) }}
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        {{ form_row(form.address.city) }}
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        {{ form_row(form.address.zip) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row {% if isClient == true %}d-none{% endif %}">
+                                            {{ form_row(form.password) }}
+                                        </div>
+                                        <div class="mb-1 {% if isProfil == true %}d-none{% endif %}">
+                                            {{ form_row(form.status) }}
+                                        </div>
+                                        <div class="mb-1 {% if isClient or isProfil %}d-none{% endif %}">
+                                            {{ form_row(form.roles) }}
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        {{ form_row(form.save) }}
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

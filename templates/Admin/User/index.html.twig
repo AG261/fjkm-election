@@ -1,0 +1,74 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ parent() }}Utilisateurs{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    {{ include('Element/datatable-style.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
+                                    </li>
+                                    {% if isClient == false %}
+                                        <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateurs</a></li>
+                                    {% else %}
+                                        <li class="breadcrumb-item"><a href="{{ path('app.admin.user.client.index') }}">Clients</a></li>
+                                    {% endif %}
+                                    <li class="breadcrumb-item active">Liste
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                    <div class="mb-1 breadcrumb-right">
+                        {% if isClient == false %}
+                        <a class="btn btn-primary" href="{{ path('app.admin.user.team.new') }}">
+                            <span class="align-middle">Ajout</span>
+                        </a>
+                        {% else %}
+                        {# <a class="btn btn-primary" href="{{ path('app.admin.user.client.new') }}">
+                            <span class="align-middle">Ajout</span>
+                        </a> #}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <!-- Basic table -->
+                <section id="basic-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div id="user-list" class="table-responsive">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal to add new record -->
+                    
+                </section>
+                <!--/ Basic table -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+{% endblock %}
+
+{% block javascripts %}
+    {{ include('Element/datatable-script.html.twig') }}
+    {{ include('Element/datatable-script-event.html.twig', {'element' : '#user-list'}) }}
+   
+{% endblock %}

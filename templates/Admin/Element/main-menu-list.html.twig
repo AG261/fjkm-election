@@ -1,0 +1,122 @@
+{% set _router = app.request.attributes.get('_route') %}
+<div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        
+        <li class=" nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.dashboard') }}">
+                <i data-feather="home"></i>
+                <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
+            </a>
+        </li>
+        <li class=" navigation-header">
+            <span data-i18n="Fonctionnalités">Fonctionnalités</span>
+            <i data-feather="more-horizontal"></i>
+        </li>
+        
+        <li class="{{ _router in ['app.admin.category.index', 'app.admin.category.new', 'app.admin.category.edit',
+        'app.admin.product.index', 'app.admin.product.new', 'app.admin.product.edit', 'app.admin.product.file'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="javascript:;">
+                <i data-feather="book"></i>
+                <span class="menu-title text-truncate" data-i18n="Catalogue">Catalogue</span>
+            </a>
+            <ul class="menu-content">
+                <li class="{{ _router in ['app.admin.category.index', 'app.admin.category.new', 'app.admin.category.edit'] ? 'active' : '' }} nav-item">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.category.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Categories">Catégories</span>
+                    </a>
+                </li>
+                <li class="{{ _router in ['app.admin.product.index', 'app.admin.product.new', 'app.admin.product.edit'] ? 'active' : '' }} nav-item">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.product.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Produits">Produits</span>
+                    </a>
+                </li>
+                <li class="{{ _router in ['app.admin.product.file'] ? 'active' : '' }} nav-item">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.product.file') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Produits">Fichier</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="{{ _router in ['app.admin.order.index', 'app.admin.order.edit', 'app.admin.client.index', 'app.admin.client.edit'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="javascript:;">
+                <i data-feather="shopping-cart"></i>
+                <span class="menu-title text-truncate" data-i18n="Vente">Vente</span>
+            </a>
+            <ul class="menu-content">
+                <li class="{{ _router in ['app.admin.order.index', 'app.admin.order.edit'] ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.order.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Commmandes">Commmandes</span>
+                    </a>
+                </li>
+                <li class="{{ _router in ['app.admin.user.client.index', 'app.admin.user.client.edit'] ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.user.client.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Clients">Clients</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="{{ _router in ['app.admin.tracking.index'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.tracking.index') }}">
+                <i data-feather="map"></i>
+                <span class="menu-title text-truncate" data-i18n="Tracking">Tracking</span>
+            </a>
+        </li>
+       
+        
+        <li class=" navigation-header">
+            <span data-i18n="Parametrages">Parametrages</span>
+            <i data-feather="more-horizontal"></i>
+        </li>
+        <li class="{{ _router in ['app.admin.user.team.index', 'app.admin.user.team.new', 'app.admin.user.team.edit'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.user.team.index') }}">
+                <i data-feather="users"></i>
+                <span class="menu-title text-truncate" data-i18n="Utilisateurs">Utilisateurs</span>
+            </a>
+        </li>
+        
+        <li class="{{ _router in ['app.admin.equipment.index', 'app.admin.equipment.new', 'app.admin.equipment.edit',
+         'app.admin.vehicle.index', 'app.admin.vehicle.new', 'app.admin.vehicle.edit'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="javascript:;">
+                <i data-feather="inbox"></i>
+                <span class="menu-title text-truncate" data-i18n="Logistique">Logistique</span>
+            </a>
+            <ul class="menu-content">
+                <li class="{{ _router in ['app.admin.equipment.index', 'app.admin.equipment.new', 'app.admin.equipment.edit'] ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.equipment.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Matériels">Matériels</span>
+                    </a>
+                </li>
+                <li class="{{ _router in ['app.admin.vehicle.index', 'app.admin.vehicle.new', 'app.admin.vehicle.edit'] ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ path('app.admin.vehicle.index') }}">
+                        <i data-feather="circle"></i>
+                        <span class="menu-item text-truncate" data-i18n="Vehicules">Véhicules</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="{{ _router in ['app.admin.distributor.index', 'app.admin.distributor.new', 'app.admin.distributor.edit'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.distributor.index') }}">
+                <i data-feather="home"></i>
+                <span class="menu-title text-truncate" data-i18n="Distributeurs">Distributeurs</span>
+            </a>
+        </li>
+        <li class="{{ _router in ['app.admin.localArea.index'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.localArea.index') }}">
+                <i data-feather="cloud"></i>
+                <span class="menu-title text-truncate" data-i18n="Zones">Zones</span>
+            </a>
+        </li>
+        <li class="{{ _router in ['app.admin.storage.index', 'app.admin.storage.edit'] ? 'active' : '' }} nav-item">
+            <a class="d-flex align-items-center" href="{{ path('app.admin.storage.index') }}">
+                <i data-feather="home"></i>
+                <span class="menu-title text-truncate" data-i18n="Magasin de dépôt">Magasins de dépôt</span>
+            </a>
+        </li>
+    </ul>
+</div>

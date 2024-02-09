@@ -1,0 +1,73 @@
+<script>
+    $(function() {
+        
+           
+            var element = "{{ element }}" ;
+            if($(element).length>0){
+                {% if datatable is defined %}
+                       
+                        var table = $(element).initDataTables({{ datatable_settings(datatable) }}, {
+                                method: 'GET',
+                                searching: true,
+                                language: {
+                                        url: "https://cdn.datatables.net/plug-ins/1.10.24/i18n/fr_fr.json"
+                                },
+                                drawCallback: function( settings ) {
+                                        feather.replace();
+                                },
+                                oLanguage: {
+                                        oPaginate: {
+                                                sFirst: '<span class="pagination-fa" title="Premier"><i data-feather="arrow-left-circle"></i></span>',
+                                                sNext: '<span class="pagination-fa" title="Suivant"><i data-feather="arrow-right"></i></span>',
+                                                sPrevious: '<span class="pagination-fa" title="Precedent"><i data-feather="arrow-left"></i></span>',
+                                                sLast: '<span class="pagination-fa" title="Dernier"><i data-feather="arrow-right-circle"></i></span>',
+                                        },
+                                        "sLengthMenu": "Afficher _MENU_ par page",
+                                        "sZeroRecords": "Pas de résultat - désolé",
+                                        "sInfo": "Affichage _START_ à _END_ / _TOTAL_ enregistrés",
+                                        "sInfoEmpty": "Affichage 0 à 0 / 0 records",
+                                        "sInfoFiltered": "(Filtré à partir de _MAX_ enregistrements totaux)"
+                                },
+                                
+
+                        }).then(function(table) {
+                                
+                                //Produc list
+                                if($('#product_filter_origine').length > 0){
+                                        var origineColumn = 3;
+                                        var categoryColumn = 4;
+                                        $('#product_filter_origine').on('change', function(){
+                                                var value = $(this).val() ;
+                                                
+                                                
+                                                table.column(origineColumn).search(value).draw();
+                                                        
+                                        }) ;
+
+                                        $('#product_filter_category').on('change', function(){
+                                                var value = $(this).val() ;
+                                                
+                                                
+                                                table.column(categoryColumn).search(value).draw();
+                                                
+                                        }) ;
+
+                                        $('#product_filter_reset').unbind('click').bind('click', function(){
+                                                $('.select2-selection__rendered').html("");
+                                                $('#product_filter_origine').val("") ;
+                                                $('#product_filter_category').val("") ;
+
+                                                table.column(origineColumn).search("").draw();
+                                                table.column(categoryColumn).search("").draw();
+                                        }) ;
+                                }  
+                                
+                        });
+
+                        
+                {% endif %}
+            }
+            
+            
+    });
+</script>
