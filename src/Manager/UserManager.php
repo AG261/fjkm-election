@@ -83,6 +83,7 @@ class UserManager {
 
         $this->_entityManager->persist($_user);
         $this->_entityManager->flush();
+        
         return $_user;
     }
     
