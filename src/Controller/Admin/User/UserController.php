@@ -101,7 +101,6 @@ class UserController extends AbstractController
         
         return $this->render('User/index.html.twig', [
             'datatable' => $table,
-            'isClient'  => $isClient
         ]);
     }
 
