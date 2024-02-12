@@ -3,8 +3,7 @@
 namespace App\DataTable;
 
 use App\Common\Constants\UserConstants;
-use App\Entity\LocalArea;
-use App\Entity\User;
+use App\Entity\Account\User;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\TextColumn;
@@ -37,7 +36,7 @@ class UserDataTableType extends AbstractController implements DataTableTypeInter
                     $image = "upload/profil/".$photo ;
                 }
 
-                return $this->renderView('Element/datatable-image.html.twig', [
+                return $this->renderView('Admin/Element/datatable-image.html.twig', [
                     'url' => $image,
                     'name' => $context->getFullName(),
                 ]);
@@ -52,23 +51,11 @@ class UserDataTableType extends AbstractController implements DataTableTypeInter
                 return trim($user->getFullName(), '-');
             }
         ]);
-            $dataTable->add('lastName', TextColumn::class, [
-                'field' => 'u.lastName',
-                'label' => "Nom",
-                'searchable' => false,
-            ]);
-        
-
-        $dataTable->add('localArea', TextColumn::class, [
-            'label' => "Zone",
+        $dataTable->add('lastName', TextColumn::class, [
+            'field' => 'u.lastName',
+            'label' => "Nom",
             'searchable' => false,
-            'render' => function($value, $user) {
-
-                return !empty($user->getLocalArea()) ? $user->getLocalArea()->getName() : '-';
-            }
         ]);
-
-        
 
         $dataTable->add('buttons', TextColumn::class, [
             'label' => "Action",
@@ -82,7 +69,7 @@ class UserDataTableType extends AbstractController implements DataTableTypeInter
                 $urls = [
                     ['name' => 'Edition', 'icon' => 'edit', 'path' => $route, 'params' => ['id' => $user->getId()]],
                 ];
-                return $this->renderView('Element/datatable-button.html.twig', [
+                return $this->renderView('Admin/Element/datatable-button.html.twig', [
                     'urls' => $urls
                 ]);
             }

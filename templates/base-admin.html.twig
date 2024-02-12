@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     
-    {{ include('Element/stylesheet.html.twig') }}
+    {{ include('Admin/Element/stylesheet.html.twig') }}
     {% block stylesheets %}
         <style>
             .select2-selection__arrow{
@@ -37,7 +37,7 @@
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static   menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="">
 
 <!-- BEGIN: Header-->
-{{ include('Element/nav-header-menu.html.twig') }}
+{{ include('Admin/Element/nav-header-menu.html.twig') }}
 
 <ul class="main-search-list-defaultlist-other-list d-none">
     <li class="auto-suggestion justify-content-between"><a class="d-flex align-items-center justify-content-between w-100 py-50">
@@ -49,9 +49,9 @@
 
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
-    {{ include('Element/main-menu-header.html.twig') }}
+    {{ include('Admin/Element/main-menu-header.html.twig') }}
     <div class="shadow-bottom"></div>
-    {{ include('Element/main-menu-list.html.twig') }}
+    {{ include('Admin/Element/main-menu-list.html.twig') }}
 </div>
 <!-- END: Main Menu-->
 
@@ -59,8 +59,8 @@
 {% block body %}{% endblock %}
 <!-- END: Content-->
 
-{{ include('Element/footer.html.twig') }}
-{{ include('Element/javascript.html.twig') }}
+{{ include('Admin/Element/footer.html.twig') }}
+{{ include('Admin/Element/javascript.html.twig') }}
 <div class="loading-custom hidden">Loading&#8230;</div>
 {% block javascripts %}
     

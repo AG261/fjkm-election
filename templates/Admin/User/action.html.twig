@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }} Utilisateurs{% endblock %}
 {% block stylesheets %}{{ parent() }}
-    {{ include('Element/datatable-style.html.twig') }}
+    {{ include('Admin/Element/datatable-style.html.twig') }}
     <style>
         .field-d-none + .form-check-label{
             display:none;
@@ -33,7 +33,7 @@
                                             <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
                                             </li>
                                             
-                                                <li class="breadcrumb-item"><a href="{{ path('app.admin.user.client.index') }}">Clients</a></li>
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateur</a></li>
                                             
                                            
                                             <li class="breadcrumb-item active">{{ user.id != "" ? "Edition" : "Ajout"}}

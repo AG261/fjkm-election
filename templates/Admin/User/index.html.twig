@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }}Utilisateurs{% endblock %}
 {% block stylesheets %}{{ parent() }}
-    {{ include('Element/datatable-style.html.twig') }}
+    {{ include('Admin/Element/datatable-style.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -18,11 +18,8 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
                                     </li>
-                                    {% if isClient == false %}
-                                        <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateurs</a></li>
-                                    {% else %}
-                                        <li class="breadcrumb-item"><a href="{{ path('app.admin.user.client.index') }}">Clients</a></li>
-                                    {% endif %}
+                                    <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateurs</a></li>
+                                    
                                     <li class="breadcrumb-item active">Liste
                                     </li>
                                 </ol>
@@ -32,15 +29,10 @@
                 </div>
                 <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
-                        {% if isClient == false %}
                         <a class="btn btn-primary" href="{{ path('app.admin.user.team.new') }}">
                             <span class="align-middle">Ajout</span>
                         </a>
-                        {% else %}
-                        {# <a class="btn btn-primary" href="{{ path('app.admin.user.client.new') }}">
-                            <span class="align-middle">Ajout</span>
-                        </a> #}
-                        {% endif %}
+                        
                     </div>
                 </div>
             </div>
@@ -68,7 +60,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ include('Element/datatable-script.html.twig') }}
-    {{ include('Element/datatable-script-event.html.twig', {'element' : '#user-list'}) }}
+    {{ include('Admin/Element/datatable-script.html.twig') }}
+    {{ include('Admin/Element/datatable-script-event.html.twig', {'element' : '#user-list'}) }}
    
 {% endblock %}

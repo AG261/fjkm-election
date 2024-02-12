@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Common\Constants\UserConstants;
-use App\Entity\User;
+use App\Entity\Account\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -56,11 +56,8 @@ class UserType extends AbstractType
                 'expanded' => true,
                 'choice_attr' => function ($choice, string $key, mixed $value) use ($options) : array {
 
-                    $isClient = isset($options['isClient']) ? $options['isClient'] : false ;
                     $class    = 'user_'.strtolower($value);
-                    if(empty($isClient) && $value == UserConstants::USER_ROLE_CUSTOMER){
-                        $class    = $class.' d-none field-d-none' ;
-                    }
+                    
                     return ['class' => $class];
                 },
                 

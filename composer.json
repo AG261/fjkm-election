@@ -10,7 +10,7 @@
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "doctrine/orm": "^3.0",
+        "doctrine/orm": "^2.16",
         "omines/datatables-bundle": "^0.7.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "6.3.*",
