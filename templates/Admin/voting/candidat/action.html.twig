@@ -48,6 +48,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Information</h4>
+                                <div class="col-md-3">
+                                    {% if candidat.id %}
+                                        {{ include('Admin/voting/candidat/_delete_form.html.twig') }}
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="card-body">
                                 {{ form_start(form) }}
@@ -72,15 +77,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         {{ form_row(form.save) }}
                                     </div>
-                                    <div class="col-md-4">
+
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
                                         <a href="{{ path('app.admin.voting.candidat.index') }}" class="form-control btn btn-warning btn waves-effect waves-float waves-light">Annuler</a>
                                     </div>
                                 </div>
                                 {{ form_end(form) }}
                             </div>
+
                         </div>
                     </div>
                  </div>
