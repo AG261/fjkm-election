@@ -1,6 +1,6 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}{{ parent() }} Utilisateurs{% endblock %}
+{% block title %}{{ parent() }} Candidats{% endblock %}
 {% block stylesheets %}{{ parent() }}
     {{ include('Admin/Element/datatable-style.html.twig') }}
     <style>
@@ -33,10 +33,10 @@
                                             <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
                                             </li>
                                             
-                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.user.team.index') }}">Utilisateur</a></li>
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.candidat.index') }}">Candidat</a></li>
                                             
                                            
-                                            <li class="breadcrumb-item active">{{ user.id != "" ? "Edition" : "Ajout"}}
+                                            <li class="breadcrumb-item active">{{ candidat.id != "" ? "Edition" : "Ajout"}}
                                             </li>
                                         </ol>
                                     </div>
@@ -55,52 +55,28 @@
                                 <div class="row">
                                     <div class="col-md-6 col-6">
                                         <div class="mb-1">
-                                            {{ form_label(form.photo) }}
-                                            {% set photo = "" %}
-                                                {% if user.photo != "" %}
-                                                    {% set photo = 'upload/profil/' ~ user.photo %}
-                                                {% else %}
-                                                    {% set photo = 'images/illustration/no-image.png' %}
-                                                {% endif %}
-                                            <div>
-                                                
-                                                <img class="photo-profile" src="{{ asset(photo) }}" alt="Photo">
-                                            </div>
-                                            {{ form_widget(form.photo) }}
-                                        </div>
-                                        <div class="mb-1">
                                             {{ form_row(form.civility) }}
                                         </div>
                                         <div class="mb-1">
-                                            {{ form_row(form.firstName) }}
+                                            {{ form_row(form.firstname) }}
                                         </div>
-                                        <div class="mb-1">
-                                            {{ form_row(form.lastName) }}
-                                        </div>
-                                        <div class="mb-1">
-                                            {{ form_row(form.email) }}
-                                        </div>
-                                        <div class="mb-1">
-                                            {{ form_row(form.phone) }}
-                                        </div>
+
                                     </div>
                                     <div class="col-md-6 col-6">
-                                        
-                                        <div class="mb-1 row">
-                                            {{ form_row(form.password) }}
+                                        <div class="mb-1">
+                                            {{ form_row(form.birthday) }}
                                         </div>
-                                        <div class="mb-1 {% if isProfil == true %}d-none{% endif %}">
-                                            {{ form_row(form.status) }}
+                                        <div class="mb-1">
+                                            {{ form_row(form.lastname) }}
                                         </div>
-                                        <div class="mb-1 {% if  isProfil %}d-none{% endif %}">
-                                            {{ form_row(form.roles) }}
-                                        </div>
-                                        
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
                                         {{ form_row(form.save) }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('app.admin.voting.candidat.index') }}" class="form-control btn btn-warning btn waves-effect waves-float waves-light">Annuler</a>
                                     </div>
                                 </div>
                                 {{ form_end(form) }}

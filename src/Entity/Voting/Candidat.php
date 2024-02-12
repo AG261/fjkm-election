@@ -9,6 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CandidatRepository::class)]
 class Candidat
 {
+
+    //User civility
+    public const CANDIDAT_CIVILITY_MR  = 'Mr';
+    public const CANDIDAT_CIVILITY_MME = 'Mme';
+
+    public const CANDIDAT_CIVILITY_LIST   = [
+        self::CANDIDAT_CIVILITY_MR  => 'Monsieur',
+        self::CANDIDAT_CIVILITY_MME => 'Madame'
+    ] ;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
