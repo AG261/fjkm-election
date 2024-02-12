@@ -1,11 +1,11 @@
- ## Well hotels
+ ## FJKM
 
 ### How to install this project?
 To get this project working on your local, you need to follow the following steps
 
-- **Clone wellhotels**
+- **Clone FJKM Election**
 ```bash
-git clone git clone https://lova.rabarison@gitlab.com/lova.rabarison/ebook.git
+git clone git clone https://github.com/AG261/fjkm-election.git
 ```
 - **Install dependencies**
 ```bash
