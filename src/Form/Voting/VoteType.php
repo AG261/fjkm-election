@@ -3,7 +3,11 @@
 namespace App\Form\Voting;
 
 use App\Common\Constants\UserConstants;
+use App\Constants\Content;
 use App\Entity\Voting\Candidat;
+use App\Entity\Voting\Vote;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,88 +19,82 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CandidatType extends AbstractType
+class VoteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             
-            ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+            ->add('num', TextType::class, [
+                'label' => 'Numéro',
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
                 ],
                 'attr' => [
-                    'placeholder' => 'Prénom',
+                    'placeholder' => 'Numéro',
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off'
                 ],
-                'required' => true,
+                'required' => false,
             ])
-            ->add('lastname', TextType::class, [
-                'label' => 'Nom',
+            
+            ->add('isDead', ChoiceType::class, [
+                'label' => 'Vote Mort',
+                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
                 ],
                 'attr' => [
-                    'placeholder' => 'Nom',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off'
-                ],
-                'required' => true,
-            ])
-            ->add('civility', ChoiceType::class, [
-                'label' => 'Civilité',
-                'choices' => array_flip(Candidat::CANDIDAT_CIVILITY_LIST),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Civilité',
+                    'placeholder' => 'Vote Mort',
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off',
 
                 ],
-                'required' => true,
+                'required' => false,
             ])
-            ->add('birthday', BirthdayType::class, [
-                'label' => 'Date de Naissance',
-                'widget' => 'single_text',
-                'html5' => false, // we disable HTML5 to use the datepicker
-                'format' => 'dd/MM/yyyy',
-                'attr' => [
-                    'class' => 'flatpickr-input' // Ajoutez votre classe ici
-                ],
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'required' => true,
-            ])
-            ->add('photo', FileType::class, [
-                'label' => 'Photo',
-                'mapped' => false,
+            ->add('isWhite', ChoiceType::class, [
+                'label' => 'Vote Blanc',
+                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
                 ],
                 'attr' => [
-                    'class' => 'form-control-file', 
-                    'accept' => 'image/*', 
+                    'placeholder' => 'Vote Blanc',
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off',
+
                 ],
                 'required' => false,
-            ]) 
-            ->add('status', ChoiceType::class, [
-                'label' => 'Statut',
-                'choices' => array_flip(UserConstants::USER_STATUS_LIST),
-                
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
+            ])
+            ->add('candidat', EntityType::class, [
+                'label' => 'Candidat',
+                'class' => Candidat::class,
+                'query_builder' => function (EntityRepository $er) use ($options){
+
+                    $query = $er->createQueryBuilder('c') ;
+                    
+                    $query->andWhere('c.status = :status')
+                          ->setParameter('status', true)
+                          ->orderBy('c.firstname', 'ASC')
+                          ;
+                          
+                    return $query;
+                },
+                'choice_label' => function(Candidat $candidat){
+
+                    return $candidat->getFullName() ;
+                },
                 'attr' => [
-                    'placeholder' => 'Statut',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off'
+                    'data-control' => "select2",
+                    'data-placeholder' => "Candidat",
+                    'class' => "select2 form-select",
                 ],
-                'required' => true,
+                'row_attr'  => [
+                    'class'     => 'fv-row mb-2'
+                ],
+                'mapped' => false,
+                'required' => false, 
+                
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
@@ -113,7 +111,7 @@ class CandidatType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Candidat::class,
+            'data_class' => Vote::class,
         ]);
     }
 }

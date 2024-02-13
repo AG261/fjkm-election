@@ -6,6 +6,8 @@
 parameters:
     project_dir: '%kernel.project_dir%'
     app_name : '%env(APP_NAME)%'
+    profil_upload_dir: '%kernel.project_dir%/public/upload/profil'
+    
 services:
     # default configuration for services in *this* file
     _defaults:

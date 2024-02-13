@@ -58,6 +58,27 @@
                                 {{ form_start(form) }}
                                 {{ form_errors(form) }}
                                 <div class="row">
+                                    <div class="mb-1">
+                                        
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="mb-1">
+                                            {{ form_label(form.photo) }}
+                                            {% set photo = "" %}
+                                                {% if candidat.photo != "" %}
+                                                    {% set photo = 'upload/profil/' ~ candidat.photo %}
+                                                {% else %}
+                                                    {% set photo = 'images/illustration/no-image.png' %}
+                                                {% endif %}
+                                            <div>
+                                                
+                                                <img class="photo-profile" src="{{ asset(photo) }}" alt="Photo">
+                                            </div>
+                                            {{ form_widget(form.photo) }}
+                                        </div>
+                                        
+
+                                    </div>
                                     <div class="col-md-6 col-6">
                                         <div class="mb-1">
                                             {{ form_row(form.civility) }}
@@ -65,14 +86,16 @@
                                         <div class="mb-1">
                                             {{ form_row(form.firstname) }}
                                         </div>
-
+                                        <div class="mb-1">
+                                            {{ form_row(form.lastname) }}
+                                        </div>
                                     </div>
                                     <div class="col-md-6 col-6">
                                         <div class="mb-1">
                                             {{ form_row(form.birthday) }}
                                         </div>
                                         <div class="mb-1">
-                                            {{ form_row(form.lastname) }}
+                                            {{ form_row(form.status) }}
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,134 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ parent() }} Vote{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    {{ include('Admin/Element/datatable-style.html.twig') }}
+    <style>
+        
+        .float-left{
+            float:left;
+            margin-right:5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+                <div class="content-wrapper container-xxl p-0">
+                    <div class="content-header row">
+                        <div class="content-header-left col-md-9 col-12 mb-2">
+                            <div class="row breadcrumbs-top">
+                                <div class="col-12">
+                                    <div class="breadcrumb-wrapper">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
+                                            </li>
+                                            
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.vote.index') }}">Vote</a></li>
+                                            
+                                           
+                                            <li class="breadcrumb-item active">{{ vote.id != "" ? "Edition" : "Ajout"}}
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Information</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        
+                                        <div class="col-md-3 float-left">
+                                            {{ form_row(form.num) }}
+                                        </div>
+                                        <div class="col-md-3 float-left">
+                                            {{ form_row(form.isDead) }}
+                                        </div>
+                                        <div class="col-md-3 float-left">
+                                            {{ form_row(form.isWhite) }}
+                                        </div>
+                                        <div class="col-md-3 float-left d-none">
+                                            {{ form_row(form.candidat) }}
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="row match-height">
+                                            <!-- Company Table Card -->
+                                            <div class="col-lg-8 col-12">
+                                                <div class="card card-company-table">
+                                                    <div class="card-body p-0">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th colspan="3">Candidat</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="avatar rounded">
+                                                                                    <div class="avatar-content">
+                                                                                        <img src="../../../app-assets/images/icons/toolbox.svg" alt="Toolbar svg" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <div class="fw-bolder">Dixons</div>
+                                                                                    <div class="font-small-2 text-muted">meguc@ruj.io</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="avatar bg-light-primary me-1">
+                                                                                    <div class="avatar-content">
+                                                                                        <i data-feather="monitor" class="font-medium-3"></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <span>Technology</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-nowrap">
+                                                                            <div class="d-flex flex-column">
+                                                                                <span class="fw-bolder mb-25">23.4k</span>
+                                                                                <span class="font-small-2 text-muted">in 24 hours</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        {{ form_row(form.save) }}
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

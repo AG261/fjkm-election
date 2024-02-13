@@ -124,7 +124,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted()) {
             $email = $user->getEmail();
             $user->setUsername($email);
-            
+            $user->setCreated(new \Datetime());
+            $user->setUpdated(new \Datetime());
+
             $profileFile = $form->get('photo')->getData();
             if ($profileFile) {
                 $profileFileName = $this->fileUploader->upload($profileFile, $this->getParameter("profil_upload_dir"));
@@ -186,8 +188,7 @@ class UserController extends AbstractController
                 $profileFileName = $this->fileUploader->upload($profileFile, $this->getParameter("profil_upload_dir"));
                 $_user->setPhoto($profileFileName);
             }
-
-            $address     = $form->get('address')->getData();
+            $_user->setUpdated(new \Datetime());
             
             $validations = $this->userManager->validation($form, $_user, $_request) ;
             $error       = $validations['error'];

@@ -1,6 +1,6 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}{{ parent() }}Candidats{% endblock %}
+{% block title %}{{ parent() }}Vote{% endblock %}
 {% block stylesheets %}{{ parent() }}
     {{ include('Admin/Element/datatable-style.html.twig') }}
 {% endblock %}
@@ -18,8 +18,8 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.candidat.index') }}">Candidats</a></li>
-
+                                    <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.vote.index') }}">Vote</a></li>
+                                    
                                     <li class="breadcrumb-item active">Liste
                                     </li>
                                 </ol>
@@ -29,10 +29,10 @@
                 </div>
                 <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
-                        <a class="btn btn-primary" href="{{ path('app.admin.voting.candidat.new') }}">
+                        <a class="btn btn-primary" href="{{ path('app.admin.voting.vote.new') }}">
                             <span class="align-middle">Ajout</span>
                         </a>
-
+                        
                     </div>
                 </div>
             </div>
@@ -42,24 +42,25 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div id="candidat-list" class="table-responsive">
-
+                                <div id="vote-list" class="table-responsive">
+                                
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Modal to add new record -->
-
+                    
                 </section>
                 <!--/ Basic table -->
 
             </div>
         </div>
     </div>
+    <!-- END: Content-->
 {% endblock %}
 
 {% block javascripts %}
     {{ include('Admin/Element/datatable-script.html.twig') }}
-    {{ include('Admin/Element/datatable-script-event.html.twig', {'element' : '#candidat-list'}) }}
-
+    {{ include('Admin/Element/datatable-script-event.html.twig', {'element' : '#vote-list'}) }}
+   
 {% endblock %}

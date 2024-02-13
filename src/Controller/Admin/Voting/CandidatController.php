@@ -8,6 +8,7 @@ use App\Entity\Voting\Candidat;
 use App\Form\Voting\CandidatType;
 use App\Repository\Voting\CandidatRepository;
 use App\Services\Common\DataTableService;
+use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/voting/candidat', name : '.voting.candidat')]
 class CandidatController extends AbstractController
-{
+{   
+    /**
+     * @var FileUploader
+     */
+    private $fileUploader;
+
+    /**
+     * Construct
+     *
+     * @param FileUploader $fileUploader
+     */
+    public function __construct(FileUploader $fileUploader, )
+    {
+        $this->fileUploader = $fileUploader;
+    }
+
     #[Route('/', name: '.index')]
     public function index(Request $_request, DataTableService $_dataTableService): Response
     {
@@ -40,7 +56,7 @@ class CandidatController extends AbstractController
             return $table->getResponse();
         }
 
-        return $this->render('Admin/voting/candidat/index.html.twig', [
+        return $this->render('Admin/Voting/candidat/index.html.twig', [
             'datatable' => $table,
         ]);
     }
@@ -53,13 +69,20 @@ class CandidatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $profileFile = $form->get('photo')->getData();
+            if ($profileFile) {
+                $profileFileName = $this->fileUploader->upload($profileFile, $this->getParameter("profil_upload_dir"));
+                $candidat->setPhoto($profileFileName);
+            }
+
             $entityManager->persist($candidat);
             $entityManager->flush();
 
             return $this->redirectToRoute('.voting.candidat.index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('Admin/voting/candidat/action.html.twig', [
+        return $this->render('Admin/Voting/candidat/action.html.twig', [
             'candidat' => $candidat,
             'form' => $form,
         ]);
@@ -85,7 +108,7 @@ class CandidatController extends AbstractController
             return $this->redirectToRoute('.voting.candidat.index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('Admin/voting/candidat/action.html.twig', [
+        return $this->render('Admin/Voting/candidat/action.html.twig', [
             'candidat' => $candidat,
             'form' => $form,
         ]);

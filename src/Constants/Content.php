@@ -19,4 +19,11 @@ class Content
     const USER_DISABLED = 0;
     const USER_ENABLE   = 1;
     
+    const VOTE_EXCEPTION_NO = 0;
+    const VOTE_EXCEPTION_YES = 1;
+
+    const VOTE_EXCEPTIONS = [
+        self::VOTE_EXCEPTION_NO => 'Non',
+        self::VOTE_EXCEPTION_YES => 'Oui',
+    ];
 }

@@ -29,16 +29,28 @@ class Candidat
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
+    
+    #[ORM\Column(length: 250, nullable: true)]
+    private ?string $photo = null;
 
     #[ORM\Column(length: 255)]
     private ?string $civility = null;
-
+    
+    
+    #[ORM\Column]
+    private ?int $status = null;
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $birthday = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFullName(): string
+    {
+        return "$this->firstname $this->lastname";
     }
 
     public function getFirstname(): ?string
@@ -85,6 +97,30 @@ class Candidat
     public function setBirthday(\DateTimeInterface $birthday): static
     {
         $this->birthday = $birthday;
+
+        return $this;
+    }
+    
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
