@@ -1,6 +1,10 @@
 index:
     path: /
-    controller: App\Controller\SecurityController::login
+    controller: App\Controller\ResultController::index
+
+result_ajax:
+    path: /result_ajax
+    controller: App\Controller\ResultController::resultAjax
     
 controllers:
     resource:
