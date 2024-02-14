@@ -13,8 +13,6 @@ class IndexController extends AbstractController
     #[Route('/dashboard', name:'.dashboard')]
     public function index(Request $_request): Response
     {
-        
-
         return$this->render('Admin/Dashboard/index.html.twig', [
             
         ]);
