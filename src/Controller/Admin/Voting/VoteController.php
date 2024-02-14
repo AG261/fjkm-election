@@ -3,7 +3,9 @@
 namespace App\Controller\Admin\Voting;
 
 use App\DataTable\VoteDataTableType;
+use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
+use App\Entity\Voting\VoteResult;
 use App\Form\Voting\VoteType;
 use App\Repository\Voting\VoteRepository;
 use App\Services\Common\DataTableService;
@@ -65,9 +67,28 @@ class VoteController extends AbstractController
         $vote = new Vote();
         $form = $this->createForm(VoteType::class, $vote);
         $form->handleRequest($request);
+        $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $all = $request->request->all();
+            foreach ($all as $element => $value) {
+                if (is_array($element)) {
+                    continue;
+                }
+                if (str_starts_with($element, 'candidat')) {
+                    $id = (int)(str_replace('candidat', '', $element));
+                    $candidate = $entityManager->getRepository(Candidat::class)->find($id);
+                    $isVotedOn = $value === 'on';
+                    $voteResult = new VoteResult();
+                    $voteResult->setIsVotedOn($isVotedOn)
+                        ->setVote($vote)
+                        ->setCandidat($candidate)
+                        ->setResponsible($this->getUser());
+                    $entityManager->persist($voteResult);
+                }
+            }
+            $vote->setUser($this->getUser());
             $entityManager->persist($vote);
             $entityManager->flush();
 
@@ -77,6 +98,7 @@ class VoteController extends AbstractController
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote' => $vote,
             'form' => $form,
+            'candidats' => $candidates
         ]);
     }
 

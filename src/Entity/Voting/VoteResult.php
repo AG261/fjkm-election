@@ -3,7 +3,6 @@
 namespace App\Entity\Voting;
 
 use App\Entity\Account\User;
-use App\Entity\Voting\Vote;
 use App\Repository\Voting\VoteResultRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,30 +15,31 @@ class VoteResult
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'voteResult')]
-    private ?Vote $vote;
-    
-    #[ORM\ManyToOne(inversedBy: 'voteResult')]
     private ?Candidat $candidat;
-    
+
+    #[ORM\ManyToOne(inversedBy: 'voteResults')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Vote $vote = null;
+
     #[ORM\ManyToOne(inversedBy: 'voteResult')]
     private ?User $responsible;
 
     #[ORM\Column(nullable: true)]
-    private ?int $number = null;
+    private ?bool $isVotedOn = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNumber(): ?int
+    public function getCandidat(): ?Candidat
     {
-        return $this->number;
+        return $this->candidat;
     }
 
-    public function setNumber(?int $number): static
+    public function setCandidat(?Candidat $candidat): static
     {
-        $this->number = $number;
+        $this->candidat = $candidat;
 
         return $this;
     }
@@ -55,18 +55,6 @@ class VoteResult
 
         return $this;
     }
-    
-    public function getCandidat(): ?Vote
-    {
-        return $this->candidat;
-    }
-
-    public function setCandidat(?Candidat $candidat): static
-    {
-        $this->candidat = $candidat;
-
-        return $this;
-    }
 
     public function getResponsible(): ?Vote
     {
@@ -76,6 +64,18 @@ class VoteResult
     public function setResponsible(?User $responsible): static
     {
         $this->responsible = $responsible;
+
+        return $this;
+    }
+
+    public function isIsVotedOn(): ?bool
+    {
+        return $this->isVotedOn;
+    }
+
+    public function setIsVotedOn(?bool $isVotedOn): static
+    {
+        $this->isVotedOn = $isVotedOn;
 
         return $this;
     }

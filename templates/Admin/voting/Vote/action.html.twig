@@ -4,7 +4,7 @@
 {% block stylesheets %}{{ parent() }}
     {{ include('Admin/Element/datatable-style.html.twig') }}
     <style>
-        
+
         .float-left{
             float:left;
             margin-right:5px;
@@ -25,10 +25,10 @@
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
                                             </li>
-                                            
+
                                             <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.vote.index') }}">Vote</a></li>
-                                            
-                                           
+
+
                                             <li class="breadcrumb-item active">{{ vote.id != "" ? "Edition" : "Ajout"}}
                                             </li>
                                         </ol>
@@ -47,7 +47,7 @@
                                 {{ form_errors(form) }}
                                 <div class="row">
                                     <div class="col-md-12 col-12">
-                                        
+
                                         <div class="col-md-3 float-left">
                                             {{ form_row(form.num) }}
                                         </div>
@@ -57,17 +57,14 @@
                                         <div class="col-md-3 float-left">
                                             {{ form_row(form.isWhite) }}
                                         </div>
-                                        <div class="col-md-3 float-left d-none">
-                                            {{ form_row(form.candidat) }}
-                                        </div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                                 <div class="row">
                                     <div class="row match-height">
                                             <!-- Company Table Card -->
-                                            <div class="col-lg-8 col-12">
+                                            <div class="col-md-9 col-9">
                                                 <div class="card card-company-table">
                                                     <div class="card-body p-0">
                                                         <div class="table-responsive">
@@ -78,39 +75,39 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                {% for candidat in candidats %}
+{#                                                                    {{ dump(candidat.photo) }}#}
                                                                     <tr>
-                                                                        <td>
+                                                                        <td colspan="2">
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar rounded">
                                                                                     <div class="avatar-content">
-                                                                                        <img src="../../../app-assets/images/icons/toolbox.svg" alt="Toolbar svg" />
+                                                                                        <img src="{{ candidat.photo }}" alt="Toolbar svg" />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <div class="fw-bolder">Dixons</div>
-                                                                                    <div class="font-small-2 text-muted">meguc@ruj.io</div>
+                                                                                    <div class="fw-bolder">{{ candidat.fullname }}</div>
+                                                                                    <div class="font-small-2 text-muted">
+                                                                                        {{candidat.number}}</div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <div class="avatar bg-light-primary me-1">
-                                                                                    <div class="avatar-content">
-                                                                                        <i data-feather="monitor" class="font-medium-3"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <span>Technology</span>
                                                                             </div>
                                                                         </td>
                                                                         <td class="text-nowrap">
                                                                             <div class="d-flex flex-column">
-                                                                                <span class="fw-bolder mb-25">23.4k</span>
-                                                                                <span class="font-small-2 text-muted">in 24 hours</span>
+                                                                                <div class="vs-checkbox-con vs-checkbox-success">
+                                                                                    <input type="checkbox" name="{{ 'candidat' ~ candidat.id }}">
+                                                                                    <span class="vs-checkbox">
+                                                                                        <span class="vs-checkbox--check">
+                                                                                            <i class="vs-icon feather icon-check"></i>
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
                                                                         </td>
-                                                                        
+
                                                                     </tr>
-                                                                    
+                                                                {% endfor %}
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
