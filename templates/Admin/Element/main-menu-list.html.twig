@@ -12,45 +12,54 @@
             <span data-i18n="Fonctionnalités">Fonctionnalités</span>
             <i data-feather="more-horizontal"></i>
         </li>
-        <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new'] ? 'active' : '' }} nav-item">
-            <a class="d-flex align-items-center" href="javascript:;">
-                <i data-feather="command"></i>
-                <span class="menu-title text-truncate" data-i18n="Vote">Vote</span>
-            </a>
-            <ul class="menu-content">
-                <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new', 'app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }}">
-                    <a class="d-flex align-items-center" href="{{ path('app.admin.voting.candidat.index') }}">
-                        <i data-feather="circle"></i>
-                        <span class="menu-item text-truncate" data-i18n="Candidat">Candidat</span>
-                    </a>
-                </li>
-                <li class="{{ _router in ['app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }}">
-                    <a class="d-flex align-items-center" href="{{ path('app.admin.voting.vote.index') }}">
-                        <i data-feather="circle"></i>
-                        <span class="menu-item text-truncate" data-i18n="Vote">Vote</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
         
-       
-        
-        <li class=" navigation-header">
-            <span data-i18n="Parametrages">Parametrages</span>
-            <i data-feather="more-horizontal"></i>
-        </li>
-        <li class="{{ _router in ['app.admin.user.team.index', 'app.admin.user.team.new', 'app.admin.user.team.edit'] ? 'active' : '' }} nav-item">
-            <a class="d-flex align-items-center" href="{{ path('app.admin.user.team.index') }}">
-                <i data-feather="users"></i>
-                <span class="menu-title text-truncate" data-i18n="Utilisateurs">Utilisateurs</span>
-            </a>
-        </li>
-        <li class="{{ _router in ['app.admin.configuration.index'] ? 'active' : '' }} nav-item">
-            <a class="d-flex align-items-center" href="{{ path('app.admin.configuration.index') }}">
-                <i data-feather="settings"></i>
-                <span class="menu-title text-truncate" data-i18n="Configuration">Configuration</span>
-            </a>
-        </li>
-        
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new'] ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="javascript:;">
+                    <i data-feather="command"></i>
+                    <span class="menu-title text-truncate" data-i18n="Vote">Vote</span>
+                </a>
+                <ul class="menu-content">
+                
+                    <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new', 'app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ path('app.admin.voting.candidat.index') }}">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="Candidat">Candidat</span>
+                        </a>
+                    </li>
+                    <li class="{{ _router in ['app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ path('app.admin.voting.vote.index') }}">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="Vote">Vote</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li class="{{ _router in ['app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="{{ path('app.admin.voting.vote.index') }}">
+                    <i data-feather="command"></i>
+                    <span class="menu-title text-truncate" data-i18n="Vote">Vote</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class=" navigation-header">
+                <span data-i18n="Parametrages">Parametrages</span>
+                <i data-feather="more-horizontal"></i>
+            </li>
+            <li class="{{ _router in ['app.admin.user.team.index', 'app.admin.user.team.new', 'app.admin.user.team.edit'] ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="{{ path('app.admin.user.team.index') }}">
+                    <i data-feather="users"></i>
+                    <span class="menu-title text-truncate" data-i18n="Utilisateurs">Utilisateurs</span>
+                </a>
+            </li>
+            <li class="{{ _router in ['app.admin.configuration.index'] ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="{{ path('app.admin.configuration.index') }}">
+                    <i data-feather="settings"></i>
+                    <span class="menu-title text-truncate" data-i18n="Configuration">Configuration</span>
+                </a>
+            </li>
+        {% endif %}
     </ul>
 </div>
