@@ -103,6 +103,13 @@ class CandidatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profileFile = $form->get('photo')->getData();
+            if ($profileFile) {
+                $profileFileName = $this->fileUploader->upload($profileFile, $this->getParameter("profil_upload_dir"));
+                $candidat->setPhoto($profileFileName);
+            }
+
+            $entityManager->persist($candidat);
             $entityManager->flush();
 
             return $this->redirectToRoute('.voting.candidat.index', [], Response::HTTP_SEE_OTHER);

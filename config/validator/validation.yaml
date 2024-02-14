@@ -1,0 +1,49 @@
+App\Entity\Account\User:
+    properties:
+        email:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [user:write]
+            - Regex:
+                pattern: '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/'
+                match:   true
+                message: 'It is not a valid email address'
+                groups: [user:write]
+   
+        roles:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [user:write]  
+        
+        status:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [user:write]
+
+        civility:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [user:write] 
+
+App\Entity\Voting\Candidat:
+    properties:
+        firstname:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [candidat:write]
+   
+        lastname:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [candidat:write] 
+        
+        number:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [candidat:write]
+   
+
+
+    
+
+
