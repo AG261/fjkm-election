@@ -4,11 +4,13 @@
 
 {% block body %}
     <!-- BEGIN: Content-->
-    <div class="app-content content ">
+    <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
+
         <div class="content-wrapper">
             <div class="content-header row">
+                <a href="{{ path('app_login') }}" class="btn btn-primary waves-effect waves-float waves-light">Administration</a>
             </div>
             <div class="content-body">
                 <div class="row">
@@ -18,7 +20,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="list-group" id="data-container-vote">
-{#                                        data content#}
+                                    {#                                        data content #}
                                 </div>
                             </div>
                         </div>
@@ -31,7 +33,7 @@
     </div>
     <!-- END: Content-->
 
-{#     START : script#}
+    {#     START : script #}
     <script>
         function fetchData() {
             fetch('{{ path('result_ajax') }}')
@@ -83,9 +85,9 @@
                         const add_btn = document.createElement('div');
                         add_btn.classList.add('add-btn');
 
-                        const button = document.createElement('button');
-                        button.classList.add('btn', 'btn-primary', 'btn-sm');
-                        button.textContent = 'Add';
+                        const button = document.createElement('div');
+                        button.classList.add('badge', 'bg-success');
+                        button.textContent = '15';
 
                         add_btn.appendChild(button);
 
@@ -110,7 +112,7 @@
         // Fetch data every 5 minutes
         setInterval(fetchData, 5 * 60 * 1000);
     </script>
-{#     END : script#}
+    {#     END : script #}
 {% endblock %}
 
 
