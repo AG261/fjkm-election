@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,36 +66,6 @@ class VoteType extends AbstractType
 
                 ],
                 'required' => false,
-            ])
-            ->add('candidat', EntityType::class, [
-                'label' => 'Candidat',
-                'class' => Candidat::class,
-                'query_builder' => function (EntityRepository $er) use ($options){
-
-                    $query = $er->createQueryBuilder('c') ;
-                    
-                    $query->andWhere('c.status = :status')
-                          ->setParameter('status', true)
-                          ->orderBy('c.firstname', 'ASC')
-                          ;
-                          
-                    return $query;
-                },
-                'choice_label' => function(Candidat $candidat){
-
-                    return $candidat->getFullName() ;
-                },
-                'attr' => [
-                    'data-control' => "select2",
-                    'data-placeholder' => "Candidat",
-                    'class' => "select2 form-select",
-                ],
-                'row_attr'  => [
-                    'class'     => 'fv-row mb-2'
-                ],
-                'mapped' => false,
-                'required' => false, 
-                
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

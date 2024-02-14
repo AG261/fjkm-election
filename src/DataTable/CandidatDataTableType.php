@@ -30,9 +30,9 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
             'field' => 'c.photo',
             'label' => 'Photo',
             'searchable' => false,
-            'render' => function($value, $context) {
+            'render' => function($value, $candidat) {
                 
-                $photo = $context->getPhoto();
+                $photo = $candidat->getPhoto();
                 $image = "images/illustration/no-image.png" ;
                 if(!empty($photo)){
                     $image = "upload/profil/".$photo ;
@@ -40,7 +40,7 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
 
                 return $this->renderView('Admin/Element/datatable-image.html.twig', [
                     'url' => $image,
-                    'name' => $context->getFirstname().' '.$context->getLastname(),
+                    'name' => $candidat->getFirstname().' '.$candidat->getLastname(),
                 ]);
             },
         ])
@@ -49,19 +49,20 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
             'label' => "Numéro",
             'searchable' => true
         ])
-        ->add('lastname', TextColumn::class, [
-            'field' => 'c.lastname',
-            'label' => "Nom",
-            'searchable' => true
-        ])
-        ->add('firstname', TextColumn::class, [
-            'field' => 'c.firstname',
-            'label' => "Prénom",
-            'searchable' => true
-        ]);
-       
 
-        $dataTable->add('buttons', TextColumn::class, [
+        ->add('candidat', TextColumn::class, [
+            
+           // 'field' => 'u.firstName',
+            'label' => "Nom",
+            'searchable' => false,
+            'render' => function($value, $candidat) {
+
+                return $candidat->getCivility().' '.$candidat->getFirstname().' '.$candidat->getLastname();
+            }
+        ])
+
+
+        ->add('buttons', TextColumn::class, [
             'label' => "Action",
             'orderable' => false,
             'searchable' => false,

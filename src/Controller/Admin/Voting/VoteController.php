@@ -3,12 +3,18 @@
 namespace App\Controller\Admin\Voting;
 
 use App\DataTable\VoteDataTableType;
+use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
+use App\Entity\Voting\VoteResult;
 use App\Form\Voting\VoteType;
+use App\Manager\VoteManager;
 use App\Repository\Voting\VoteRepository;
 use App\Services\Common\DataTableService;
 use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\NotSupported;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +32,7 @@ class VoteController extends AbstractController
      * Construct
      *
      */
-    public function __construct( )
+    public function __construct(private readonly VoteManager $voteManager)
     {
         
     }
@@ -59,17 +65,21 @@ class VoteController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws NotSupported
+     * @throws ORMException
+     */
     #[Route('/new', name: '.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $vote = new Vote();
         $form = $this->createForm(VoteType::class, $vote);
         $form->handleRequest($request);
+        $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->persist($vote);
-            $entityManager->flush();
+            $this->voteManager->createNewVote($request, $vote, $this->getUser());
 
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }
@@ -77,6 +87,7 @@ class VoteController extends AbstractController
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote' => $vote,
             'form' => $form,
+            'candidats' => $candidates
         ]);
     }
 
