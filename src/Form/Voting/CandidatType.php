@@ -20,7 +20,18 @@ class CandidatType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            
+            ->add('number', TextType::class, [
+                'label' => 'Numéro',
+                'row_attr' => [
+                    'class' => 'fv-row mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Numéro',
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off'
+                ],
+                'required' => false,
+            ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'row_attr' => [
@@ -31,7 +42,7 @@ class CandidatType extends AbstractType
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off'
                 ],
-                'required' => true,
+                'required' => false,
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
@@ -43,7 +54,7 @@ class CandidatType extends AbstractType
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off'
                 ],
-                'required' => true,
+                'required' => false,
             ])
             ->add('civility', ChoiceType::class, [
                 'label' => 'Civilité',
@@ -59,19 +70,7 @@ class CandidatType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('birthday', BirthdayType::class, [
-                'label' => 'Date de Naissance',
-                'widget' => 'single_text',
-                'html5' => false, // we disable HTML5 to use the datepicker
-                'format' => 'dd/MM/yyyy',
-                'attr' => [
-                    'class' => 'flatpickr-input' // Ajoutez votre classe ici
-                ],
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'required' => true,
-            ])
+            
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
                 'mapped' => false,
@@ -96,7 +95,7 @@ class CandidatType extends AbstractType
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off'
                 ],
-                'required' => true,
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
@@ -114,6 +113,8 @@ class CandidatType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Candidat::class,
+            'validation_groups'  => ['candidat:write'],
+            'cascade_validation' => true,
         ]);
     }
 }

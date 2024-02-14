@@ -39,9 +39,9 @@ class Candidat
     
     #[ORM\Column]
     private ?int $status = null;
-    
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $birthday = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $number = null;
 
     public function getId(): ?int
     {
@@ -58,7 +58,7 @@ class Candidat
         return $this->firstname;
     }
 
-    public function setFirstname(?string $firstname): static
+    public function setFirstname(string $firstname): static
     {
         $this->firstname = $firstname;
 
@@ -88,18 +88,6 @@ class Candidat
 
         return $this;
     }
-
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(\DateTimeInterface $birthday): static
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
     
     public function getPhoto(): ?string
     {
@@ -121,6 +109,18 @@ class Candidat
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
+    public function setNumber(string $number): static
+    {
+        $this->number = $number;
 
         return $this;
     }
