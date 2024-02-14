@@ -59,11 +59,7 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
             'label' => "Prénom",
             'searchable' => true
         ]);
-        $dataTable->add('civility', TextColumn::class, [
-            'field' => 'c.civility',
-            'label' => "Civilité",
-            'searchable' => true,
-        ]);
+       
 
         $dataTable->add('buttons', TextColumn::class, [
             'label' => "Action",
