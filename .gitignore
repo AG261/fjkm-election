@@ -10,3 +10,6 @@
 /migrations/
 /public/upload/
 ###< symfony/framework-bundle ###
+
+.idea
+/.idea/
