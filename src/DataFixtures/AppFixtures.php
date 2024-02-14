@@ -2,50 +2,66 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
-use App\Factory\AddressFactory;
-use App\Factory\CategoryFactory;
-use App\Factory\DistributorFactory;
-use App\Factory\ProductFactory;
-use App\Factory\UserFactory;
-use App\Repository\UserRepository;
+use App\Entity\Account\User;
+use App\Entity\Voting\Candidat;
+use App\Entity\Voting\Vote;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
 
-    public function __construct()
+    public function __construct(private UserPasswordHasherInterface $hasher)
     {
     }
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 10; $i++) {
-//            address and user
-            $addressProxy = AddressFactory::createOne();
-            $address = $addressProxy->object();
-            $manager->persist($address);
-
-            $userProxy = UserFactory::createOne();
-            $user = $userProxy->object();
-            $user->addAddress($address);
+        $faker = Factory::create('fr');
+        for ($i = 0; $i < 4; $i++) {
+            $user = new User();
             $manager->persist($user);
-
-//            categories and product
-            $categoryProxy = CategoryFactory::createOne();
-            $category = $categoryProxy->object();
-            $manager->persist($category);
-
-            $productProxy = ProductFactory::createOne();
-            $product = $productProxy->object();
-            $product->addCategory($category);
-            $manager->persist($product);
+            $user->setEmail($faker->email())
+                ->setRoles(['ROLE_ADMIN'])
+                ->setLastname($faker->lastname())
+                ->setFirstname($faker->firstName())
+                ->setUsername($faker->userName())
+                ->setStatus(1)
+                ->setCivility($faker->randomElement(['Mr', 'Mme', 'Mlle']));
+            $password = $this->hasher->hashPassword($user, '123456');
+            $user->setPassword($password);
+            $manager->flush();
         }
 
-        DistributorFactory::createMany(5);
+        $users = $manager->getRepository(User::class)->findAll();
+        for ($i = 0; $i < 20; $i++) {
+            $this->createCandidate($manager, $faker);
+            $this->createVote($faker->randomElement($users), $manager, $faker);
+        }
 
         $manager->flush();
+    }
+
+    public function createCandidate(ObjectManager $manager, $faker): void
+    {
+
+        $candidate = new Candidat();
+        $candidate->setFirstname($faker->firstName())
+            ->setLastname($faker->name())
+            ->setCivility($faker->randomElement(['Mr', 'Mme', 'Mlle']))
+            ->setStatus(1)
+            ->setPhoto('default.jpeg');
+        $manager->persist($candidate);
+    }
+
+    public function createVote($user, ObjectManager $manager, $faker): void
+    {
+        $vote = new Vote();
+        $vote->setNum($faker->randomNumber(8))
+            ->setUser($user)
+            ->setIsDead($faker->randomElement([true, false]));
+        $manager->persist($vote);
     }
 }

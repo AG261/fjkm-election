@@ -29,20 +29,41 @@ class VoteManager
      */
     public function createNewVote(Request $request, Vote $vote, UserInterface $user): Vote
     {
-        $candidates = $request->request->all()['candidat'];
-        foreach ($candidates as $id) {
-            $candidate = $this->entityManager->getRepository(Candidat::class)->find((int)$id);
-            $voteResult = new VoteResult();
-            $voteResult->setIsVotedOn(true)
-                ->setVote($vote)
-                ->setCandidat($candidate)
-                ->setResponsible($user);
-            $this->entityManager->persist($voteResult);
+        $candidatesVoted = $request->request->all()['candidat'];
+        $candidatesVoted = array_map(fn($id): int => (int)$id, $candidatesVoted);
+        foreach ($candidatesVoted as $id) {
+            $candidate = $this->entityManager->getRepository(Candidat::class)->find($id);
+            $this->createVoteResult($vote, $candidate, $user, true);
         }
+
+        $allCandidate = $this->entityManager->getRepository(Candidat::class)->findAll();
+        foreach ($allCandidate as $candidate) {
+            if (!in_array($candidate->getId(), $candidatesVoted)) {
+                $this->createVoteResult($vote, $candidate, $user, false);
+            }
+        }
+
         $vote->setUser($user);
         $this->entityManager->persist($vote);
         $this->entityManager->flush();
 
         return $vote;
+    }
+
+    private function createVoteResult(Vote $vote, Candidat $candidate, $user, $isVotedOn)
+    {
+        $voteResult = new VoteResult();
+        $voteResult->setIsVotedOn($isVotedOn)
+            ->setVote($vote)
+            ->setCandidat($candidate)
+            ->setResponsible($user);
+        $this->entityManager->persist($voteResult);
+
+        return $voteResult;
+    }
+
+    public function updateVoteResult(Vote $vote, Request $request)
+    {
+        $candidates = $request->request->all()['candidat'];
     }
 }

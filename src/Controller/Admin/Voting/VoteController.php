@@ -97,6 +97,7 @@ class VoteController extends AbstractController
     {
         $form = $this->createForm(VoteType::class, $vote);
         $form->handleRequest($request);
+        $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -107,6 +108,7 @@ class VoteController extends AbstractController
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote' => $vote,
             'form' => $form,
+            'candidats' => $candidates,
         ]);
     }
 
