@@ -83,7 +83,6 @@ class VoteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vote::class,
-            'candidats' => null,
         ]);
     }
 }

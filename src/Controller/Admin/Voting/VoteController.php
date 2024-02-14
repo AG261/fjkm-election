@@ -7,10 +7,14 @@ use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
 use App\Form\Voting\VoteType;
+use App\Manager\VoteManager;
 use App\Repository\Voting\VoteRepository;
 use App\Services\Common\DataTableService;
 use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\NotSupported;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +32,7 @@ class VoteController extends AbstractController
      * Construct
      *
      */
-    public function __construct( )
+    public function __construct(private readonly VoteManager $voteManager)
     {
         
     }
@@ -61,6 +65,11 @@ class VoteController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws NotSupported
+     * @throws ORMException
+     */
     #[Route('/new', name: '.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -70,27 +79,7 @@ class VoteController extends AbstractController
         $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $all = $request->request->all();
-            foreach ($all as $element => $value) {
-                if (is_array($element)) {
-                    continue;
-                }
-                if (str_starts_with($element, 'candidat')) {
-                    $id = (int)(str_replace('candidat', '', $element));
-                    $candidate = $entityManager->getRepository(Candidat::class)->find($id);
-                    $isVotedOn = $value === 'on';
-                    $voteResult = new VoteResult();
-                    $voteResult->setIsVotedOn($isVotedOn)
-                        ->setVote($vote)
-                        ->setCandidat($candidate)
-                        ->setResponsible($this->getUser());
-                    $entityManager->persist($voteResult);
-                }
-            }
-            $vote->setUser($this->getUser());
-            $entityManager->persist($vote);
-            $entityManager->flush();
+            $this->voteManager->createNewVote($request, $vote, $this->getUser());
 
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }

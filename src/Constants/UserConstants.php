@@ -6,17 +6,14 @@ class UserConstants
 {
     //User role
     public const USER_ROLE_ADMIN      = 'ROLE_ADMIN';
-    public const USER_ROLE_COMMERCIAL = 'ROLE_COMMERCIAL';
-    public const USER_ROLE_DELIVERY   = 'ROLE_DELIVERY';
-    public const USER_ROLE_CUSTOMER   = 'ROLE_CUSTOMER';
-    public const USER_ROLE_DRIVER     = 'ROLE_DRIVER';
+    public const USER_ROLE_OPERATOR   = 'USER_ROLE_OPERATOR';
+    public const USER_ROLE_VALIDATOR  = 'USER_ROLE_VALIDATOR';
+  
 
     public const USER_ROLE_LIST   = [
         self::USER_ROLE_ADMIN      => 'Admin',
-        self::USER_ROLE_COMMERCIAL => 'Commercial',
-        self::USER_ROLE_DELIVERY   => 'Livreur',
-        self::USER_ROLE_DRIVER     => 'Chauffeur',
-        self::USER_ROLE_CUSTOMER   => 'Client',
+        self::USER_ROLE_OPERATOR => 'Opérateur',
+        self::USER_ROLE_VALIDATOR   => 'Validateur'
     ] ;
 
     //User civility

@@ -64,7 +64,7 @@
                                 <div class="row">
                                     <div class="row match-height">
                                             <!-- Company Table Card -->
-                                            <div class="col-md-9 col-9">
+                                            <div class="col-md-12 col-12">
                                                 <div class="card card-company-table">
                                                     <div class="card-body p-0">
                                                         <div class="table-responsive">
@@ -76,13 +76,12 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 {% for candidat in candidats %}
-{#                                                                    {{ dump(candidat.photo) }}#}
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar rounded">
                                                                                     <div class="avatar-content">
-                                                                                        <img src="{{ candidat.photo }}" alt="Toolbar svg" />
+                                                                                        <img src="{{ asset("upload/profil/" ~ candidat.photo ) }}" style="width: 50px" alt="Toolbar svg" />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div>
@@ -94,17 +93,9 @@
                                                                         </td>
                                                                         <td class="text-nowrap">
                                                                             <div class="d-flex flex-column">
-                                                                                <div class="vs-checkbox-con vs-checkbox-success">
-                                                                                    <input type="checkbox" name="{{ 'candidat' ~ candidat.id }}">
-                                                                                    <span class="vs-checkbox">
-                                                                                        <span class="vs-checkbox--check">
-                                                                                            <i class="vs-icon feather icon-check"></i>
-                                                                                        </span>
-                                                                                    </span>
-                                                                                </div>
+                                                                                <input type="checkbox" name="candidat[]" value="{{ candidat.id }}">
                                                                             </div>
                                                                         </td>
-
                                                                     </tr>
                                                                 {% endfor %}
 
