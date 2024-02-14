@@ -19,3 +19,9 @@ php8.2 bin/console make:migration + php8.2 bin/console d:m:m
 ```bash
 php8.2 bin/console app:create-user admin@voting.mg Admin123456! admin
 ```
+
+### Load fake data
+ <p><i>only for applicant data</i></p>
+```bash
+    symfony console doctrine:fixtures:load
+```
