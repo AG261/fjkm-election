@@ -57,9 +57,7 @@
                                         <div class="col-md-3 float-left">
                                             {{ form_row(form.isWhite) }}
                                         </div>
-                                        <div class="col-md-3 float-left d-none">
-                                            {{ form_row(form.candidat) }}
-                                        </div>
+                                       
                                         
                                     </div>
                                     
@@ -71,6 +69,7 @@
                                                 <div class="card card-company-table">
                                                     <div class="card-body p-0">
                                                         <div class="table-responsive">
+                                                        {{ dump( candidats )}}
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>

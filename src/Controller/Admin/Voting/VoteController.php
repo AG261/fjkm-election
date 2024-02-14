@@ -5,7 +5,7 @@ namespace App\Controller\Admin\Voting;
 use App\DataTable\VoteDataTableType;
 use App\Entity\Voting\Vote;
 use App\Form\Voting\VoteType;
-use App\Repository\Voting\VoteRepository;
+use App\Repository\Voting\CandidatRepository;
 use App\Services\Common\DataTableService;
 use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +26,7 @@ class VoteController extends AbstractController
      * Construct
      *
      */
-    public function __construct( )
+    public function __construct( protected CandidatRepository $_candidatRepository)
     {
         
     }
@@ -71,12 +71,16 @@ class VoteController extends AbstractController
             $entityManager->persist($vote);
             $entityManager->flush();
 
+            $alls = $request->request->all() ;
+            dump($alls) ;
+
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote' => $vote,
             'form' => $form,
+            'candidats' => $this->_candidatRepository->findAll()
         ]);
     }
 
@@ -90,12 +94,16 @@ class VoteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $alls = $request->request->all() ;
+            dump($alls) ;
+            
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote' => $vote,
             'form' => $form,
+            'candidats' => $this->_candidatRepository->findAll()
         ]);
     }
 
