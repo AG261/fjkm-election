@@ -42,7 +42,7 @@
                     // Process the data returned from the server
                     const container = document.getElementById('data-container-vote');
                     container.innerHTML = '';
-                    data = JSON.parse(data);
+                    data = Array.isArray(data) ? data : JSON.parse(data);
                     data.forEach(item => {
 
                         const a = document.createElement('a');

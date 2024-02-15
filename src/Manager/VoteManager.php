@@ -1,7 +1,7 @@
 <?php
 
 /**
- * User Manager
+ * Vote Manager
  */
 
 namespace App\Manager;
