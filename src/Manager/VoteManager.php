@@ -127,4 +127,37 @@ class VoteManager
 
     }
 
+    /**
+     * Get result voting
+     *
+     * @param Vote $vote
+     * @return mixed
+     */
+    public function getVotingCount(){
+
+        $results = [];
+        $votes = $this->entityManager->getRepository(Vote::class)->findAll();
+
+        $total   = count($votes) ;
+        $isDead  = 0 ;
+        $isWhite = 0 ;
+        $isGood  = 0 ;
+        foreach($votes as $vote){
+            if(!empty($vote->isIsDead())){
+                $isDead++;
+            }
+
+            if(!empty($vote->isIsWhite())){
+                $isWhite++;
+            }
+        }
+
+        $isGood  = $total - $isDead - $isWhite ;
+
+        $results = ['total' => $total, 'isGood' => $isGood, 'isDead' => $isDead, 'isWhite' => $isWhite] ;
+        
+        return $results;
+
+    }
+
 }

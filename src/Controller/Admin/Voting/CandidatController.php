@@ -40,13 +40,14 @@ class CandidatController extends AbstractController
 
         $ajaxRequest = $_request->isXmlHttpRequest();
         $options     = [] ;
-
+        
         if($ajaxRequest){
+            
             $searchs = $_request->get('search', []) ;
             if(isset($searchs['value']) && !empty($searchs['value'])){
-                $options['query'] = $searchs['value'];
+                $options['query'] = $searchs['value'];                    
             }
-
+            
         }
 
         $table = $_dataTableService->createDataTable(CandidatDataTableType::class, $options);

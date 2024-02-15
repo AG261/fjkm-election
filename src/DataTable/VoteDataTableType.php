@@ -2,6 +2,7 @@
 
 namespace App\DataTable;
 
+use App\Entity\Account\User;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use Doctrine\ORM\QueryBuilder;
@@ -33,10 +34,21 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
             'label' => "Numéro",
             'searchable' => true
         ])
-        ->add('responsible', TextColumn::class, [
-            'field' => 'v.responsible',
-            'label' => "Responsable",
+        ->add('firstname', TextColumn::class, [
+            'field' => 'u.firstname',
+            'label' => "Prénom",
             'searchable' => true,
+            'visible' => false,
+        ])
+        ->add('lastname', TextColumn::class, [
+            'field' => 'u.lastname',
+            'label' => "Nom",
+            'searchable' => true,
+            'visible' => false,
+        ])
+        ->add('responsible', TextColumn::class, [
+            'label' => "Responsable",
+            'searchable' => false,
             'render' => function($value, Vote $vote) {
                 $responsible = $vote->getUser() ;
                 return $responsible->getFullName();
@@ -45,7 +57,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
         ->add('isDead', TextColumn::class, [
             'field' => 'v.isDead',
             'label' => "Vote Mort",
-            'searchable' => true,
+            'searchable' => false,
             'render' => function($value, Vote $vote) {
                 if(!empty($vote->isIsDead())){
                     return '<i class="text-success" data-feather="check-square"></i>' ;
@@ -58,7 +70,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
         ->add('isWhite', TextColumn::class, [
             'field' => 'v.isWhite',
             'label' => "Vote Blanc",
-            'searchable' => true,
+            'searchable' => false,
             'render' => function($value, Vote $vote) {
                 if(!empty($vote->isIsWhite())){
                     return '<i class="text-success" data-feather="check-square"></i>' ;
@@ -95,6 +107,13 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
                         ->from(Vote::class, 'v')
                         ->select('v')
                 ;
+
+                if(isset($options['query']) && !empty($options['query'])){
+                    $builder->innerJoin(User::class,'u','WITH', 'v.user = u.id');
+                    $builder->andWhere('v.num LIKE :query OR u.firstname LIKE :query OR u.lastname LIKE :query')
+                            ->setParameter('query', '%'.$options['query'].'%');
+                }
+
             },
         ])
     ;

@@ -10,13 +10,82 @@
 
         <div class="content-wrapper">
             <div class="content-header row">
-                <a href="{{ path('app_login') }}" class="btn btn-primary waves-effect waves-float waves-light">Administration</a>
+                <a href="{{ path('app_login') }}" class="btn btn-primary waves-effect waves-float waves-light">Résultat provisoir</a>
             </div>
             <div class="content-body">
                 <div class="row">
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="card card-statistics">
+                                <div class="card-header">
+                                    <h4 class="card-title"></h4>
+                                    <div class="d-flex align-items-center">
+                                        
+                                    </div>
+                                </div>
+                                <div class="card-body statistics-body">
+                                    <div class="row">
+                                        
+                                        <div class="col-xl-3 col-sm-3 col-12 mb-2 mb-xl-0">
+                                            <div class="d-flex flex-row">
+                                                <div class="avatar bg-light-info me-2">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="users" class="avatar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="my-auto">
+                                                    <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-total">0</h4>
+                                                    <p class="card-text font-small-3 mb-0">Vote Total</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-3 col-12 mb-2 mb-xl-0">
+                                            <div class="d-flex flex-row">
+                                                <div class="avatar bg-light-info me-2">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="users" class="avatar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="my-auto">
+                                                    <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-isgood" >0</h4>
+                                                    <p class="card-text font-small-3 mb-0">Vote accépté</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-3 col-12 mb-2 mb-xl-0">
+                                            <div class="d-flex flex-row">
+                                                <div class="avatar bg-light-info me-2">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="users" class="avatar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="my-auto">
+                                                    <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-iswhite">0</h4>
+                                                    <p class="card-text font-small-3 mb-0">Vote blanc</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-3 col-12 mb-2 mb-xl-0">
+                                            <div class="d-flex flex-row">
+                                                <div class="avatar bg-light-info me-2">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="users" class="avatar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="my-auto">
+                                                    <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-isdead">0</h4>
+                                                    <p class="card-text font-small-3 mb-0">Vote mort</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10 p-4">
-                        <h4 class="mb-2">Résultats de l'éléction provisoir</h4>
+                    <div class="col-10">
+                        <h4 class="mb-2"></h4>
                         <div class="card">
                             <div class="card-body">
                                 <div class="list-group" id="data-container-vote">
@@ -38,12 +107,20 @@
         function fetchData() {
             fetch('{{ path('result_ajax') }}')
                 .then(response => response.json())
-                .then(data => {
+                .then(result => {
                     // Process the data returned from the server
                     const container = document.getElementById('data-container-vote');
                     container.innerHTML = '';
-                    data = Array.isArray(data) ? data : JSON.parse(data);
-                    console.log(data);
+                    results = Array.isArray(result) ? result : JSON.parse(result);
+                    data = results['data'];
+                    count = results['count'];
+                    console.log(count);
+
+                    document.getElementById('vote-total').innerHTML   = count.total;
+                    document.getElementById('vote-isgood').innerHTML  = count.isGood;
+                    document.getElementById('vote-iswhite').innerHTML = count.isWhite;
+                    document.getElementById('vote-isdead').innerHTML  = count.isDead;
+
                     data.forEach(item => {
                         const a = document.createElement('a');
                         a.href = '#';
@@ -51,7 +128,8 @@
 
                         const img = document.createElement('img');
                         var base_url = window.location.origin;
-                        img.src = base_url+`/upload/profil/${item.photo}`;
+                        var photo = item.photo != null ? '/upload/profil/'+item.photo : 'images/illustration/no-image.png';
+                        img.src = base_url+`/${photo}`;
                         img.alt = 'User Image';
                         img.classList.add('rounded-circle', 'me-3', 'w-px-50');
 
