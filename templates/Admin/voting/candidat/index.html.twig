@@ -29,10 +29,11 @@
                 </div>
                 <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
+                        {% if is_granted('ROLE_OPERATOR') %}
                         <a class="btn btn-primary" href="{{ path('app.admin.voting.candidat.new') }}">
                             <span class="align-middle">Ajout</span>
                         </a>
-
+                        {% endif %}
                     </div>
                 </div>
             </div>

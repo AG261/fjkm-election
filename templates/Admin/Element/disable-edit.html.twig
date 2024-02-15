@@ -1,0 +1,15 @@
+<script>
+    $(function() {
+        
+           
+            {% if not is_granted('ROLE_OPERATOR') %}
+                $('input').each(function(){
+                        $(this).prop('disabled', true) ;
+                }) ;
+                $('.btn-save').each(function(){
+                        $(this).hide() ;
+                }) ;
+            
+            {% endif %}
+    });
+</script>

@@ -13,7 +13,7 @@
             <i data-feather="more-horizontal"></i>
         </li>
         
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_OPERATOR') %}
             <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new'] ? 'active' : '' }} nav-item">
                 <a class="d-flex align-items-center" href="javascript:;">
                     <i data-feather="command"></i>
@@ -21,7 +21,7 @@
                 </a>
                 <ul class="menu-content">
                 
-                    <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new', 'app.admin.voting.vote.index', 'app.admin.voting.vote.edit', 'app.admin.voting.vote.new'] ? 'active' : '' }}">
+                    <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new'] ? 'active' : '' }}">
                         <a class="d-flex align-items-center" href="{{ path('app.admin.voting.candidat.index') }}">
                             <i data-feather="circle"></i>
                             <span class="menu-item text-truncate" data-i18n="Candidat">Candidat</span>

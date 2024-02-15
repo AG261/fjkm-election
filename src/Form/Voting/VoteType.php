@@ -70,7 +70,7 @@ class VoteType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => "form-control btn btn-primary",
+                    'class' => "form-control btn btn-primary btn-save",
                 ],
                 'row_attr'  => [
                     'class'     => 'col-md-4 mb-8'

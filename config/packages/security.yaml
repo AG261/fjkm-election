@@ -37,8 +37,8 @@ security:
         # https://symfony.com/doc/current/security/impersonating_user.html
         # switch_user: true
     role_hierarchy:
-        ROLE_OPERATOR: ['ROLE_OPERATOR']
-        ROLE_VALIDATOR: ['ROLE_VALIDATOR']
+        ROLE_OPERATOR: []
+        ROLE_VALIDATOR: []
         ROLE_ADMIN: ['ROLE_ADMIN', 'ROLE_OPERATOR', 'ROLE_VALIDATOR']
 
     # Easy way to control access for large sections of your site
