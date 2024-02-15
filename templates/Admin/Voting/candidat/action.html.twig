@@ -48,11 +48,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Information</h4>
-                                <div class="col-md-3 d-none">
-                                    {% if candidat.id %}
-                                        {{ include('Admin/voting/candidat/_delete_form.html.twig') }}
-                                    {% endif %}
-                                </div>
+                                
                             </div>
                             <div class="card-body">
                                 {{ form_start(form) }}
