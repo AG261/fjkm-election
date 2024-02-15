@@ -6,8 +6,8 @@ class UserConstants
 {
     //User role
     public const USER_ROLE_ADMIN      = 'ROLE_ADMIN';
-    public const USER_ROLE_OPERATOR   = 'USER_ROLE_OPERATOR';
-    public const USER_ROLE_VALIDATOR  = 'USER_ROLE_VALIDATOR';
+    public const USER_ROLE_OPERATOR   = 'ROLE_OPERATOR';
+    public const USER_ROLE_VALIDATOR  = 'ROLE_VALIDATOR';
   
 
     public const USER_ROLE_LIST   = [

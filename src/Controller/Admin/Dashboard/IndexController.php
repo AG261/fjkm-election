@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin\Dashboard;
 
-use App\Form\DashboardSearchType;
 use App\Manager\CandidatManager;
 use App\Manager\VoteManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
