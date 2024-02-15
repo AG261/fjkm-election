@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Manager\VoteManager;
 use App\Repository\Voting\VoteResultRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,14 +14,21 @@ class ResultController extends AbstractController
     #[Route('/', name: 'app_result')]
     public function index(): Response
     {
-        return $this->render('result/index.html.twig', [
+        return $this->render('Result/index.html.twig', [
             'controller_name' => 'ResultController'
         ]);
     }
 
-    public function resultAjax(VoteResultRepository $repository): Response
+    public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager): Response
     {
+        $votingCount = $voteManager->getVotingCount();
+        
         $data = $repository->fetchData();
-        return new JsonResponse(json_encode($data));
+        $results = [
+                        'count' => $votingCount,
+                        'data'  => $data
+                  ] ;
+        
+        return new JsonResponse(json_encode($results));
     }
 }

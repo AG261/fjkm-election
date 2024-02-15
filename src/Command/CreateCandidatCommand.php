@@ -52,7 +52,7 @@ class CreateCandidatCommand extends Command
             while (($data = fgetcsv($file, 0, $delimiter)) !== false) {
                 if($num > 0){
                     $number    = $data[0] ;
-                    $civility  = "" ;
+                    $civility  = $data[1] ;
                     $lastname  = $data[2] ;
                     $firstname = $data[3] ;
 
