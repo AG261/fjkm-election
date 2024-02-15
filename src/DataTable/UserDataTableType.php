@@ -83,6 +83,10 @@ class UserDataTableType extends AbstractController implements DataTableTypeInter
                         ->select('u')
                 ;
                 
+                if(isset($options['query']) && !empty($options['query'])){
+                    $builder->andWhere('u.firstname LIKE :query OR u.lastname LIKE :query')
+                            ->setParameter('query', '%'.$options['query'].'%');
+                }
                 
             },
         ])

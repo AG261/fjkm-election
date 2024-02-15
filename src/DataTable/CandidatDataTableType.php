@@ -16,7 +16,6 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
     public function configure(DataTable $dataTable, array $options)
     {
 
-
         $dataTable
         
         ->add('id', TextColumn::class, [
@@ -26,6 +25,18 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
                 'className' => "id",
                 'visible' => false,
             ])
+        ->add('firstname', TextColumn::class, [
+            'field' => 'c.firstname',
+            'label' => "Prénom",
+            'searchable' => true,
+            'visible' => false
+        ])
+        ->add('lastname', TextColumn::class, [
+            'field' => 'c.lastname',
+            'label' => "Nom",
+            'searchable' => true,
+            'visible' => false
+        ])
         ->add('photo', TextColumn::class, [
             'field' => 'c.photo',
             'label' => 'Photo',
@@ -88,7 +99,11 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
                         ->select('c')
                 ;
                 
-                
+                if(isset($options['query']) && !empty($options['query'])){
+                    $builder->andWhere('c.firstname LIKE :query OR c.lastname LIKE :query OR c.number LIKE :query')
+                            ->setParameter('query', '%'.$options['query'].'%');
+                }
+
             },
         ])
     ;
