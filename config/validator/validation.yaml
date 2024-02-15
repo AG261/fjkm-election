@@ -27,11 +27,6 @@ App\Entity\Account\User:
 
 App\Entity\Voting\Candidat:
     properties:
-        firstname:
-            - NotBlank: 
-                message: 'The field must be not empty'
-                groups: [candidat:write]
-   
         lastname:
             - NotBlank: 
                 message: 'The field must be not empty'
@@ -42,7 +37,14 @@ App\Entity\Voting\Candidat:
                 message: 'The field must be not empty'
                 groups: [candidat:write]
    
-
+App\Entity\Voting\Vote:
+    properties:
+        num:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [vote:write]
+   
+        
 
     
 

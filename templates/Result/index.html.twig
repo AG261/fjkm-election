@@ -158,7 +158,10 @@
                         h6.classList.add('mb-1');
                         h6.textContent = `${item.firstname} ${item.lastname}`; // Assuming 'item' is an object containing the name property
                         const small = document.createElement('small');
-                        small.textContent = `Numéro: ${item.number}`; // Assuming 13 minutes is dynamic
+                        //const smallNum = document.createElement('smallNum');
+
+                        small.textContent = `Numéro : ${item.number}`; // Assuming 13 minutes is dynamic
+                        //smallNum.textContent = `Numéro à l'élection : ${item.number}`; // Assuming 13 minutes is dynamic
                         const user_status = document.createElement('div');
                         user_status.classList.add('user-status');
                         const span = document.createElement('span');

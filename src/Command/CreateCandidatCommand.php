@@ -55,13 +55,15 @@ class CreateCandidatCommand extends Command
                     $civility  = $data[1] ;
                     $lastname  = $data[2] ;
                     $firstname = $data[3] ;
+                    $numberid  = $data[4] ;
 
-                    $candidat = $this->_candidatRepository->findOneBy(['number' => $number]) ;
+                    $candidat = $this->_candidatRepository->findOneBy(['number' => $number, 'civility' => $civility]) ;
                     if(empty($candidat)){
                         $candidat = new Candidat() ;
                     }
 
                     $candidat->setNumber($number) ;
+                    $candidat->setNumberId($numberid) ;
                     $candidat->setCivility($civility) ;
                     $candidat->setLastname($lastname) ;
                     $candidat->setFirstname($firstname) ;

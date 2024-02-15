@@ -83,6 +83,8 @@ class VoteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vote::class,
+            'validation_groups'  => ['vote:write'],
+            'cascade_validation' => true,
         ]);
     }
 }
