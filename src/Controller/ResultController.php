@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\Voting\VoteResultRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,21 +18,9 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function resultAjax(): Response
+    public function resultAjax(VoteResultRepository $repository): Response
     {
-        $data = [
-            [
-                'id' => 1,
-                'name' => 'John Doe',
-                'email' => 'john.doe@example.com',
-            ],
-            [
-                'id' => 2,
-                'name' => 'Jane Doe',
-                'email' => 'jane.doe@example.com',
-            ],
-        ];
-
+        $data = $repository->fetchData();
         return new JsonResponse(json_encode($data));
     }
 }
