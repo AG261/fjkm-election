@@ -50,7 +50,7 @@ class VoteManager
         return $vote;
     }
 
-    private function createVoteResult(Vote $vote, Candidat $candidate, $user, $isVotedOn)
+    private function createVoteResult(Vote $vote, Candidat $candidate, $user, $isVotedOn): VoteResult
     {
         $voteResult = new VoteResult();
         $voteResult->setIsVotedOn($isVotedOn)
@@ -62,8 +62,18 @@ class VoteManager
         return $voteResult;
     }
 
-    public function updateVoteResult(Vote $vote, Request $request)
+    public function updateVoteResult(Vote $vote, Request $request): void
     {
-        $candidates = $request->request->all()['candidat'];
+        $candidatesVoted = $request->request->all()['candidat'];
+        $candidatesVoted = array_map(fn($id): int => (int)$id, $candidatesVoted);
+        $allCandidate = $this->entityManager->getRepository(Candidat::class)->findAll();
+        foreach ($allCandidate as $candidate) {
+            $oldCandidateVoteResult = $this->entityManager->getRepository(VoteResult::class)->findOneBy(['vote' => $vote, 'candidat' => $candidate]);
+            if (in_array($candidate->getId(), $candidatesVoted)) {
+                $oldCandidateVoteResult->setIsVotedOn(true);
+            } else {
+                $oldCandidateVoteResult->setIsVotedOn(false);
+            }
+        }
     }
 }

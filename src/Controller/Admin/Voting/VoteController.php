@@ -100,6 +100,7 @@ class VoteController extends AbstractController
         $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->voteManager->updateVoteResult($vote, $request);
             $entityManager->flush();
 
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
