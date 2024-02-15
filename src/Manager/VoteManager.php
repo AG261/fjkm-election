@@ -9,6 +9,8 @@ namespace App\Manager;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
+use App\Manager\ConfigurationManager;
+use App\Repository\Configuration\ConfigurationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
@@ -18,7 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class VoteManager
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager,
+                                protected ConfigurationManager $_configurationManager
+                                )
     {
     }
 
@@ -43,6 +47,12 @@ class VoteManager
             }
         }
 
+        $configuration = $this->_configurationManager->getConfiguration() ;
+        $isWhite = count($candidatesVoted) > 0 ? true : false ;
+        $isDead  = count($candidatesVoted) > ($configuration->getNumberWomen() + $configuration->getNumberMen()) ? true : false;
+        
+        $vote->setIsDead($isDead) ;
+        $vote->setIsWhite($isWhite) ;
         $vote->setUser($user);
         $this->entityManager->persist($vote);
         $this->entityManager->flush();
