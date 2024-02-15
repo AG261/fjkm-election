@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Configuration;
 
 use App\Entity\Configuration\Configuration;
 use App\Form\Configuration\ConfigurationType;
+use App\Manager\ConfigurationManager;
 use App\Repository\Configuration\ConfigurationRepository;
 use App\Services\Common\DataTableService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +22,7 @@ class ConfigurationController extends AbstractController
      * Construct
      *
      */
-    public function __construct( protected ConfigurationRepository $_configurationRepository,
+    public function __construct( protected ConfigurationManager $_configurationManager,
                                 protected EntityManagerInterface $_entityManager)
     {
         
@@ -31,16 +32,8 @@ class ConfigurationController extends AbstractController
     #[Route('/', name: '.index', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $configurations = $this->_configurationRepository->findAll() ;
-        if(count($configurations) > 0){
-            $configuration = $configurations[0];
-        }else{
-            $configuration = new Configuration();
-            $configuration->setNumberMen(1) ;
-            $configuration->setNumberWomen(1) ;
-            $this->_entityManager->persist($configuration) ;
-            $this->_entityManager->flush() ;
-        }
+        $configuration = $this->_configurationManager->getConfiguration() ;
+       
         $form = $this->createForm(ConfigurationType::class, $configuration);
         $form->handleRequest($request);
 

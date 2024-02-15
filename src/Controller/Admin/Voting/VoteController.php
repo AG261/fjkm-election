@@ -81,13 +81,17 @@ class VoteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->voteManager->createNewVote($request, $vote, $this->getUser());
 
+            //Update voting controll
+            $this->voteManager->updateVotingNull($vote, $request) ;
+            
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Admin/Voting/Vote/action.html.twig', [
-            'vote' => $vote,
-            'form' => $form,
-            'candidats' => $candidates
+            'vote'        => $vote,
+            'form'        => $form,
+            'voteResults' => [],
+            'candidats'   => $candidates
         ]);
     }
 
@@ -100,15 +104,22 @@ class VoteController extends AbstractController
         $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->voteManager->updateVoteResult($vote, $request);
             $entityManager->flush();
+
+            //UPdate voting controll
+            $this->voteManager->updateVotingNull($vote, $request) ;
 
             return $this->redirectToRoute('.voting.vote.index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $voteResults = $this->voteManager->getVoteResult($vote);
+       
         return $this->render('Admin/Voting/Vote/action.html.twig', [
-            'vote' => $vote,
-            'form' => $form,
-            'candidats' => $candidates,
+            'vote'          => $vote,
+            'form'          => $form,
+            'voteResults'   => $voteResults,
+            'candidats'     => $candidates,
         ]);
     }
 
