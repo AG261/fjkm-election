@@ -37,11 +37,12 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
             'field' => 'v.responsible',
             'label' => "Responsable",
             'searchable' => true,
-            'render' => function($value, $vote) {
-                $responsible = $vote->getResponsible() ;
+            'render' => function($value, Vote $vote) {
+                $responsible = $vote->getUser() ;
                 return $responsible->getFullName();
             }
-        ]);
+        ])
+        ;
         
 
         $dataTable->add('buttons', TextColumn::class, [
@@ -49,12 +50,12 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
             'orderable' => false,
             'searchable' => false,
             'className' => "button",
-            'render' => function($value, Candidat $candidat)  use ($options){
+            'render' => function($value, Vote $vote)  use ($options){
 
                 $route    = 'app.admin.voting.vote.edit' ;
 
                 $urls = [
-                    ['name' => 'Edition', 'icon' => 'edit', 'path' => $route, 'params' => ['id' => $candidat->getId()]],
+                    ['name' => 'Edition', 'icon' => 'edit', 'path' => $route, 'params' => ['id' => $vote->getId()]],
                 ];
                 return $this->renderView('Admin/Element/datatable-button.html.twig', [
                     'urls' => $urls
@@ -63,7 +64,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
         ])
         ->addOrderBy('id', DataTable::SORT_ASCENDING)
         ->createAdapter(ORMAdapter::class, [
-            'entity' => Candidat::class,
+            'entity' => Vote::class,
             'query' => function (QueryBuilder $builder) use ($options){
                 $builder
                         ->from(Vote::class, 'v')

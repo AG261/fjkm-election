@@ -16,10 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/configuration', name : '.configuration')]
 class ConfigurationController extends AbstractController
 {   
-    /**
-     * @var FileUploader
-     */
-    private $fileUploader;
 
     /**
      * Construct

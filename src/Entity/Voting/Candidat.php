@@ -3,6 +3,8 @@
 namespace App\Entity\Voting;
 
 use App\Repository\Voting\CandidatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +44,14 @@ class Candidat
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $number = null;
+
+    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: VoteResult::class)]
+    private Collection $voteResults;
+
+    public function __construct()
+    {
+        $this->voteResults = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +131,36 @@ class Candidat
     public function setNumber(string $number): static
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VoteResult>
+     */
+    public function getVoteResults(): Collection
+    {
+        return $this->voteResults;
+    }
+
+    public function addVoteResult(VoteResult $voteResult): static
+    {
+        if (!$this->voteResults->contains($voteResult)) {
+            $this->voteResults->add($voteResult);
+            $voteResult->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoteResult(VoteResult $voteResult): static
+    {
+        if ($this->voteResults->removeElement($voteResult)) {
+            // set the owning side to null (unless already changed)
+            if ($voteResult->getCandidat() === $this) {
+                $voteResult->setCandidat(null);
+            }
+        }
 
         return $this;
     }

@@ -62,7 +62,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-    
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
     }
 
     public function getFullName(): string

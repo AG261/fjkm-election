@@ -14,9 +14,6 @@ class VoteResult
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'voteResult')]
-    private ?Candidat $candidat;
-
     #[ORM\ManyToOne(inversedBy: 'voteResults')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Vote $vote = null;
@@ -27,21 +24,12 @@ class VoteResult
     #[ORM\Column(nullable: true)]
     private ?bool $isVotedOn = null;
 
+    #[ORM\ManyToOne(inversedBy: 'voteResults')]
+    private ?Candidat $candidat = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCandidat(): ?Candidat
-    {
-        return $this->candidat;
-    }
-
-    public function setCandidat(?Candidat $candidat): static
-    {
-        $this->candidat = $candidat;
-
-        return $this;
     }
 
     public function getVote(): ?Vote
@@ -76,6 +64,18 @@ class VoteResult
     public function setIsVotedOn(?bool $isVotedOn): static
     {
         $this->isVotedOn = $isVotedOn;
+
+        return $this;
+    }
+
+    public function getCandidat(): ?Candidat
+    {
+        return $this->candidat;
+    }
+
+    public function setCandidat(?Candidat $candidat): static
+    {
+        $this->candidat = $candidat;
 
         return $this;
     }
