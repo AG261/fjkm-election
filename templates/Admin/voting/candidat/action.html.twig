@@ -65,11 +65,11 @@
                                         <div class="mb-1">
                                             {{ form_label(form.photo) }}
                                             {% set photo = "" %}
-                                                {% if candidat.photo != "" %}
-                                                    {% set photo = 'upload/profil/' ~ candidat.photo %}
-                                                {% else %}
-                                                    {% set photo = 'images/illustration/no-image.png' %}
-                                                {% endif %}
+                                            {% if candidat.photo != "" %}
+                                                {% set photo = 'upload/profil/' ~ candidat.photo %}
+                                            {% else %}
+                                                {% set photo = 'images/illustration/no-image.png' %}
+                                            {% endif %}
                                             <div>
                                                 
                                                 <img class="photo-profile" src="{{ asset(photo) }}" alt="Photo">

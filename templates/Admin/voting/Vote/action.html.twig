@@ -108,19 +108,36 @@
                                                                             <div class="d-flex align-items-center">
                                                                                 <div class="avatar rounded">
                                                                                     <div class="avatar-content">
-                                                                                        <img src="{{ asset("upload/profil/" ~ candidat.photo ) }}" style="width: 50px" alt="Toolbar svg" />
+                                                                                        {% set photo = "" %}
+                                                                                        {% if candidat.photo != "" %}
+                                                                                            {% set photo = 'upload/profil/' ~ candidat.photo %}
+                                                                                        {% else %}
+                                                                                            {% set photo = 'images/illustration/no-image.png' %}
+                                                                                        {% endif %}
+                                                                                        <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div>
                                                                                     <div class="fw-bolder">{{ candidat.fullname }}</div>
                                                                                     <div class="font-small-2 text-muted">
                                                                                        <strong>Numéro : </strong> {{candidat.number}}</div>
+                                                                                       
                                                                                 </div>
                                                                             </div>
                                                                         </td>
                                                                         <td class="text-nowrap">
+                                                                            
                                                                             <div class="custom-checkbox">
-                                                                                <input type="checkbox" id="candidat_{{ candidat.id }}" name="candidat[]" value="{{ candidat.id }}">
+                                                                                <input 
+                                                                                type="checkbox" 
+                                                                                id="candidat_{{ candidat.id }}" 
+                                                                                name="candidat[]" 
+                                                                                 
+                                                                                {% if voteResults[candidat.id]  is defined %} 
+                                                                                    {% if voteResults[candidat.id] == true %}checked{% endif %}
+                                                                                {% endif %}
+                                                                                value="{{ candidat.id }}"
+                                                                                >
                                                                                 <label for="candidat_{{ candidat.id }}"></label>
                                                                             </div>
                                                                         </td>

@@ -11,6 +11,7 @@ use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
 use App\Manager\ConfigurationManager;
 use App\Repository\Configuration\ConfigurationRepository;
+use App\Repository\Voting\VoteResultRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
@@ -21,7 +22,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class VoteManager
 {
     public function __construct(private readonly EntityManagerInterface $entityManager,
-                                protected ConfigurationManager $_configurationManager
+                                protected ConfigurationManager $_configurationManager,
+                                protected VoteResultRepository $_voteResultRepository
                                 )
     {
     }
@@ -33,8 +35,8 @@ class VoteManager
      */
     public function createNewVote(Request $request, Vote $vote, UserInterface $user): Vote
     {
-        $candidatesVoted = $request->request->all()['candidat'];
-        $candidatesVoted = array_map(fn($id): int => (int)$id, $candidatesVoted);
+        $candidatesVoted = isset($request->request->all()['candidat']) ? $request->request->all()['candidat'] : [];
+        $candidatesVoted = count($candidatesVoted) > 0 ? array_map(fn($id): int => (int)$id, $candidatesVoted) : [];
         foreach ($candidatesVoted as $id) {
             $candidate = $this->entityManager->getRepository(Candidat::class)->find($id);
             $this->createVoteResult($vote, $candidate, $user, true);
@@ -47,12 +49,6 @@ class VoteManager
             }
         }
 
-        $configuration = $this->_configurationManager->getConfiguration() ;
-        $isWhite = count($candidatesVoted) > 0 ? true : false ;
-        $isDead  = count($candidatesVoted) > ($configuration->getNumberWomen() + $configuration->getNumberMen()) ? true : false;
-        
-        $vote->setIsDead($isDead) ;
-        $vote->setIsWhite($isWhite) ;
         $vote->setUser($user);
         $this->entityManager->persist($vote);
         $this->entityManager->flush();
@@ -62,6 +58,7 @@ class VoteManager
 
     private function createVoteResult(Vote $vote, Candidat $candidate, $user, $isVotedOn): VoteResult
     {
+        
         $voteResult = new VoteResult();
         $voteResult->setIsVotedOn($isVotedOn)
             ->setVote($vote)
@@ -74,8 +71,8 @@ class VoteManager
 
     public function updateVoteResult(Vote $vote, Request $request): void
     {
-        $candidatesVoted = $request->request->all()['candidat'];
-        $candidatesVoted = array_map(fn($id): int => (int)$id, $candidatesVoted);
+        $candidatesVoted = isset($request->request->all()['candidat']) ? $request->request->all()['candidat'] : [];
+        $candidatesVoted = count($candidatesVoted) > 0 ? array_map(fn($id): int => (int)$id, $candidatesVoted) : [];
         $allCandidate = $this->entityManager->getRepository(Candidat::class)->findAll();
         foreach ($allCandidate as $candidate) {
             $oldCandidateVoteResult = $this->entityManager->getRepository(VoteResult::class)->findOneBy(['vote' => $vote, 'candidat' => $candidate]);
@@ -86,4 +83,48 @@ class VoteManager
             }
         }
     }
+
+    /**
+     * Update voting null with controll     *
+     * @param Vote $vote
+     * @param Request $request
+     * @return void
+     */
+    public function updateVotingNull(Vote $vote, Request $request){
+
+        $candidatesVoted = isset($request->request->all()['candidat']) ? $request->request->all()['candidat'] : [];
+        $candidatesVoted = count($candidatesVoted) > 0 ? array_map(fn($id): int => (int)$id, $candidatesVoted) : [];
+
+        $configuration = $this->_configurationManager->getConfiguration() ;
+        $isWhite = count($candidatesVoted) == 0 ? true : false ;
+        $isDead  = count($candidatesVoted) > ($configuration->getNumberWomen() + $configuration->getNumberMen()) ? true : false;
+        
+        $vote->setIsDead($isDead) ;
+        $vote->setIsWhite($isWhite) ;
+
+        $this->entityManager->persist($vote);
+        $this->entityManager->flush();
+        
+        return $vote;
+    }
+
+    /**
+     * Get result voting
+     *
+     * @param Vote $vote
+     * @return mixed
+     */
+    public function getVoteResult(Vote $vote){
+
+        $results = [];
+        $voteResults = $this->entityManager->getRepository(VoteResult::class)->findBy(['vote' => $vote]);
+
+        foreach($voteResults as $voteResult){
+            $results[$voteResult->getCandidat()->getId()] = $voteResult->isIsVotedOn() ;
+        }
+
+        return $results;
+
+    }
+
 }
