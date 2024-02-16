@@ -3,7 +3,7 @@
         
            
             {% if not is_granted('ROLE_OPERATOR') %}
-                $('#vote_status').css({'opacity': 0}) ;
+                $('#vote_status').prop('readonly':'readonly'}) ;
                 $('input[type="checkbox"], input[type="text"], select').each(function(){
                         $(this).prop('disabled', true) ;
                 }) ;
