@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,8 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator,
+                                private readonly Security $security)
     {
     }
 
@@ -51,9 +53,17 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        $route = 'app.admin.dashboard' ;
+        if ($this->security->isGranted('ROLE_OPERATOR')) {
+            $route = 'app.admin.voting.vote.new' ;
+        }
+
+        if ($this->security->isGranted('ROLE_OPERATOR')) {
+            $route = 'app.admin.voting.vote.index' ;
+        }
+
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app.admin.dashboard'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate($route));
     }
 
     protected function getLoginUrl(Request $request): string

@@ -1,13 +1,14 @@
 {% set _router = app.request.attributes.get('_route') %}
 <div class="main-menu-content">
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        
+        {% if is_granted('ROLE_ADMIN') %}
         <li class=" nav-item">
             <a class="d-flex align-items-center" href="{{ path('app.admin.dashboard') }}">
                 <i data-feather="home"></i>
                 <span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span>
             </a>
         </li>
+        {% endif %}
         <li class=" navigation-header">
             <span data-i18n="Fonctionnalités">Fonctionnalités</span>
             <i data-feather="more-horizontal"></i>

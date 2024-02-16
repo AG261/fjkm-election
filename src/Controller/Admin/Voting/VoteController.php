@@ -16,6 +16,7 @@ use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,8 @@ class VoteController extends AbstractController
      * Construct
      *
      */
-    public function __construct(private readonly VoteManager $voteManager)
+    public function __construct(private readonly VoteManager $voteManager,
+                                private readonly Security $security)
     {
         
     }
@@ -41,6 +43,12 @@ class VoteController extends AbstractController
     #[Route('/', name: '.index')]
     public function index(Request $_request, DataTableService $_dataTableService): Response
     {
+        
+        if ($this->security->isGranted('ROLE_OPERATOR')) {
+            $route = 'app.admin.voting.vote.new' ;
+            return $this->redirectToRoute($route);
+        }
+
         $routeParams = $_request->attributes->get('_route_params');
 
         $ajaxRequest = $_request->isXmlHttpRequest();
@@ -60,7 +68,7 @@ class VoteController extends AbstractController
         if ($table->isCallback()) {
             return $table->getResponse();
         }
-
+        
         return $this->render('Admin/Voting/Vote/index.html.twig', [
             'datatable' => $table,
         ]);

@@ -3,7 +3,7 @@
         
            
             {% if not is_granted('ROLE_OPERATOR') %}
-                $('input').each(function(){
+                $('input[type="checkbox"], input[type="text"], select').each(function(){
                         $(this).prop('disabled', true) ;
                 }) ;
                 $('.btn-save').each(function(){
@@ -12,7 +12,7 @@
             
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-                $('input').each(function(){
+                $('input[type="checkbox"], input[type="text"], select').each(function(){
                         $(this).prop('disabled', false) ;
                 }) ;
                 $('.btn-save').each(function(){
