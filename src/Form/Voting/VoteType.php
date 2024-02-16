@@ -40,7 +40,7 @@ class VoteType extends AbstractType
                 'required' => false,
             ])
             
-            ->add('isDead', ChoiceType::class, [
+            ->add('isDead', HiddenType::class, [
                 'label' => false,
                 
                 'required' => false,
