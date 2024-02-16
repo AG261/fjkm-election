@@ -40,16 +40,7 @@ class VoteType extends AbstractType
                 'required' => false,
             ])
             
-            ->add('isDead', HiddenType::class, [
-                'label' => false,
-                
-                'required' => false,
-            ])
-            ->add('isWhite', HiddenType::class, [
-                'label' => false,
-                
-                'required' => false,
-            ])
+            
             ->add('status', ChoiceType::class, [
                 'label' => 'Etat',
                 'choices' => array_flip(Content::VOTE_STATUS_LIST),
