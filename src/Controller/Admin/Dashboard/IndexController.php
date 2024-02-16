@@ -29,7 +29,7 @@ class IndexController extends AbstractController
         $roles = $user->getRoles() ;
         
         if (!in_array(UserConstants::USER_ROLE_ADMIN, $roles)) {
-            $route = 'app_result' ;
+            $route = 'app.admin.voting.vote.index' ;
             return $this->redirectToRoute($route);
         }
         
