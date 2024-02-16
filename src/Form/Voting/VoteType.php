@@ -52,7 +52,7 @@ class VoteType extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'Etat',
-                    'class' => 'form-control bg-transparent',
+                    'class' => 'form-control',
                     'autocomplete' => 'off',
 
                 ],
