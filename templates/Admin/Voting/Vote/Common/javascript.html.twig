@@ -43,5 +43,14 @@
         }else{
                 $('.block-candidat').removeClass('d-none');
         }  
+
+        //Change status
+        $('#vote_status').on('change', function(){
+                $('#change-vote-status').modal('show');
+                
+                $('#btn-change-vote-status-accept').click(function(){
+                        $('.btn-save').trigger('click');
+                });
+        });
     });
 </script>

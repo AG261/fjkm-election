@@ -23,7 +23,18 @@ class Content
     const VOTE_EXCEPTION_YES = 1;
 
     const VOTE_EXCEPTIONS = [
-        self::VOTE_EXCEPTION_NO => 'Non',
+        self::VOTE_EXCEPTION_NO  => 'Non',
         self::VOTE_EXCEPTION_YES => 'Oui',
     ];
+
+    //Vote status
+    public const VOTE_STATUS_NOT_VERIFY       = 1;
+    public const VOTE_STATUS_VERIFY_NOT_VALID = 2;
+    public const VOTE_STATUS_VERIFY_VALID     = 3;
+
+    public const VOTE_STATUS_LIST   = [
+        self::VOTE_STATUS_NOT_VERIFY        => 'Pas vérifié',
+        self::VOTE_STATUS_VERIFY_NOT_VALID  => 'Non validé',
+        self::VOTE_STATUS_VERIFY_VALID      => 'Validé'
+    ] ;
 }

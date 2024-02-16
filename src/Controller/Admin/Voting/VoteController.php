@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Voting;
 
 use App\Common\Constants\UserConstants;
+use App\Constants\Content;
 use App\DataTable\VoteDataTableType;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
@@ -93,6 +94,7 @@ class VoteController extends AbstractController
         $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $vote->setStatus(Content::VOTE_STATUS_NOT_VERIFY) ;
             $this->voteManager->createNewVote($request, $vote, $this->getUser());
 
             //Update voting controll
@@ -113,7 +115,8 @@ class VoteController extends AbstractController
     #[Route('/{id}/edit', name: '.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Vote $vote, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(VoteType::class, $vote);
+        $form   = $this->createForm(VoteType::class, $vote);
+        
         $form->handleRequest($request);
         $candidates = $entityManager->getRepository(Candidat::class)->findAll();
 

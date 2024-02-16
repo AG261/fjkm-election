@@ -2,6 +2,7 @@
 
 namespace App\DataTable;
 
+use App\Constants\Content;
 use App\Entity\Account\User;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
@@ -77,6 +78,28 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
                 }else{
                     return '<i class="text-danger" data-feather="x-square"></i>' ;
                 }
+            }
+        ])
+        ->add('status', TextColumn::class, [
+            'field' => 'v.status',
+            'label' => "Etat",
+            'searchable' => false,
+            'render' => function($value, Vote $vote) {
+                $status = $vote->getStatus();
+                $voteStatus = Content::VOTE_STATUS_LIST ;
+                
+                $value  = $voteStatus[Content::VOTE_STATUS_NOT_VERIFY] ;
+                $class  = 'text-warning';
+                if($status == Content::VOTE_STATUS_VERIFY_NOT_VALID){
+                    $value  = $voteStatus[Content::VOTE_STATUS_VERIFY_NOT_VALID] ;
+                    $class  = 'text-danger';
+                }
+                if($status == Content::VOTE_STATUS_VERIFY_VALID){
+                    $value  = $voteStatus[Content::VOTE_STATUS_VERIFY_VALID] ;
+                    $class  = 'text-success';
+                }
+
+                return '<span class="'.$class.'">'.$value.'</span>' ;
             }
         ])
         ;

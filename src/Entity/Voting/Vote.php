@@ -36,6 +36,9 @@ class Vote
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $status = null;
+    
     #[ORM\OneToMany(mappedBy: 'vote', targetEntity: VoteResult::class, orphanRemoval: true)]
     private Collection $voteResults;
 
@@ -149,6 +152,18 @@ class Vote
                 $voteResult->setVote(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

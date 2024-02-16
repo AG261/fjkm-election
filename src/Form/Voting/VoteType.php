@@ -67,6 +67,23 @@ class VoteType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('status', ChoiceType::class, [
+                'label' => 'Etat',
+                'choices' => array_flip(Content::VOTE_STATUS_LIST),
+                //'choices_as_values' => true,
+                'multiple' => false,
+                'expanded' => true,
+                'row_attr' => [
+                    'class' => 'fv-row mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Etat',
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off',
+
+                ],
+                'required' => true,
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
