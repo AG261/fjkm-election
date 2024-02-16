@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,31 +41,13 @@ class VoteType extends AbstractType
             ])
             
             ->add('isDead', ChoiceType::class, [
-                'label' => 'Vote null',
-                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Vote null',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off',
-
-                ],
+                'label' => false,
+                
                 'required' => false,
             ])
-            ->add('isWhite', ChoiceType::class, [
-                'label' => 'Vote Blanc',
-                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Vote Blanc',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off',
-
-                ],
+            ->add('isWhite', HiddenType::class, [
+                'label' => false,
+                
                 'required' => false,
             ])
             ->add('status', ChoiceType::class, [
