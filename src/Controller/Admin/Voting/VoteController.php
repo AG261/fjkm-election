@@ -107,6 +107,7 @@ class VoteController extends AbstractController
             'vote'        => $vote,
             'form'        => $form,
             'voteResults' => [],
+            'voteStatus' => [],
             'candidats'   => $candidates
         ]);
     }
@@ -137,6 +138,7 @@ class VoteController extends AbstractController
             'form'          => $form,
             'voteResults'   => $voteResults,
             'candidats'     => $candidates,
+            'voteStatus' => Content::VOTE_STATUS_LIST,
         ]);
     }
 
