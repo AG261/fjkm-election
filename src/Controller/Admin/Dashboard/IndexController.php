@@ -28,9 +28,7 @@ class IndexController extends AbstractController
         $user  = $this->getUser() ;
         $roles = $user->getRoles() ;
         
-        if (in_array(UserConstants::USER_ROLE_OPERATOR, $roles) 
-            && (!in_array(UserConstants::USER_ROLE_ADMIN, $roles)
-            || !in_array(UserConstants::USER_ROLE_VALIDATOR, $roles))) {
+        if (in_array(UserConstants::USER_ROLE_ADMIN, $roles)) {
             $route = 'app_result' ;
             return $this->redirectToRoute($route);
         }
