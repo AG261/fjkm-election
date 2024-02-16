@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Voting;
 
+use App\Common\Constants\UserConstants;
 use App\DataTable\VoteDataTableType;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
@@ -43,8 +44,12 @@ class VoteController extends AbstractController
     #[Route('/', name: '.index')]
     public function index(Request $_request, DataTableService $_dataTableService): Response
     {
+        $user  = $this->getUser() ;
+        $roles = $user->getRoles() ;
         
-        if ($this->security->isGranted('ROLE_OPERATOR')) {
+        if (in_array(UserConstants::USER_ROLE_OPERATOR, $roles) 
+            && (!in_array(UserConstants::USER_ROLE_ADMIN, $roles)
+            || !in_array(UserConstants::USER_ROLE_VALIDATOR, $roles))) {
             $route = 'app.admin.voting.vote.new' ;
             return $this->redirectToRoute($route);
         }
