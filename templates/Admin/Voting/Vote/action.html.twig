@@ -51,6 +51,11 @@
                                         <div class="col-md-3 float-left d-none">
                                             {{ form_row(form.isWhite) }}
                                         </div>
+                                        
+                                    </div>
+                                    <div class="col-md-12 col-12">
+
+                                        
                                         <div class="col-md-3 float-left {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
                                             {{ form_row(form.status) }}
                                         </div>
