@@ -14,7 +14,7 @@
             <i data-feather="more-horizontal"></i>
         </li>
         
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_OPERATOR') %}
+        {% if is_granted('ROLE_ADMIN') %}
             <li class="{{ _router in ['app.admin.voting.candidat.index', 'app.admin.voting.candidat.edit', 'app.admin.voting.candidat.new'] ? 'active' : '' }} nav-item">
                 <a class="d-flex align-items-center" href="javascript:;">
                     <i data-feather="command"></i>
