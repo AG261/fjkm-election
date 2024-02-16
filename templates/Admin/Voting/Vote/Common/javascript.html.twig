@@ -3,7 +3,7 @@
         //POur le cas d'un ajout
         var voteNum = $('#vote_num') ;
         var modalNum = $('#modal-number') ; 
-        //voteNum.prop('readonly', 'readonly') ;
+        voteNum.prop('readonly', 'readonly') ;
         if(voteNum.val() == ''){
                 
                 $('#add-vote-number').modal('show');
@@ -14,14 +14,14 @@
                              $('.number-error').html('Veulliez entré un numéro valide!').show()    ;
                         }else{
                         
-                               $.ajax({
+                                $.ajax({
                                         url: "{{ path('app.admin.voting.vote.search.ajax') }}",
                                         method: 'POST',
                                         data: {'number' : modalNum.val()},
                                         success: function (result) {
                                                 if(result.isNew == true){
                                                         //Add number to input
-                                                        voteNum.val(modalNum.val());
+                                                        voteNum.val(modalNum.val()).prop('readonly', 'readonly');
                                                         $('#add-vote-number').modal('hide');
                                                         
                                                         $('.block-candidat').removeClass('d-none');
@@ -52,9 +52,19 @@
         //Change status
         $('#vote_status').on('change', function(){
                 $('#change-vote-status').modal('show');
-                
+                var value = $(this).val();
                 $('#btn-change-vote-status-accept').click(function(){
-                        $('.btn-save').trigger('click');
+                        $.ajax({
+                                url: "{{ path('app.admin.voting.vote.update.ajax') }}",
+                                method: 'POST',
+                                data: {'number' : modalNum.val(), 'status' : value},
+                                success: function (result) {
+                                        //
+                                },
+                                error: function (error) {
+                                        console.error('Erreur :', error);
+                                }
+                        });
                 });
         });
     });

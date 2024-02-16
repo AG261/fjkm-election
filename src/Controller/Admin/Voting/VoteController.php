@@ -166,4 +166,23 @@ class VoteController extends AbstractController
         return new JsonResponse(['isNew' => $isNew, 'redirection' => $redirect]) ;
     }
 
+    #[Route('/update', name: '.update.ajax', defaults: [])]
+    public function voteUpdate(Request $_request, EntityManagerInterface $entityManager): Response
+    {   
+        $number   = $_request->get('number', '') ;
+        $status   = $_request->get('status', '') ;
+        
+        if(!empty($number)){
+
+            $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number]);
+            if(!empty($vote)){
+                $vote->setStatus($status) ;
+                $entityManager->persist($vote);
+                $entityManager->flush();
+            }
+        }
+        
+        return new JsonResponse() ;
+    }
+
 }
