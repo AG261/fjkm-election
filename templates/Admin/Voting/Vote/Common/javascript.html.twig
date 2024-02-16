@@ -57,7 +57,7 @@
                         $.ajax({
                                 url: "{{ path('app.admin.voting.vote.update.ajax') }}",
                                 method: 'POST',
-                                data: {'number' : modalNum.val(), 'status' : value},
+                                data: {'number' : voteNum.val(), 'status' : value},
                                 success: function (result) {
                                         //
                                 },
