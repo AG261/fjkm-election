@@ -29,7 +29,7 @@
                 </div>
                 <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
-                        {% if is_granted('ROLE_OPERATOR') %}
+                        {% if is_granted('ROLE_OPERATOR') and not is_granted('ROLE_ADMIN') and not is_granted('ROLE_VALIDATOR')%}
                         <a class="btn btn-primary" href="{{ path('app.admin.voting.vote.new') }}">
                             <span class="align-middle">Ajout</span>
                         </a>

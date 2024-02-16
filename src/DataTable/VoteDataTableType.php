@@ -3,9 +3,11 @@
 namespace App\DataTable;
 
 use App\Constants\Content;
+
 use App\Entity\Account\User;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
+use App\Services\Common\Utils;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\TextColumn;
@@ -83,7 +85,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
         ->add('status', TextColumn::class, [
             'field' => 'v.status',
             'label' => "Etat",
-            'searchable' => false,
+            'searchable' => true,
             'render' => function($value, Vote $vote) {
                 $status = $vote->getStatus();
                 $voteStatus = Content::VOTE_STATUS_LIST ;
@@ -131,10 +133,34 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
                         ->select('v')
                 ;
 
+                
                 if(isset($options['query']) && !empty($options['query'])){
+
+                    $query  = $options['query'] ;
+                    
+                    $sql    = 'v.num LIKE :query OR u.firstname LIKE :query OR u.lastname LIKE :query';
                     $builder->innerJoin(User::class,'u','WITH', 'v.user = u.id');
-                    $builder->andWhere('v.num LIKE :query OR u.firstname LIKE :query OR u.lastname LIKE :query')
-                            ->setParameter('query', '%'.$options['query'].'%');
+
+                    //Search in array
+                    $utils  = new Utils();
+                    $searchsStatus = $utils->arraySearchLike(Content::VOTE_STATUS_LIST, '%'.str_replace("+"," ",$query).'%') ;
+                    $status = '';
+                    if(count($searchsStatus) > 0){
+                        $status = array_key_first($searchsStatus);
+                        
+                    }
+
+                    if(!empty($status)){
+                        $sql    = $sql.' OR v.status = :status';
+                    }
+
+                    $builder->andWhere($sql)
+                            ->setParameter('query', '%'.$query.'%');
+                            
+                    if(!empty($status)){
+                        $builder->setParameter('status', $status);
+                    }
+                    
                 }
 
             },
