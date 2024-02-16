@@ -155,8 +155,11 @@ class VoteController extends AbstractController
             if(!empty($vote)){
                 $isNew    = false ;
                 $status   = $vote->getStatus();
-                $redirect = ($status != Content::VOTE_STATUS_VERIFY_NOT_VALID) ? '' : $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())); 
-                $redirect = $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())) ;
+                if($status == Content::VOTE_STATUS_VERIFY_NOT_VALID){
+                    $redirect = $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())); 
+                }
+                
+                
             }
         }
         
