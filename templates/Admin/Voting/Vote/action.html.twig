@@ -53,13 +53,7 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="col-md-12 col-12">
-
-                                        
-                                        <div class="col-md-3 float-left {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
-                                            {{ form_row(form.status) }}
-                                        </div>
-                                    </div>
+                                    
 
                                 </div>
                                 <div class="row block-candidat d-none">
@@ -112,6 +106,16 @@
                                         </div>
                                     </div>
                                             
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-12 col-12">
+                                        
+                                        <div class="col-md-2 float-right {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
+                                            {{ form_row(form.status) }}
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row display-block">
                                     
