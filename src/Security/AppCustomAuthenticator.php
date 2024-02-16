@@ -58,7 +58,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             $route = 'app.admin.voting.vote.new' ;
         }
 
-        if ($this->security->isGranted('ROLE_OPERATOR')) {
+        if ($this->security->isGranted('ROLE_VALIDATOR')) {
             $route = 'app.admin.voting.vote.index' ;
         }
 
