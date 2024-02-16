@@ -57,13 +57,14 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
         ])
         ->add('numberid', TextColumn::class, [
             'field' => 'c.numberid',
-            'label' => "Numéro à l'eglise",
+            'label' => "Numéro",
             'searchable' => true
         ])
         ->add('number', TextColumn::class, [
             'field' => 'c.number',
             'label' => "Numéro à l'éléction",
-            'searchable' => true
+            'searchable' => true,
+            'visible' => false
         ])
 
         ->add('candidat', TextColumn::class, [

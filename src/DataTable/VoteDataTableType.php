@@ -86,6 +86,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
             'field' => 'v.status',
             'label' => "Etat",
             'searchable' => true,
+            'visible' => false,
             'render' => function($value, Vote $vote) {
                 $status = $vote->getStatus();
                 $voteStatus = Content::VOTE_STATUS_LIST ;

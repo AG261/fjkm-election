@@ -144,18 +144,23 @@ class VoteController extends AbstractController
     #[Route('/search', name: '.search.ajax', defaults: [])]
     public function voteSearch(Request $_request, EntityManagerInterface $entityManager): Response
     {   
-        $number  = $_request->get('number', '') ;
+        $number   = $_request->get('number', '') ;
 
-        $isNew   = true ;
+        $isNew    = true ;
+        $redirect = '' ;
+        $status   = Content::VOTE_STATUS_LIST ;
         if(!empty($number)){
 
             $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number]);
             if(!empty($vote)){
-                $isNew   = false ;
+                $isNew    = false ;
+                $status   = $vote->getStatus();
+                $redirect = ($status != Content::VOTE_STATUS_VERIFY_NOT_VALID) ? '' : $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())); 
+                $redirect = $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())) ;
             }
         }
         
-        return new JsonResponse(['isNew' => $isNew]) ;
+        return new JsonResponse(['isNew' => $isNew, 'redirection' => $redirect]) ;
     }
 
 }

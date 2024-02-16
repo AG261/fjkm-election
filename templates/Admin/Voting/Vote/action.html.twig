@@ -45,10 +45,10 @@
                                         <div class="col-md-3 float-left">
                                             {{ form_row(form.num) }}
                                         </div>
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left d-none">
                                             {{ form_row(form.isDead) }}
                                         </div>
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left d-none">
                                             {{ form_row(form.isWhite) }}
                                         </div>
                                         <div class="col-md-3 float-left {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">

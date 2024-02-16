@@ -26,12 +26,17 @@
                                                         
                                                         $('.block-candidat').removeClass('d-none');
                                                 }else{
+                                                        if(result.redirection != ''){
+                                                                
+                                                                location.href = result.redirection;
+                                                        }else{
+                                                                $('#add-vote-number-error').modal('show');
+                                                                $('#add-vote-number').modal('hide');
+                                                                $('#btn-add-number-error-accept').click(function(){
+                                                                $('#add-vote-number').modal('show');  
+                                                                });    
+                                                        }
                                                         
-                                                        $('#add-vote-number-error').modal('show');
-                                                        $('#add-vote-number').modal('hide');
-                                                        $('#btn-add-number-error-accept').click(function(){
-                                                              $('#add-vote-number').modal('show');  
-                                                        });
                                                 }
                                         },
                                         error: function (error) {
