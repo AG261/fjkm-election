@@ -3,7 +3,7 @@
         //POur le cas d'un ajout
         var voteNum = $('#vote_num') ;
         var modalNum = $('#modal-number') ; 
-        voteNum.prop('readonly', 'readonly') ;
+        //voteNum.prop('readonly', 'readonly') ;
         if(voteNum.val() == ''){
                 
                 $('#add-vote-number').modal('show');
@@ -21,7 +21,7 @@
                                         success: function (result) {
                                                 if(result.isNew == true){
                                                         //Add number to input
-                                                        voteNum.val(modalNum.val()).prop('readonly', 'readonly') ;
+                                                        voteNum.val(modalNum.val());
                                                         $('#add-vote-number').modal('hide');
                                                         
                                                         $('.block-candidat').removeClass('d-none');
