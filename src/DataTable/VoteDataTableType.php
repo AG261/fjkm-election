@@ -56,7 +56,7 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
         ])
         ->add('isDead', TextColumn::class, [
             'field' => 'v.isDead',
-            'label' => "Vote Mort",
+            'label' => "Vote null",
             'searchable' => false,
             'render' => function($value, Vote $vote) {
                 if(!empty($vote->isIsDead())){

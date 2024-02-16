@@ -11,5 +11,14 @@
                 }) ;
             
             {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                $('input').each(function(){
+                        $(this).prop('disabled', false) ;
+                }) ;
+                $('.btn-save').each(function(){
+                        $(this).show() ;
+                }) ;
+            
+            {% endif %}
     });
 </script>

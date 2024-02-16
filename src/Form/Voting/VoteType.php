@@ -40,13 +40,13 @@ class VoteType extends AbstractType
             ])
             
             ->add('isDead', ChoiceType::class, [
-                'label' => 'Vote Mort',
+                'label' => 'Vote null',
                 'choices' => array_flip(Content::VOTE_EXCEPTIONS),
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
                 ],
                 'attr' => [
-                    'placeholder' => 'Vote Mort',
+                    'placeholder' => 'Vote null',
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off',
 
@@ -73,7 +73,7 @@ class VoteType extends AbstractType
                     'class' => "form-control btn btn-primary btn-save",
                 ],
                 'row_attr'  => [
-                    'class'     => 'col-md-4 mb-8'
+                    'class'     => 'col-md-4 mb-8 float-right'
                 ],
             ])
         ;

@@ -16,6 +16,7 @@ use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -121,6 +122,24 @@ class VoteController extends AbstractController
             'voteResults'   => $voteResults,
             'candidats'     => $candidates,
         ]);
+    }
+
+
+    #[Route('/search', name: '.search.ajax', defaults: [])]
+    public function voteSearch(Request $_request, EntityManagerInterface $entityManager): Response
+    {   
+        $number  = $_request->get('number', '') ;
+
+        $isNew   = true ;
+        if(!empty($number)){
+
+            $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number]);
+            if(!empty($vote)){
+                $isNew   = false ;
+            }
+        }
+        
+        return new JsonResponse(['isNew' => $isNew]) ;
     }
 
 }

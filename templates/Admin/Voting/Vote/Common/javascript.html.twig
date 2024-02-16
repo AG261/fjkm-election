@@ -1,0 +1,47 @@
+<script>
+    $(function() {
+        //POur le cas d'un ajout
+        var voteNum = $('#vote_num') ;
+        var modalNum = $('#modal-number') ; 
+        voteNum.prop('disabled', true) ;
+        if(voteNum.val() == ''){
+                
+                $('#add-vote-number').modal('show');
+                
+                //On save number
+                $('#btn-add-number').click(function(){
+                        if(modalNum.val() == ''){
+                             $('.number-error').html('Veulliez entré un numéro valide!').show()    ;
+                        }else{
+                        
+                               $.ajax({
+                                        url: "{{ path('app.admin.voting.vote.search.ajax') }}",
+                                        method: 'POST',
+                                        data: {'number' : modalNum.val()},
+                                        success: function (result) {
+                                                if(result.isNew == true){
+                                                        //Add number to input
+                                                        voteNum.val(modalNum.val()).prop('disabled', true) ;
+                                                        $('#add-vote-number').modal('hide');
+                                                        
+                                                        $('.block-candidat').removeClass('d-none');
+                                                }else{
+                                                        
+                                                        $('#add-vote-number-error').modal('show');
+                                                        $('#add-vote-number').modal('hide');
+                                                        $('#btn-add-number-error-accept').click(function(){
+                                                              $('#add-vote-number').modal('show');  
+                                                        });
+                                                }
+                                        },
+                                        error: function (error) {
+                                                console.error('Erreur :', error);
+                                        }
+                                });   
+                        }
+                });
+        }else{
+                $('.block-candidat').removeClass('d-none');
+        }  
+    });
+</script>
