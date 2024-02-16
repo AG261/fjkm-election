@@ -107,7 +107,7 @@
                                     
                                     <div class="col-md-12 col-12">
                                         
-                                        <div class="col-md-2 float-right {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
+                                        <div class="col-md-2 float-right {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}{% endif %}">
                                             {{ form_row(form.status) }}
                                         </div>
                                     </div>
