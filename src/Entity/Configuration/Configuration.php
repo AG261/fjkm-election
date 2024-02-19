@@ -18,6 +18,9 @@ class Configuration
 
     #[ORM\Column(nullable: true)]
     private ?int $number_women = null;
+
+    #[ORM\Column]
+    private ?int $executingVote = null;
     
     public function getId(): ?int
     {
@@ -44,6 +47,18 @@ class Configuration
     public function setNumberWomen(?int $number_women): static
     {
         $this->number_women = $number_women;
+
+        return $this;
+    }
+
+    public function getExecutingVote(): ?int
+    {
+        return $this->executingVote;
+    }
+
+    public function setExecutingVote(int $executingVote): static
+    {
+        $this->executingVote = $executingVote;
 
         return $this;
     }

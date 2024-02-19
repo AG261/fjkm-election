@@ -39,4 +39,12 @@ class Content
         self::VOTE_STATUS_VERIFY_VALID      => 'Validé',
         //self::VOTE_STATUS_CORRECTION_OK     => 'Corrigé'
     ] ;
+
+    const VOTE_IN_PROCESS_MEN = 1;
+    const VOTE_IN_PROCESS_WOMEN = 2;
+
+    const VOTE_IN_PROCESS = [
+        self::VOTE_IN_PROCESS_MEN  => 'Homme',
+        self::VOTE_IN_PROCESS_WOMEN => 'Femme',
+    ];
 }

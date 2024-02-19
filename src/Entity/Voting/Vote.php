@@ -42,6 +42,9 @@ class Vote
     #[ORM\OneToMany(mappedBy: 'vote', targetEntity: VoteResult::class, orphanRemoval: true)]
     private Collection $voteResults;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $executingVote = null;
+    
     public function __construct()
     {
         $this->voteResults = new ArrayCollection();
@@ -164,6 +167,18 @@ class Vote
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+    
+    public function getExecutingVote(): ?int
+    {
+        return $this->executingVote;
+    }
+
+    public function setExecutingVote(int $executingVote): static
+    {
+        $this->executingVote = $executingVote;
 
         return $this;
     }
