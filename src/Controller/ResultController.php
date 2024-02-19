@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Manager\CandidatManager;
+use App\Manager\ConfigurationManager;
 use App\Manager\VoteManager;
 use App\Repository\Voting\VoteResultRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,14 +24,22 @@ class ResultController extends AbstractController
         ]);
     }
 
-    public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager): Response
+    public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager, ConfigurationManager $configurationManager): Response
     {
         $votingCount = $voteManager->getVotingCount();
+        $configuration = $configurationManager->getConfiguration() ;
         
-        $data = $repository->fetchData();
+        $datas   = [] ;
+        $mens    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+        $womenMmes  = $repository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+        $datas = array_merge($datas, $mens) ;
+        $datas = array_merge($datas, $womenMmes) ;
+
+        //$data  = $repository->fetchData();
         $results = [
                         'count' => $votingCount,
-                        'data'  => $data
+                        'data'  => $datas,
+                        
                   ] ;
         
         return new JsonResponse(json_encode($results));

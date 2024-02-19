@@ -21,6 +21,12 @@
         .list-group-item + .list-group-item{
             border-top-width:1px;
         }
+
+        .block-resume{
+            width: 70%;
+            margin: auto;
+            padding-left: 9%;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -37,14 +43,14 @@
                 <div class="row">
                         <div class="col-xl-12 col-md-12 col-12">
                             <div class="card card-statistics">
-                                <div class="card-header">
+                                <div class="card-header d-none">
                                     <h4 class="card-title"></h4>
                                     <div class="d-flex align-items-center">
                                         
                                     </div>
                                 </div>
                                 <div class="card-body statistics-body">
-                                    <div class="row">
+                                    <div class="row  block-resume">
                                         <div class="col-xl-2 col-sm-2 col-12 mb-2 mb-xl-0">
                                             <div class="d-flex flex-row">
                                                 <div class="avatar bg-light-info me-2">
@@ -242,7 +248,7 @@
         }
 
         // Fetch data every 1 minute
-        //setInterval(fetchData, 60 * 1000);
+        setInterval(fetchData, 60 * 1000);
 
         // Fetch data initially
         fetchData();
