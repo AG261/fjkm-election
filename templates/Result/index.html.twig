@@ -1,7 +1,28 @@
 {% extends 'layout_result.html.twig' %}
 
 {% block title %}Résultat des éléctions{% endblock %}
-
+{% block stylesheet %} 
+    {{ parent() }}
+    <style>
+        .data-container-vote{
+            display: block;
+        }
+        .float-left{
+            float:left;
+        }
+        .data-container-item{
+            padding:10px;
+        }
+        .list-group-item{
+            margin-bottom:5px;
+            border-top:1px solid rgba(34, 41, 47, 0.125);
+            
+        }
+        .list-group-item + .list-group-item{
+            border-top-width:1px;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -100,8 +121,17 @@
                         <h4 class="mb-2"></h4>
                         <div class="card">
                             <div class="card-body">
-                                <div class="list-group" id="data-container-vote">
+                                <div class="{# list-group  #}col-md-12 data-container-vote" id="data-container-vote">
                                     {# data content #}
+                                    
+                                    <div class="col-md-6 float-left data-container-item">
+                                        <legend class="text-primary">Femmes</legend>
+                                        <div id="data-container-vote-mme"></div>
+                                    </div>
+                                    <div class="col-md-6 float-left data-container-item" >
+                                        <legend class="text-primary">Hommes</legend>
+                                        <div id="data-container-vote-mr"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -121,11 +151,15 @@
                 .then(response => response.json())
                 .then(result => {
                     // Process the data returned from the server
-                    const container = document.getElementById('data-container-vote');
-                    container.innerHTML = '';
+                    const container    = document.getElementById('data-container-vote');
+                    const containerMr  = document.getElementById('data-container-vote-mr');
+                    const containerMme = document.getElementById('data-container-vote-mme');
+                    //container.innerHTML = '';
+                    containerMr.innerHTML  = '';
+                    containerMme.innerHTML = '';
                     results = Array.isArray(result) ? result : JSON.parse(result);
-                    data = results['data'];
-                    count = results['count'];
+                    data    = results['data'];
+                    count   = results['count'];
                     console.log(count);
 
                     document.getElementById('vote-total').innerHTML   = count.total;
@@ -156,7 +190,7 @@
 
                         const h6 = document.createElement('h6');
                         h6.classList.add('mb-1');
-                        h6.textContent = `${item.firstname} ${item.lastname}`; // Assuming 'item' is an object containing the name property
+                        h6.textContent = `${item.civility} ${item.firstname} ${item.lastname}`; // Assuming 'item' is an object containing the name property
                         const small = document.createElement('small');
                         //const smallNum = document.createElement('smallNum');
 
@@ -193,7 +227,13 @@
                         a.appendChild(img);
                         a.appendChild(div1);
 
-                        container.appendChild(a);
+                        var civility = `${item.civility}`;
+                        if(civility == "Mr"){
+                            containerMr.appendChild(a);
+                        }else{
+                            containerMme.appendChild(a);
+                        }
+                        
                     });
                 })
                 .catch(error => {
@@ -202,7 +242,7 @@
         }
 
         // Fetch data every 1 minute
-        setInterval(fetchData, 60 * 1000);
+        //setInterval(fetchData, 60 * 1000);
 
         // Fetch data initially
         fetchData();

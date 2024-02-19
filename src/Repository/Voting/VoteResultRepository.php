@@ -27,7 +27,7 @@ class VoteResultRepository extends ServiceEntityRepository
     public function fetchData(): array
     {
         return $this->createQueryBuilder('v')
-            ->select('DISTINCT c.id, c.firstname, c.lastname, c.photo, c.number, c.numberid, SUM(CASE WHEN v.isVotedOn = true THEN 1 ELSE 0 END) AS vote_count')
+            ->select('DISTINCT c.id, c.civility, c.firstname, c.lastname, c.photo, c.number, c.numberid, SUM(CASE WHEN v.isVotedOn = true THEN 1 ELSE 0 END) AS vote_count')
             ->join('v.candidat', 'c')
             ->groupBy('c.id')
             ->orderBy('vote_count', 'DESC')
