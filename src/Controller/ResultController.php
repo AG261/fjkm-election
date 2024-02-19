@@ -14,13 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResultController extends AbstractController
 {
     #[Route('/', name: 'app_result')]
-    public function index(CandidatManager $candidatManager): Response
+    public function index(VoteResultRepository $repository, CandidatManager $candidatManager, ConfigurationManager $configurationManager): Response
     {   
         $candidats  = $candidatManager->getCandidatCount();
-        
+        $configuration = $configurationManager->getConfiguration() ;
+        $menResults    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+        $womenResults  = $repository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+
         return $this->render('Result/index.html.twig', [
             'controller_name' => 'ResultController',
-            'candidats'       => $candidats
+            'candidats'       => $candidats,
+            'menResults'      => $menResults,
+            'womenResults'    => $womenResults
         ]);
     }
 

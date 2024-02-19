@@ -52,12 +52,13 @@
         //Change status
         $('.vote-status').on('change', function(){
                 $('#change-vote-status').modal('show');
-                var value = $(this).val();
+                var value  = $(this).val();
+                var voteId = $('#vote_status').data('id') ;
                 $('#btn-change-vote-status-accept').click(function(){
                         $.ajax({
                                 url: "{{ path('app.admin.voting.vote.update.ajax') }}",
                                 method: 'POST',
-                                data: {'number' : voteNum.val(), 'status' : value},
+                                data: {'number' : voteNum.val(), 'status' : value, 'id' : voteId},
                                 success: function (result) {
                                         //
                                 },

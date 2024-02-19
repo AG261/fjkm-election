@@ -27,6 +27,17 @@
             margin: auto;
             padding-left: 9%;
         }
+        .dataTables_wrapper{
+            display:none;
+        }
+        legend{
+            width:50%;
+        }
+        .btn-export-pdf{
+            float:right;
+            margin-top:0px;
+            margin-bottom: 10px;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -37,7 +48,7 @@
 
         <div class="content-wrapper">
             <div class="content-header row">
-                <a href="{{ path('app_login') }}" class="btn btn-primary waves-effect waves-float waves-light">Résultat provisoir</a>
+                <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Résultat provisoir</a>
             </div>
             <div class="content-body">
                 <div class="row">
@@ -132,10 +143,75 @@
                                     
                                     <div class="col-md-6 float-left data-container-item">
                                         <legend class="text-primary">Femmes</legend>
+                                        
+                                        <span id="vote-table-mme-title" class="d-none">Résultat des votes pour les femmes</span>
+                                        <a href="javascript:;" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Export PDF</a>
+                                        <div id="data-container-vote-table-mme" class="d-none">
+                                            
+                                            <table id="vote-table-mme" class="display no-wrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Numéro</th>
+                                                        <th>Nom</th>
+                                                        <th>Nombre de vote</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for womenResult in womenResults %}
+                                                    <tr>
+                                                        <td>{{ womenResult.number }}</td>
+                                                        <td>{{ womenResult.lastname~''~womenResult.firstname}}</td>
+                                                        <td>{{ womenResult.vote_count }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Numéro</th>
+                                                        <th>Nom</th>
+                                                        <th>Nombre de vote</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                         <div id="data-container-vote-mme"></div>
                                     </div>
                                     <div class="col-md-6 float-left data-container-item" >
                                         <legend class="text-primary">Hommes</legend>
+                                        <span id="vote-table-mr-title" class="d-none">Résultat des votes pour les hommes</span>
+                                        <a href="javascript:;" data-aria="vote-table-mr" class="btn btn-primary btn-export-pdf ">Export PDF</a>
+                                        <div id="data-container-vote-table-mr" class="d-none">
+                                            
+                                            <table id="vote-table-mr" class="display no-wrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Numéro</th>
+                                                        <th>Nom</th>
+                                                        <th>Nombre de vote</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for menResult in menResults %}
+                                                    <tr>
+                                                        <td>{{ menResult.number }}</td>
+                                                        <td>{{ menResult.lastname~''~menResult.firstname}}</td>
+                                                        <td>{{ menResult.vote_count }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Numéro</th>
+                                                        <th>Nom</th>
+                                                        <th>Nombre de vote</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                         <div id="data-container-vote-mr"></div>
                                     </div>
                                 </div>
@@ -151,7 +227,14 @@
     <!-- END: Content-->
 
     {#     START : script #}
+    
     <script>
+
+        
+
+        /**
+        * Show result
+        **/
         function fetchData() {
             fetch('{{ path('result_ajax') }}')
                 .then(response => response.json())

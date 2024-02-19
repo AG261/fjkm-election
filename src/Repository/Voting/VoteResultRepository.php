@@ -47,15 +47,4 @@ class VoteResultRepository extends ServiceEntityRepository
         ;
     }
 
-//    public function findOneBySomeField($value): ?VoteResult
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-
 }

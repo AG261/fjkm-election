@@ -19,7 +19,7 @@ class Configuration
     #[ORM\Column(nullable: true)]
     private ?int $number_women = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $executingVote = null;
     
     public function getId(): ?int

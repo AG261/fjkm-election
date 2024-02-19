@@ -9,6 +9,7 @@ use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
 use App\Form\Voting\VoteType;
+use App\Manager\ConfigurationManager;
 use App\Manager\VoteManager;
 use App\Repository\Voting\VoteRepository;
 use App\Services\Common\DataTableService;
@@ -37,7 +38,8 @@ class VoteController extends AbstractController
      *
      */
     public function __construct(private readonly VoteManager $voteManager,
-                                private readonly Security $security)
+                                private readonly Security $security,
+                                protected ConfigurationManager $configurationManager)
     {
         
     }
@@ -91,10 +93,16 @@ class VoteController extends AbstractController
         $vote = new Vote();
         $form = $this->createForm(VoteType::class, $vote);
         $form->handleRequest($request);
-        $candidates = $entityManager->getRepository(Candidat::class)->findAll();
-
+        
+        $configuration = $this->configurationManager->getConfiguration() ;
+        $civility      = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
+        $params        = ['civility' => $civility];
+        $candidates = $entityManager->getRepository(Candidat::class)->findBy($params);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $vote->setStatus(Content::VOTE_STATUS_NOT_VERIFY) ;
+            $vote->setExecutingVote($configuration->getExecutingVote()) ;
+            
             $this->voteManager->createNewVote($request, $vote, $this->getUser());
 
             //Update voting controll
@@ -119,7 +127,10 @@ class VoteController extends AbstractController
         $form   = $this->createForm(VoteType::class, $vote);
         
         $form->handleRequest($request);
-        $candidates = $entityManager->getRepository(Candidat::class)->findAll();
+
+        $civility      = $vote->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
+        $params        = ['civility' => $civility];
+        $candidates    = $entityManager->getRepository(Candidat::class)->findBy($params);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->voteManager->updateVoteResult($vote, $request);
@@ -152,16 +163,15 @@ class VoteController extends AbstractController
         $redirect = '' ;
         $status   = Content::VOTE_STATUS_LIST ;
         if(!empty($number)){
-
-            $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number]);
+            $configuration = $this->configurationManager->getConfiguration() ;
+            $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number, 'executingVote' => $configuration->getExecutingVote()]);
+            
             if(!empty($vote)){
                 $isNew    = false ;
                 $status   = $vote->getStatus();
                 if($status == Content::VOTE_STATUS_VERIFY_NOT_VALID){
                     $redirect = $this->generateUrl('app.admin.voting.vote.edit', array('id' => $vote->getId())); 
                 }
-                
-                
             }
         }
         
@@ -172,11 +182,12 @@ class VoteController extends AbstractController
     public function voteUpdate(Request $_request, EntityManagerInterface $entityManager): Response
     {   
         $number   = $_request->get('number', '') ;
+        $id       = $_request->get('id', '') ;
         $status   = $_request->get('status', '') ;
         
-        if(!empty($number)){
+        if(!empty($id)){
 
-            $vote = $entityManager->getRepository(Vote::class)->findOneBy(['num' => $number]);
+            $vote = $entityManager->getRepository(Vote::class)->find($id);
             if(!empty($vote)){
                 $vote->setStatus($status) ;
                 $entityManager->persist($vote);

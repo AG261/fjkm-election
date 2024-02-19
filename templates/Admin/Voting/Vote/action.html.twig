@@ -112,17 +112,18 @@
                                         <div class="col-md-2 float-right {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
                                             <fieldset class="fv-row mb-2">
                                                 <legend class="col-form-label required">Etat</legend>
-                                                <div id="vote_status" placeholder="Etat" class="form-control" autocomplete="off">
+                                                
                                                     {% if voteStatus | length > 0 %}
+                                                        <div id="vote_status" data-id="{{ vote.id }}" placeholder="Etat" class="form-control" autocomplete="off">
                                                         {% for key, voteStatusName in voteStatus %}
                                                             <div class="form-check">
                                                                 <input type="radio" id="vote_status_{{ key }}" {% if vote.status == key%}checked{% endif %} name="status" required="required" class="form-check-input vote-status" value="{{ key }}">
                                                                 <label class="form-check-label required" for="vote_status_{{ key }}">{{ voteStatusName }}</label>
                                                             </div>
                                                         {% endfor %}
-                                                    
+                                                        </div> 
                                                     {% endif %}
-                                                </div>        
+                                                       
                                             </fieldset>
                                         </div>
                                     </div>
