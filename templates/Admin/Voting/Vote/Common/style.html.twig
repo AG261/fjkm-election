@@ -43,17 +43,28 @@
 
         .canditat-item-block
         {
-                float: left;
-                margin-left: 8px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
         }
         .canditat-item-list{
-                margin-right: 10px;
+                /*margin-right: 10px;
                 margin-bottom: 50px;
                 height: 80px;
                 border-bottom-width: 1px;
                 background:rgba(115, 103, 240, 0.12); 
                 float:left;
-                max-width: 430px;
+                max-width: 430px;*/
+                border-bottom-width: 1px;
+                background:rgba(115, 103, 240, 0.12);
+                width: 100%
+        }
+        .canditat-item-list-content {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
         }
         .canditat-item{
                 float:left;
@@ -62,25 +73,34 @@
         .canditat-item-num{
                 width: 50px;
                 height: auto;
-                padding-top: 7%;
-                padding-left: 5%;
+                /*padding-top: 7%;
+                padding-left: 5%;*/
                 font-weight: bold;
         }
         .canditat-item-avatar{
                 width:50px;
                 height:50px;
-                padding-top: 15px;
+                /*padding-top: 15px;*/
         }
         .canditat-item-name{
                 width: auto;
                 height: auto;
-                padding-top: 20px;
-                max-width: 290px;
+                /*padding-top: 20px;*/
+                max-width: 285px;
+                font-size: 19px;
+                font-weight: bold;
         }
         .canditat-item-checkbox{
-                width:30px;
-                height:50px;
-                padding-top: 15px;
-                float:right;
+                width: 45px;
+                height: 80px;
+                /*padding-top: 15px;*/
+                
+                /*float:right;*/
+        }
+
+        .canditat-item-checkbox input{
+                width: 45px;
+                height: 80px;
+               
         }
 </style>

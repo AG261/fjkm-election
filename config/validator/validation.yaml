@@ -20,11 +20,6 @@ App\Entity\Account\User:
                 message: 'The field must be not empty'
                 groups: [user:write]
 
-        civility:
-            - NotBlank: 
-                message: 'The field must be not empty'
-                groups: [user:write] 
-
 App\Entity\Voting\Candidat:
     properties:
         lastname:
