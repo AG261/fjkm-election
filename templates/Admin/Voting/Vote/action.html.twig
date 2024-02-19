@@ -67,17 +67,19 @@
                                                         
                                                         <div class="canditat-item-list col-md-4">
                                                             <div class="col-md-12 canditat-item-list-content">
-                                                                <div class="col-md-3 canditat-item canditat-item-num">{{candidat.number}}</div>
-                                                                <div class="col-md-3 canditat-item canditat-item-avatar">
-                                                                    {% set photo = "" %}
-                                                                    {% if candidat.photo != "" %}
-                                                                        {% set photo = 'upload/profil/' ~ candidat.photo %}
-                                                                    {% else %}
-                                                                        {% set photo = 'images/illustration/no-image.png' %}
-                                                                    {% endif %}
-                                                                    <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
+                                                                <div class="canditat-item-list-content-left">
+                                                                    <div class="col-md-3 canditat-item canditat-item-num">{{candidat.number}}</div>
+                                                                    <div class="col-md-3 canditat-item canditat-item-avatar">
+                                                                        {% set photo = "" %}
+                                                                        {% if candidat.photo != "" %}
+                                                                            {% set photo = 'upload/profil/' ~ candidat.photo %}
+                                                                        {% else %}
+                                                                            {% set photo = 'images/illustration/no-image.png' %}
+                                                                        {% endif %}
+                                                                        <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
+                                                                    </div>
+                                                                    <div class="col-md-3 canditat-item canditat-item-name">{{ candidat.fullname }}</div>
                                                                 </div>
-                                                                <div class="col-md-3 canditat-item canditat-item-name">{{ candidat.civility~' '~candidat.fullname }}</div>
                                                                 <div class="col-md-3 canditat-item canditat-item-checkbox">
                                                                     {# <div class="custom-checkbox"> #}
                                                                         <input 

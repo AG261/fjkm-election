@@ -18,7 +18,7 @@ class Configuration
 
     #[ORM\Column(nullable: true)]
     private ?int $number_women = null;
-
+    
     public function getId(): ?int
     {
         return $this->id;
