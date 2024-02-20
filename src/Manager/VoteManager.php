@@ -6,6 +6,7 @@
 
 namespace App\Manager;
 
+use App\Constants\Content;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
@@ -95,9 +96,12 @@ class VoteManager
         $candidatesVoted = isset($request->request->all()['candidat']) ? $request->request->all()['candidat'] : [];
         $candidatesVoted = count($candidatesVoted) > 0 ? array_map(fn($id): int => (int)$id, $candidatesVoted) : [];
 
+
         $configuration = $this->_configurationManager->getConfiguration() ;
+        $voteMax       = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? $configuration->getNumberWomen() : $configuration->getNumberMen();
+        
         $isWhite = count($candidatesVoted) == 0 ? true : false ;
-        $isDead  = count($candidatesVoted) > ($configuration->getNumberWomen() + $configuration->getNumberMen()) ? true : false;
+        $isDead  = count($candidatesVoted) > $voteMax ? true : false;
         
         $vote->setIsDead($isDead) ;
         $vote->setIsWhite($isWhite) ;

@@ -38,6 +38,20 @@
             margin-top:0px;
             margin-bottom: 10px;
         }
+        .user-info .mb-1{
+            font-size:20px;
+        }
+        .user-info small{
+            font-size:18px;
+        }
+
+        .add-btn .badge{
+            font-size: 33px;
+            font-weight: bold;
+            height: 50px;
+            margin: auto;
+            padding: 11px;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -279,7 +293,7 @@
 
                         const h6 = document.createElement('h6');
                         h6.classList.add('mb-1');
-                        h6.textContent = `${item.civility} ${item.firstname} ${item.lastname}`; // Assuming 'item' is an object containing the name property
+                        h6.textContent = `${item.firstname} ${item.lastname}`; // Assuming 'item' is an object containing the name property
                         const small = document.createElement('small');
                         //const smallNum = document.createElement('smallNum');
 
