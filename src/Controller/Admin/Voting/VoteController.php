@@ -96,6 +96,7 @@ class VoteController extends AbstractController
         
         $configuration = $this->configurationManager->getConfiguration() ;
         $civility      = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
+        $voteType      = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'femmes' : 'hommes';
         $params        = ['civility' => $civility];
         $candidates = $entityManager->getRepository(Candidat::class)->findBy($params);
         
@@ -113,6 +114,7 @@ class VoteController extends AbstractController
 
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote'        => $vote,
+            'voteType'    => $voteType,
             'form'        => $form,
             'voteResults' => [],
             'voteStatus' => [],
@@ -131,7 +133,8 @@ class VoteController extends AbstractController
         $civility      = $vote->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
         $params        = ['civility' => $civility];
         $candidates    = $entityManager->getRepository(Candidat::class)->findBy($params);
-
+        $voteType      = $vote->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'femmes' : 'hommes';
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->voteManager->updateVoteResult($vote, $request);
             $entityManager->flush();
@@ -146,6 +149,7 @@ class VoteController extends AbstractController
        
         return $this->render('Admin/Voting/Vote/action.html.twig', [
             'vote'          => $vote,
+            'voteType'     => $voteType,
             'form'          => $form,
             'voteResults'   => $voteResults,
             'candidats'     => $candidates,

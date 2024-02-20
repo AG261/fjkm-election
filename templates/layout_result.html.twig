@@ -34,12 +34,13 @@
 
 {{ include('Admin/Element/datatable-script.html.twig') }}
 {{ include('Admin/Element/datatable-script-export.html.twig') }}
+<div class="loading-custom hidden">Loading&#8230;</div>
 <!-- END:  JS-->
 <script>
     
     
-    initiDataTable("#vote-table-mme", [0, 1, 2]) ;
-    initiDataTable("#vote-table-mr", [0, 1, 2]) ;
+    initiDataTable("#vote-table-mme", [0, 1, 2], [2, 'desc']) ;
+    initiDataTable("#vote-table-mr", [0, 1, 2], [2, 'desc']) ;
     exportDatatablePDF();
     
 

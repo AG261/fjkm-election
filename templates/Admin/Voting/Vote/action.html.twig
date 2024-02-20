@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12">
                                         {% if voteStatus | length > 0 %}
-                                            <span id="vote-table-mme-title">Vote num {{ vote.num }}</span>
+                                            <span id="vote-table-infos-title" class="d-none">Vote numéro {{ vote.num }} {{ voteType }}</span>
                                             <a href="javascript:;" data-aria="vote-table-infos" class="btn btn-primary btn-export-pdf">Export PDF</a>
 
                                             <table id="vote-table-infos" class="display no-wrap">
@@ -63,30 +63,29 @@
                                                     <tr>
                                                         <th>Numéro</th>
                                                         <th>Nom</th>
-                                                        <th>Nombre de vote</th>
-                                                        
+                                                        <th>Vote</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    
+                                                    {% for candidat in candidats %}
                                                     <tr>
-                                                        <td>1</td>
-                                                        <td>A</td>
-                                                        <td>B</td>
+                                                        <td>{{candidat.number}}</td>
+                                                        <td>{{ candidat.fullname }}</td>
+                                                        <td>
+                                                            {% if voteResults[candidat.id]  is defined %} 
+                                                                {% if voteResults[candidat.id] == true %}Oui{% endif %}
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
-                                                    {# {% for womenResult in womenResults %}
-                                                    <tr>
-                                                        <td>{{ womenResult.number }}</td>
-                                                        <td>{{ womenResult.lastname~''~womenResult.firstname}}</td>
-                                                        <td>{{ womenResult.vote_count }}</td>
-                                                    </tr>
-                                                    {% endfor %} #}
+                                                    {% endfor %}
                                                     
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th>Numéro</th>
                                                         <th>Nom</th>
-                                                        <th>Nombre de vote</th>
+                                                        <th>Vote</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
