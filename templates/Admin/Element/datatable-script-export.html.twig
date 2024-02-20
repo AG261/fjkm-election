@@ -15,7 +15,7 @@
     /**
     * Init datatable
     **/
-    function initiDataTable(_element){
+    function initiDataTable(_element, _column){
         
 
         $(_element).DataTable({
@@ -50,7 +50,7 @@
                         extend: 'pdf',
                         text: feather.icons['clipboard'].toSvg({ class: 'font-small-4 me-50' }) + 'Pdf',
                         //className: 'dropdown-item',
-                        exportOptions: { columns: [0, 1, 2] },
+                        exportOptions: { columns: _column }, /* [0, 1, 2]  */
                         title: function () { return $(_element+'-title').html(); },
                     },
                     /*

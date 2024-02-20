@@ -47,6 +47,10 @@
                 });
         }else{
                 $('.block-candidat').removeClass('d-none');
+
+                //Datatable export PDF
+                initiDataTable("#vote-table-infos", [0, 1, 2]) ;
+                exportDatatablePDF();
         }  
 
         //Change status
