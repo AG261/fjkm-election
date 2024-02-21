@@ -57,36 +57,12 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
                 return $responsible->getFullName();
             }
         ])
-        ->add('isDead', TextColumn::class, [
-            'field' => 'v.isDead',
-            'label' => "Vote null",
-            'searchable' => false,
-            'render' => function($value, Vote $vote) {
-                if(!empty($vote->isIsDead())){
-                    return '<i class="text-success" data-feather="check-square"></i>' ;
-                }else{
-                    return '<i class="text-danger" data-feather="x-square"></i>' ;
-                }
-                
-            }
-        ])
-        ->add('isWhite', TextColumn::class, [
-            'field' => 'v.isWhite',
-            'label' => "Vote Blanc",
-            'searchable' => false,
-            'render' => function($value, Vote $vote) {
-                if(!empty($vote->isIsWhite())){
-                    return '<i class="text-success" data-feather="check-square"></i>' ;
-                }else{
-                    return '<i class="text-danger" data-feather="x-square"></i>' ;
-                }
-            }
-        ])
+        
         ->add('status', TextColumn::class, [
             'field' => 'v.status',
-            'label' => "Etat",
+            'label' => "Statut",
             'searchable' => true,
-            'visible' => false,
+            
             'render' => function($value, Vote $vote) {
                 $status = $vote->getStatus();
                 $voteStatus = Content::VOTE_STATUS_LIST ;

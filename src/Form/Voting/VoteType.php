@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -40,6 +41,24 @@ class VoteType extends AbstractType
                 'required' => false,
             ])
             
+            ->add('btnVoteOk', ButtonType::class, [
+                'label' => 'Ok, Retour à la liste',
+                'attr' => [
+                    'class' => "form-control btn btn-success btn-vote-status",
+                ],
+                'row_attr'  => [
+                    'class'     => 'col-md-3 mb-8 float-right mr-5'
+                ],
+            ])
+            ->add('btnVoteIncident', ButtonType::class, [
+                'label' => 'Signaler un incident',
+                'attr' => [
+                    'class' => "form-control btn btn-warning btn-vote-status",
+                ],
+                'row_attr'  => [
+                    'class'     => 'col-md-3 mb-8 float-right mr-5'
+                ],
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

@@ -34,9 +34,9 @@ class Content
     //public const VOTE_STATUS_CORRECTION_OK    = 4;
 
     public const VOTE_STATUS_LIST   = [
-        self::VOTE_STATUS_NOT_VERIFY        => 'Pas vérifié',
-        self::VOTE_STATUS_VERIFY_NOT_VALID  => 'Non validé',
-        self::VOTE_STATUS_VERIFY_VALID      => 'Validé',
+        self::VOTE_STATUS_NOT_VERIFY        => 'Non contrôlé',
+        self::VOTE_STATUS_VERIFY_NOT_VALID  => 'En cours de vérification',
+        self::VOTE_STATUS_VERIFY_VALID      => 'Contrôlé',
         //self::VOTE_STATUS_CORRECTION_OK     => 'Corrigé'
     ] ;
 

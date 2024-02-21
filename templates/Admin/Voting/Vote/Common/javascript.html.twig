@@ -59,18 +59,33 @@
                 var value  = $(this).val();
                 var voteId = $('#vote_status').data('id') ;
                 $('#btn-change-vote-status-accept').click(function(){
-                        $.ajax({
-                                url: "{{ path('app.admin.voting.vote.update.ajax') }}",
-                                method: 'POST',
-                                data: {'number' : voteNum.val(), 'status' : value, 'id' : voteId},
-                                success: function (result) {
-                                        //
-                                },
-                                error: function (error) {
-                                        console.error('Erreur :', error);
-                                }
-                        });
+                        changeStatus(voteNum.val(), value, voteId) ;
                 });
         });
+
+        $('#vote_btnVoteOk').click(function(){
+                var voteId = $('#vote_status').data('id') ;
+                changeStatus(voteNum.val(), "{{ constant('App\\Constants\\Content::VOTE_STATUS_VERIFY_VALID') }}", voteId) ;
+        });
+
+        $('#vote_btnVoteIncident').click(function(){
+                var voteId = $('#vote_status').data('id') ;
+                changeStatus(voteNum.val(), "{{ constant('App\\Constants\\Content::VOTE_STATUS_VERIFY_NOT_VALID') }}", voteId) ;
+        });
+
+        //Change user status
+        function changeStatus(_number, _status, _id){
+                $.ajax({
+                        url: "{{ path('app.admin.voting.vote.update.ajax') }}",
+                        method: 'POST',
+                        data: {'number' : _number, 'status' : _status, 'id' : _id},
+                        success: function (result) {
+                                location.href = "{{ path('app.admin.voting.vote.index') }}"
+                        },
+                        error: function (error) {
+                                console.error('Erreur :', error);
+                        }
+                });
+        }
     });
 </script>

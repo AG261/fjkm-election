@@ -153,7 +153,7 @@
                                     
                                     <div class="col-md-12 col-12">
                                         
-                                        <div class="col-md-2 float-right {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %}">
+                                        <div class="col-md-2 float-right d-none{# {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %} #}">
                                             <fieldset class="fv-row mb-2">
                                                 <legend class="col-form-label required">Etat</legend>
                                                 
@@ -176,7 +176,13 @@
                                 <div class="row display-block">
                                     
                                     <div class="col-md-8 float-right">
+                                        
                                         {{ form_row(form.save) }}
+                                        
+                                        <div {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}{# class="d-none" #}{% endif %}>
+                                        {{ form_row(form.btnVoteIncident) }}
+                                        {{ form_row(form.btnVoteOk) }}
+                                        </div>
                                     </div>
                                     
                                 </div>
