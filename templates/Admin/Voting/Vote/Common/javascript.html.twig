@@ -10,7 +10,9 @@
                 
                 //On save number
                 $('#btn-add-number').click(function(){
-                        if(modalNum.val() == ''){
+                        var regNumber   = /^\d+$/;
+                        var modalNumVal = modalNum.val() ;
+                        if(modalNumVal == '' || !regNumber.test(modalNumVal)){
                              $('.number-error').html('Veulliez entré un numéro valide!').show()    ;
                         }else{
                         
