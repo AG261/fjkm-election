@@ -179,7 +179,7 @@
                                         
                                         {{ form_row(form.save) }}
                                         
-                                        <div {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}{# class="d-none" #}{% endif %}>
+                                        <div {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}class="d-none"{% endif %}>
                                         {{ form_row(form.btnVoteIncident) }}
                                         {{ form_row(form.btnVoteOk) }}
                                         </div>
