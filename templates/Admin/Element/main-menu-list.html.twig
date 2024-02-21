@@ -61,6 +61,12 @@
                     <span class="menu-title text-truncate" data-i18n="Configuration">Configuration</span>
                 </a>
             </li>
+            <li class="{{ _router in ['app.admin.configuration.vote'] ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="{{ path('app.admin.configuration.vote') }}">
+                    <i data-feather="command"></i>
+                    <span class="menu-title text-truncate" data-i18n="Activité du vote">Activité du vote</span>
+                </a>
+            </li>
         {% endif %}
     </ul>
 </div>

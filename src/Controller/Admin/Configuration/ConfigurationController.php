@@ -28,10 +28,13 @@ class ConfigurationController extends AbstractController
         
     }
 
-    
-    #[Route('/', name: '.index', methods: ['GET', 'POST'])]
+    #[Route('/', name: '.index', methods: ['GET', 'POST'], defaults: ['type' => 'configuration'])]
+    #[Route('/vote', name: '.vote', methods: ['GET', 'POST'], defaults: ['type' => 'vote'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $routeParams     = $request->attributes->get('_route_params');
+        $isConfiguration = (isset($routeParams['type']) && $routeParams['type'] == 'configuration') ? true : false  ;
+        $urlRedirect     = (isset($routeParams['type']) && $routeParams['type'] == 'configuration') ? '.configuration.index' : '.configuration.vote'  ;
         $configuration = $this->_configurationManager->getConfiguration() ;
        
         $form = $this->createForm(ConfigurationType::class, $configuration);
@@ -39,16 +42,16 @@ class ConfigurationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             
-            return $this->redirectToRoute('.configuration.index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute($urlRedirect, [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Admin/Configuration/action.html.twig', [
-            'configuration' => $configuration,
-            'form' => $form,
-            
+            'configuration'    => $configuration,
+            'form'             => $form,
+            'isConfiguration' => $isConfiguration
         ]);
     }
+
 
 }

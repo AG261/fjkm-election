@@ -38,8 +38,28 @@ App\Entity\Voting\Vote:
             - NotBlank: 
                 message: 'The field must be not empty'
                 groups: [vote:write]
-   
-        
+
+App\Entity\Configuration\Configuration:
+    properties:
+        number_men:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [configuration:write]
+            - Regex:
+                pattern: '/^[1-9]\d{1,9}$/'
+                match:   true
+                message: 'The value {{ value }} is not a valid integer.'
+                groups: [configuration:write]
+
+        number_women:
+            - NotBlank: 
+                message: 'The field must be not empty'
+                groups: [configuration:write]
+            - Regex:
+                pattern: '/^[1-9]\d{1,9}$/'
+                match:   true
+                message: 'The value {{ value }} is not a valid integer.'
+                groups: [configuration:write]
 
     
 
