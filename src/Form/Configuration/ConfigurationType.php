@@ -21,7 +21,7 @@ class ConfigurationType extends AbstractType
 
         $builder
             
-            ->add('number_men', TextType::class, [
+            ->add('number_men', NumberType::class, [
                 'label' => 'Nombre d\'homme à élire',
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
@@ -30,12 +30,13 @@ class ConfigurationType extends AbstractType
                     'placeholder' => 'Nombre d\'homme',
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off',
-                    
+                    "min"  => 1,
                 ],
                 'required' => false,
+                'html5' => true
             ])
             
-            ->add('number_women', TextType::class, [
+            ->add('number_women', NumberType::class, [
                 'label' => 'Nombre de femme à élire',
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
@@ -43,9 +44,11 @@ class ConfigurationType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nombre de femme',
                     'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off'
+                    'autocomplete' => 'off',
+                    "min"  => 1,
                 ],
                 'required' => false,
+                'html5' => true
             ])
 
             ->add('executingVote', ChoiceType::class, [

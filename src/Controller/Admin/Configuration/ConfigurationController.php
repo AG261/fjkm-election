@@ -40,7 +40,7 @@ class ConfigurationController extends AbstractController
         $form = $this->createForm(ConfigurationType::class, $configuration);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $entityManager->flush();
             
             return $this->redirectToRoute($urlRedirect, [], Response::HTTP_SEE_OTHER);
