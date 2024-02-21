@@ -23,7 +23,7 @@
         }
 
         .block-resume{
-            width: 70%;
+            width: 78%;
             margin: auto;
             padding-left: 9%;
         }
@@ -62,7 +62,7 @@
 
         <div class="content-wrapper">
             <div class="content-header row">
-                <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Résultat provisoir</a>
+                <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Vokatra vonjimaika</a>
             </div>
             <div class="content-body">
                 <div class="row">
@@ -85,7 +85,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="candidat-total">{{ candidats['total'] }}</h4>
-                                                    <p class="card-text font-small-3 mb-0">Candidats</p>
+                                                    <p class="card-text font-small-3 mb-0">kandidà</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-total">0</h4>
-                                                    <p class="card-text font-small-3 mb-0">Vote Total</p>
+                                                    <p class="card-text font-small-3 mb-0">Vato tanteraka</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-isgood" >0</h4>
-                                                    <p class="card-text font-small-3 mb-0">Vote accépté</p>
+                                                    <p class="card-text font-small-3 mb-0">Vato manan-kery</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,7 +124,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-iswhite">0</h4>
-                                                    <p class="card-text font-small-3 mb-0">Vote blanc</p>
+                                                    <p class="card-text font-small-3 mb-0">Vato fotsy</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div class="my-auto">
                                                     <h4 class="fw-bolder mb-0 statistic-item customer-stat" id="vote-isdead">0</h4>
-                                                    <p class="card-text font-small-3 mb-0">Vote null</p>
+                                                    <p class="card-text font-small-3 mb-0">Vato maty</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,18 +156,18 @@
                                     {# data content #}
                                     
                                     <div class="col-md-6 float-left data-container-item">
-                                        <legend class="text-primary">Femmes</legend>
+                                        <legend class="text-primary">Vehivavy</legend>
                                         
-                                        <span id="vote-table-mme-title" class="d-none">Résultat des votes pour les femmes</span>
-                                        <a href="javascript:;" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Export PDF</a>
+                                        <span id="vote-table-mme-title" class="d-none">Voka-pifidianana ho an'ny vehivavy</span>
+                                        <a href="javascript:;" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Dika PDF</a>
                                         <div id="data-container-vote-table-mme" class="d-none">
                                             
                                             <table id="vote-table-mme" class="display no-wrap">
                                                 <thead>
                                                     <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Nombre de vote</th>
+                                                        <th>Laharana</th>
+                                                        <th>Anarana</th>
+                                                        <th>Isam-bato</th>
                                                         
                                                     </tr>
                                                 </thead>
@@ -183,9 +183,9 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Nombre de vote</th>
+                                                        <th>Laharana</th>
+                                                        <th>Anarana</th>
+                                                        <th>Isam-bato</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -193,17 +193,17 @@
                                         <div id="data-container-vote-mme"></div>
                                     </div>
                                     <div class="col-md-6 float-left data-container-item" >
-                                        <legend class="text-primary">Hommes</legend>
-                                        <span id="vote-table-mr-title" class="d-none">Résultat des votes pour les hommes</span>
+                                        <legend class="text-primary">Lehilahy</legend>
+                                        <span id="vote-table-mr-title" class="d-none">Voka-pifidianana ho an'ny lehilahy</span>
                                         <a href="javascript:;" data-aria="vote-table-mr" class="btn btn-primary btn-export-pdf ">Export PDF</a>
                                         <div id="data-container-vote-table-mr" class="d-none">
                                             
                                             <table id="vote-table-mr" class="display no-wrap">
                                                 <thead>
                                                     <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Nombre de vote</th>
+                                                        <th>Laharana</th>
+                                                        <th>Anarana</th>
+                                                        <th>Isam-bato</th>
                                                         
                                                     </tr>
                                                 </thead>
@@ -219,9 +219,9 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Nombre de vote</th>
+                                                        <th>Laharana</th>
+                                                        <th>Anarana</th>
+                                                        <th>Isam-bato</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -297,7 +297,7 @@
                         const small = document.createElement('small');
                         //const smallNum = document.createElement('smallNum');
 
-                        small.textContent = `Numéro : ${item.number}`; // Assuming 13 minutes is dynamic
+                        small.textContent = `Laharana : ${item.number}`; // Assuming 13 minutes is dynamic
                         //smallNum.textContent = `Numéro à l'élection : ${item.number}`; // Assuming 13 minutes is dynamic
                         const user_status = document.createElement('div');
                         user_status.classList.add('user-status');
