@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <title>Résultat des vote</title>
+
+        <style>
+            body {
+                width: 18.6cm;
+                height: 27.7cm;
+                font-family: helvetica;
+                font-size: small;
+            }
+
+            td{
+                font-size: 12px;
+            }
+            @media print {
+                body, page {
+                    margin: 0;
+                    box-shadow: 0;
+                }
+            }
+            .table-bordereless, .order-list{
+                width: 1000px;
+            }
+            .mybody,.myheader,.myfooter {
+                width: 1000px;
+
+            }
+            .head {
+                width: 1000px;
+                margin: 10px 10px ;
+            }
+            .head .client {
+                width: 350px;
+                padding-bottom: 30px;
+                padding-left: 150px;
+            }
+            .head .seller {
+                width: 350px;
+                padding-bottom: 1em;
+                padding-bottom: 30px;
+            }
+            .myfooter{
+                position: absolute;
+                bottom: 0;
+            }
+            .footer{
+                width: 1000px;
+            }
+            .footer .client {
+                width: fit-content;
+            }
+            .footer .page_number {
+                text-align: right;
+            }
+
+            .head .detail {
+                width: 1000px;
+                padding-bottom: 30px;
+            }
+
+            .order {
+
+                /*max-width: 1000px;*/
+                width: 1200px;
+                color: #717375;
+                line-height: 5mm;
+                border-collapse: collapse;
+            }
+            .order thead tr {
+                background-color:#F3F2F7;
+                color:#000000;
+                border : none ;
+            }
+
+            .order thead tr th{
+                height: 20px;
+                border:solid 1px #EBE9F1;
+                padding-top: 10px;
+            }
+            .order thead tr th.description{
+                width: 350px;
+                border:solid 1px #EBE9F1;
+                text-align: left;
+                padding-left: 20px;
+            }
+            .order thead tr th.quantity{
+                width: 100px;
+                text-align: center;
+            }
+            .order thead tr th.pu{
+                width: 100px;
+                text-align: center;
+            }
+            .order thead tr th.pht{
+                width: 150px;
+                text-align: center;
+            }
+
+            .order tbody tr td.description{
+                padding-left: 20px;
+            }
+
+            .order tbody .last-item td{
+                border-bottom: 1px solid #EBE9F1 ;
+            }
+
+            .order tbody tr td.important{
+                /*background-color:#F3F2F7;*/
+            }
+            .order tbody tr td{
+                border-right:solid 1px #EBE9F1;
+                border-left:solid 1px #EBE9F1;
+            }
+
+            .order tbody tr td.quantity{
+                text-align: right ;
+                padding-right: 24px;
+            }
+            .order tbody tr td.pu{
+                text-align: right ;
+                padding-right: 30px;
+            }
+            .order tbody tr td.pht{
+                text-align: right ;
+                padding-right: 39px;
+            }
+            .order tbody tr td{
+                border-collapse: collapse;
+                height: 15px;
+                padding-top: 15px;
+                border-bottom: 1px solid #EBE9F1;
+            }
+            .order tfoot tr td.important{
+                /*background-color:#F3F2F7;*/
+                height: 15px;
+                padding-top: 15px;
+            }
+            .order tfoot tr td.entity{
+                /*text-align: center;*/
+                height: 15px;
+                border:solid 1px #EBE9F1;
+                text-align: center;
+                /*padding-right: 30px;*/
+                padding-top: 15px;
+            }
+            .order tfoot tr td.has-border-right{
+                border-right: 1px solid #EBE9F1;
+            }
+            .order tfoot .has-border-top{
+                border-top: 1px solid #EBE9F1;
+                background: red;
+            }
+            .order tfoot tr td.pht{
+                text-align: right;
+                border:solid 1px #EBE9F1;
+                padding-right: 39px;
+            }
+            img{
+                width: 20%;
+            }
+            h2 { margin: 0; padding: 0; }
+            p { margin: 5px; color: #717375; }
+            .border th {
+                border: 1px solid #EBE9F1;
+                color: white;
+                /*background: #F3F2F7;*/
+                padding: 5px;
+                font-weight: normal;
+                font-size: 14px;
+                text-align: center;
+            }
+            .border td {
+                border: 1px solid #CFD1D2;
+                padding: 5px 10px;
+                text-align: center;
+            }
+            .no-border {
+                border-right: 1px solid #CFD1D2;
+                border-left: none;
+                border-top: none;
+                border-bottom: none;
+            }
+            .wording{
+                color: #717375;
+                font-size: 11px;
+            }
+            .p-6  { width: 6%; } .p-8 { width: 8%; }
+            .p-10 { width: 10%; } .p-15 { width: 15%; }
+            .p-33 { width: 33%; } .p-45 { width: 45%; }
+            .p-20 { width: 20%; } .p-75{ width: 75%; }
+            .text-center{
+                text-align: center;
+            }
+            .block-hr{
+                width: 750px;
+                height: 1px;
+                background: #dee1e5;
+            }
+            .default-app-name strong{
+                color: #23aadd;
+                margin-top: 10px;
+                font-size: 1.142rem;
+                font-weight: bold;
+                letter-spacing: -0.54px;
+                margin-left: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        {# <div class="myheader">
+            <table class="table-bordereless">
+                <tbody>
+                    <tr>
+                        <td class="p-8 wording default-app-name">
+                              <img src="data:image/png;base64,{{ logo }}" width="50" alt="logo" style="float:left ;  width : 50px "> 
+
+                        </td>
+                        <td class="p-20"></td>
+                        <td class="p-6"></td>
+                        <td class="p-8 wording">&nbsp;</td>
+                        <td class="p-20">
+                            <h5 style="color: #717375;">DATY 03/03/2025</h5>
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="p-8 wording">&nbsp;</td>
+                        <td class="p-20">&nbsp;</td>
+                        <td class="p-6"></td>
+                        <td class="p-8 wording">&nbsp;</td>
+                        <td class="p-20">&nbsp;</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="block-hr"></div>
+           
+        </div> #}
+        <h5>{{ title }}</h5>
+        <p><strong>DATY : 03/03/2024</strong></p>
+        <div class="mybody">
+            <table class="order">
+                <thead>
+                    
+                    <tr>
+                        <th class="quantity">
+                            Laharana
+                        </th>
+                        <th class="has-border description">
+                            Anarana
+                        </th>
+                        <th class="quantity">
+                            Nahazo vato
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set nbItem = candidats | length %}
+                    {% set currentLine = 1 %}
+                    {% for candidat in candidats %}
+                        
+                        <tr {% if currentLine == nbItem %}class="last-item"{% endif %}>
+                            <td class="quantity">{{ candidat.number }}</td>
+                            <td class="description">{{ candidat.fullname}}</td>
+                            <td class="quantity">
+                                {% if voteResults[candidat.id]  is defined %} 
+                                    {% if voteResults[candidat.id] == true %}Eny{% endif %}
+                                {% endif %}
+                            </td>
+                            {% set currentLine = currentLine + 1 %}
+                        </tr>
+                    {% endfor %}
+                    
+                    
+
+                </tbody>
+                <tfoot >
+
+                    <tr>
+                        <th class="quantity">
+                            
+                        </th>
+                        <th class="has-border description">
+                            
+                        </th>
+                        <th class="quantity">
+                            
+                        </th>
+                        
+                    </tr>
+                    
+                    
+                </tfoot>
+            </table>
+        </div>
+        <div class="myfooter">
+            <table class="footer" >
+                <tr>
+                    <td class="seller" >
+                        <b>{{ app_name }} </b>
+                    </td>
+                    <td class="page_number" >
+                        <b>Page 1</b>sur 1
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

@@ -62,39 +62,9 @@
                                     <div class="col-md-12 col-12">
                                         {% if voteStatus | length > 0 %}
                                             <span id="vote-table-infos-title" class="d-none">Vote numéro {{ vote.num }} {{ voteType }}</span>
-                                            <a href="javascript:;" data-aria="vote-table-infos" class="btn btn-primary btn-export-pdf">Export PDF</a>
+                                            <a href="{{ path('app.admin.voting.vote.export.item', {'id' : vote.id}) }}" target="_blank" data-aria="vote-table-infos" class="btn btn-primary btn-export-pdf">Export PDF</a>
 
-                                            <table id="vote-table-infos" class="display no-wrap d-none">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Vote</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    
-                                                    {% for candidat in candidats %}
-                                                    <tr>
-                                                        <td>{{candidat.number}}</td>
-                                                        <td>{{ candidat.fullname }}</td>
-                                                        <td>
-                                                            {% if voteResults[candidat.id]  is defined %} 
-                                                                {% if voteResults[candidat.id] == true %}Oui{% endif %}
-                                                            {% endif %}
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                    
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Numéro</th>
-                                                        <th>Nom</th>
-                                                        <th>Vote</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                            
                                         {% endif %}
                                         
                                         
@@ -208,7 +178,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ include('Admin/Element/datatable-script.html.twig') }}
-    {{ include('Admin/Element/datatable-script-export.html.twig') }}
+    
     {{ include('Admin/Element/disable-edit.html.twig') }}
     {{ include('Admin/Voting/Vote/Common/javascript.html.twig') }}
    

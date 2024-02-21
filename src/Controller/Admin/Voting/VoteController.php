@@ -9,9 +9,11 @@ use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use App\Entity\Voting\VoteResult;
 use App\Form\Voting\VoteType;
+use App\Manager\CandidatManager;
 use App\Manager\ConfigurationManager;
 use App\Manager\VoteManager;
 use App\Repository\Voting\VoteRepository;
+use App\Repository\Voting\VoteResultRepository;
 use App\Services\Common\DataTableService;
 use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +41,9 @@ class VoteController extends AbstractController
      */
     public function __construct(private readonly VoteManager $voteManager,
                                 private readonly Security $security,
-                                protected ConfigurationManager $configurationManager)
+                                protected ConfigurationManager $configurationManager,
+                                protected VoteResultRepository $voteResultRepository,
+                                protected CandidatManager $candidatManager)
     {
         
     }
@@ -201,5 +205,58 @@ class VoteController extends AbstractController
         
         return new JsonResponse() ;
     }
+    
+    #[Route('/export-result', name: '.export.result', defaults: [])]
+    public function exportResultPdf(Request $_request): Response
+    {   
+        $type   = $_request->get('type', '') ;
+      
+        if(!empty($type)){
 
+            $configuration = $this->configurationManager->getConfiguration() ;
+            $results       = [];
+            if($type == 'men'){
+                $results    = $this->voteResultRepository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+            }
+            if($type == 'women'){
+                $results  = $this->voteResultRepository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+            }
+            
+            $fileName = $this->voteManager->generateVoteResult($results, $type) ;
+            $file     = $this->getParameter("pdf_upload_dir") . "/" . $fileName;
+           
+            $response = new Response();
+            $response->headers->set('Content-type', 'application/octet-stream');
+            $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $fileName ));
+            $response->setContent(file_get_contents($file));
+            $response->setStatusCode(200);
+            $response->headers->set('Content-Transfer-Encoding', 'binary');
+            $response->headers->set('Pragma', 'no-cache');
+            $response->headers->set('Expires', '0');
+            
+            return $response;
+        }
+        
+        return new JsonResponse() ;
+    }
+
+    #[Route('/export-item/{id}', name: '.export.item', defaults: [])]
+    public function exportItemPdf(Vote $vote, Request $_request): Response
+    {   
+        
+        $fileName = $this->voteManager->generateVoteItem($vote) ;
+        $file     = $this->getParameter("pdf_upload_dir") . "/" . $fileName;
+        
+        $response = new Response();
+        $response->headers->set('Content-type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"',$fileName ));
+        $response->setContent(file_get_contents($file));
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        
+        return $response;
+        
+    }
 }

@@ -46,76 +46,18 @@
                                         <legend class="text-primary">Vehivavy</legend>
                                         
                                         <span id="vote-table-mme-title" class="d-none">Voka-pifidianana ho an'ny vehivavy</span>
-                                        <a href="javascript:;" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Dika PDF</a>
-                                        <div id="data-container-vote-table-mme" class="d-none">
-                                            
-                                            <table id="vote-table-mme" class="display no-wrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Laharana</th>
-                                                        <th>Anarana</th>
-                                                        <th>Isam-bato</th>
-                                                        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for womenResult in womenResults %}
-                                                        {% if womenResult.vote_count > 0%}
-                                                        <tr>
-                                                            <td>{{ womenResult.number }}</td>
-                                                            <td>{{ womenResult.lastname~''~womenResult.firstname}}</td>
-                                                            <td>{{ womenResult.vote_count }}</td>
-                                                        </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Laharana</th>
-                                                        <th>Anarana</th>
-                                                        <th>Isam-bato</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
+                                        
+                                        <a href="{{ path('app.admin.voting.vote.export.result', {'type' : 'women'}) }}" target="_blank" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Dika PDF</a>
+                                        
                                         <div id="data-container-vote-mme"></div>
                                     </div>
                                     <div class="col-md-6 float-left data-container-item" >
                                         <legend class="text-primary">Lehilahy</legend>
                                         <span id="vote-table-mr-title" class="d-none">Voka-pifidianana ho an'ny lehilahy</span>
-                                        <a href="javascript:;" data-aria="vote-table-mr" class="btn btn-primary btn-export-pdf ">Dika PDF</a>
+                                        <a href="{{ path('app.admin.voting.vote.export.result', {'type' : 'men'}) }}" target="_blank" data-aria="vote-table-mr" class="btn btn-primary btn-export-pdf ">Dika PDF</a>
                                         <div id="data-container-vote-table-mr" class="d-none">
                                             
-                                            <table id="vote-table-mr" class="display no-wrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Laharana</th>
-                                                        <th>Anarana</th>
-                                                        <th>Isam-bato</th>
-                                                        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for menResult in menResults %}
-                                                        {% if menResult.vote_count > 0%}
-                                                            <tr>
-                                                                <td>{{ menResult.number }}</td>
-                                                                <td>{{ menResult.lastname~''~menResult.firstname}}</td>
-                                                                <td>{{ menResult.vote_count }}</td>
-                                                            </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Laharana</th>
-                                                        <th>Anarana</th>
-                                                        <th>Isam-bato</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                            
                                         </div>
                                         <div id="data-container-vote-mr"></div>
                                     </div>

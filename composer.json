@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.16",
         "fakerphp/faker": "^1.23",
         "omines/datatables-bundle": "^0.7.1",
+        "spipu/html2pdf": "^5.2",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
