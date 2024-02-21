@@ -9,7 +9,7 @@
         <ul class="nav navbar-nav align-items-center ms-auto">
             {# {{ include('Element/nav-header-menu-notification.html.twig') }} #}
             {% if app.user %}
-                {% if is_granted('ROLE_OPERATOR') and not is_granted('ROLE_ADMIN') and not is_granted('ROLE_OPERATOR')%}
+                {% if is_granted('ROLE_OPERATOR') and not is_granted('ROLE_ADMIN') and not is_granted('ROLE_VALIDATOR')%}
                     <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user-nav d-sm-flex d-none">
                                 <span class="user-name fw-bolder">{{ app.user.getFullName() }}</span>
