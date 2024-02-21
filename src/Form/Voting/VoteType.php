@@ -28,7 +28,7 @@ class VoteType extends AbstractType
     {
         $builder
             
-            ->add('num', TextType::class, [
+            ->add('num', HiddenType::class, [
                 'label' => 'Numéro',
                 'row_attr' => [
                     'class' => 'fv-row mb-2'

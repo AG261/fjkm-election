@@ -24,6 +24,7 @@
                                                 if(result.isNew == true){
                                                         //Add number to input
                                                         voteNum.val(modalNum.val());
+                                                        $('#vote_num_custom').val(modalNum.val());
                                                         $('#add-vote-number').modal('hide');
                                                         
                                                         $('.block-candidat').removeClass('d-none');
@@ -32,10 +33,11 @@
                                                                 
                                                                 location.href = result.redirection;
                                                         }else{
+
                                                                 $('#add-vote-number-error').modal('show');
                                                                 $('#add-vote-number').modal('hide');
                                                                 $('#btn-add-number-error-accept').click(function(){
-                                                                $('#add-vote-number').modal('show');  
+                                                                        $('#add-vote-number').modal('show');  
                                                                 });    
                                                         }
                                                         
