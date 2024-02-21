@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Constants\Content;
 use App\Manager\CandidatManager;
 use App\Manager\ConfigurationManager;
 use App\Manager\VoteManager;
@@ -31,8 +32,9 @@ class ResultController extends AbstractController
 
     public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager, ConfigurationManager $configurationManager): Response
     {
-        $votingCount = $voteManager->getVotingCount();
-        $configuration = $configurationManager->getConfiguration() ;
+        $votingMenCount   = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_MEN]);
+        $votingWomenCount = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_WOMEN]);
+        $configuration    = $configurationManager->getConfiguration() ;
         
         $datas   = [] ;
         $mens    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
@@ -42,7 +44,7 @@ class ResultController extends AbstractController
 
         //$data  = $repository->fetchData();
         $results = [
-                        'count' => $votingCount,
+                        'count' => ['men' => $votingMenCount, 'women' => $votingWomenCount],
                         'data'  => $datas,
                         
                   ] ;

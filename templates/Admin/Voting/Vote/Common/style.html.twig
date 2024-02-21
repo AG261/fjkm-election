@@ -47,7 +47,7 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
                 @media screen and (max-width: 1528px) {
-                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-columns: repeat(3, 1fr);
                 }
                 @media screen and (max-width: 1018px) {
                         grid-template-columns: repeat(1, 1fr);
@@ -66,7 +66,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                flex-wrap: wrap;
+                
         }
         .canditat-item-list-content-left {
                 display: flex;
@@ -77,10 +77,9 @@
         }
         
         .canditat-item-num{
-                width: 50px;
+                width: fit-content;
                 height: auto;
-                /*padding-top: 7%;
-                padding-left: 5%;*/
+                padding-right:10px;
                 font-weight: bold;
                 text-align: center
         }
@@ -96,6 +95,12 @@
                 max-width: 255px;
                 font-size: 19px;
                 font-weight: bold;
+                @media screen and (max-width: 1528px) {
+                        font-size: 15px;
+                }
+                @media screen and (max-width: 1018px) {
+                        font-size: 15px;
+                }
         }
         .canditat-item-checkbox{
                 width: 45px;

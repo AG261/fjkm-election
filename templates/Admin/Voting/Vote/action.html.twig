@@ -102,7 +102,7 @@
                                     
 
                                 </div>
-                                <div class="row block-candidat d-none">
+                                <div class="block-candidat d-none">
                                     <div class="row match-height">
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="card card-transaction">
@@ -110,7 +110,7 @@
                                                 <h4 class="card-title">Liste des candidats</h4>
                                                 
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body p-0">
                                                 
                                                 <div class="canditat-item-block">
                                                     {% for candidat in candidats %}
@@ -128,7 +128,7 @@
                                                                         {% endif %}
                                                                         <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
                                                                     </div>
-                                                                    <div class="col-md-3 canditat-item canditat-item-name">{{ candidat.fullname }}</div>
+                                                                    <div class="canditat-item canditat-item-name">{{ candidat.fullname }}</div>
                                                                 </div>
                                                                 <div class="col-md-3 canditat-item canditat-item-checkbox">
                                                                     {# <div class="custom-checkbox"> #}

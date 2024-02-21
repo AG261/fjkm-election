@@ -134,13 +134,13 @@ class VoteManager
     /**
      * Get result voting
      *
-     * @param Vote $vote
-     * @return mixed
+     * @param array $params
+     * @return void
      */
-    public function getVotingCount(){
+    public function getVotingCount($params = []){
 
         $results = [];
-        $votes = $this->entityManager->getRepository(Vote::class)->findAll();
+        $votes = $this->entityManager->getRepository(Vote::class)->findBy($params);
 
         $total   = count($votes) ;
         $isDead  = 0 ;
