@@ -40,7 +40,7 @@ class Candidat
     
     
     #[ORM\Column]
-    private ?int $status = null;
+    private ?int $status = 1;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $number = null;
