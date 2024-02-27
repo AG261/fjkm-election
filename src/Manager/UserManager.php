@@ -147,6 +147,8 @@ class UserManager {
         $datas   = $alls['user'] ;
         
         $emptyError = new FormError($this->_translator->trans("The field must be not empty"));
+        $roleError = new FormError($this->_translator->trans("You must check at least one function"));
+
         if(empty($_user->getId())){
             $passwordUid = $_form->get('password')->getData();
             if(empty($passwordUid)){
@@ -187,6 +189,12 @@ class UserManager {
             $error++;
         }
         
+        $roles   = isset($datas['roles']) ? $datas['roles'] : [];
+        if(count($roles) == 0){
+            
+            $_form->get('roles')->addError($roleError);
+            $error++;
+        }
         return ['form' => $_form, 'error' => $error] ;
     }
 

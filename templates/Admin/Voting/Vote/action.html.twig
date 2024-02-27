@@ -1,0 +1,185 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ parent() }} Vote{% endblock %}
+{% block stylesheets %}{{ parent() }}
+    {{ include('Admin/Element/datatable-style.html.twig') }}
+    {{ include('Admin/Voting/Vote/Common/style.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+                <div class="content-wrapper container-xxl p-0">
+                    <div class="content-header row">
+                        <div class="content-header-left col-md-9 col-12 mb-2">
+                            <div class="row breadcrumbs-top">
+                                <div class="col-12">
+                                    <div class="breadcrumb-wrapper">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.dashboard') }}">Home</a>
+                                            </li>
+
+                                            <li class="breadcrumb-item"><a href="{{ path('app.admin.voting.vote.index') }}">Vote</a></li>
+
+
+                                            <li class="breadcrumb-item active">{{ vote.id != "" ? "Edition" : "Ajout"}}
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Information</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(form) }}
+                                {{ form_errors(form) }}
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+
+                                        <div class="col-md-3 float-left">
+                                            {{ form_row(form.num) }}
+
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <div class="col-md-3 float-left">
+                                        <div class="fv-row mb-2">
+                                            <label for="vote_num_custom" class="form-label">Numéro</label>
+                                            <input type="text" id="vote_num_custom" placeholder="Numéro" class="form-control bg-transparent form-control" readonly autocomplete="off" value="{{ vote.num }}">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        {% if voteStatus | length > 0 %}
+                                            <span id="vote-table-infos-title" class="d-none">Vote numéro {{ vote.num }} {{ voteType }}</span>
+                                            <a href="{{ path('app.admin.voting.vote.export.item', {'id' : vote.id}) }}" target="_blank" data-aria="vote-table-infos" class="btn btn-primary btn-export-pdf">Export PDF</a>
+
+                                            
+                                        {% endif %}
+                                        
+                                        
+                                    </div>
+                                    
+
+                                </div>
+                                <div class="block-candidat d-none">
+                                    <div class="row match-height">
+                                    <div class="col-lg-12 col-md-12 col-12">
+                                        <div class="card card-transaction">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Liste des candidats</h4>
+                                                
+                                            </div>
+                                            <div class="card-body p-0">
+                                                
+                                                <div class="canditat-item-block">
+                                                    {% for candidat in candidats %}
+                                                        
+                                                        <div class="canditat-item-list col-md-4">
+                                                            <div class="col-md-12 canditat-item-list-content">
+                                                                <div class="canditat-item-list-content-left">
+                                                                    <div class="col-md-3 canditat-item canditat-item-num">{{candidat.number}}</div>
+                                                                    <div class="col-md-3 canditat-item canditat-item-avatar">
+                                                                        {% set photo = "" %}
+                                                                        {% if candidat.photo != "" %}
+                                                                            {% set photo = 'upload/profil/' ~ candidat.photo %}
+                                                                        {% else %}
+                                                                            {% set photo = 'images/illustration/no-image.png' %}
+                                                                        {% endif %}
+                                                                        <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
+                                                                    </div>
+                                                                    <div class="canditat-item canditat-item-name">{{ candidat.fullname }}</div>
+                                                                </div>
+                                                                <div class="col-md-3 canditat-item canditat-item-checkbox">
+                                                                    {# <div class="custom-checkbox"> #}
+                                                                        <input 
+                                                                        type="checkbox" 
+                                                                        id="candidat_{{ candidat.id }}" 
+                                                                        name="candidat[]" 
+                                                                            
+                                                                        {% if voteResults[candidat.id]  is defined %} 
+                                                                            {% if voteResults[candidat.id] == true %}checked{% endif %}
+                                                                        {% endif %}
+                                                                        value="{{ candidat.id }}"
+                                                                        />
+                                                                        <label for="candidat_{{ candidat.id }}"></label>
+                                                                    {# </div> #}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-12 col-12">
+                                        
+                                        <div class="col-md-2 float-right d-none{# {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}d-none{% endif %} #}">
+                                            <fieldset class="fv-row mb-2">
+                                                <legend class="col-form-label required">Etat</legend>
+                                                
+                                                    {% if voteStatus | length > 0 %}
+                                                        <div id="vote_status" data-id="{{ vote.id }}" placeholder="Etat" class="form-control" autocomplete="off">
+                                                        {% for key, voteStatusName in voteStatus %}
+                                                            <div class="form-check">
+                                                                <input type="radio" id="vote_status_{{ key }}" {% if vote.status == key%}checked{% endif %} name="status" required="required" class="form-check-input vote-status" value="{{ key }}">
+                                                                <label class="form-check-label required" for="vote_status_{{ key }}">{{ voteStatusName }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                        </div> 
+                                                    {% endif %}
+                                                       
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row display-block">
+                                    
+                                    <div class="col-md-8 float-right">
+                                        
+                                        {{ form_row(form.save) }}
+                                        
+                                        <div {% if is_granted('ROLE_OPERATOR') or is_granted('ROLE_ADMIN') %}class="d-none"{% endif %}>
+                                        {{ form_row(form.btnVoteIncident) }}
+                                        {{ form_row(form.btnVoteOk) }}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {{ include('Admin/Voting/Vote/Common/modal.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+    {{ include('Admin/Element/datatable-script.html.twig') }}
+    
+    {{ include('Admin/Element/disable-edit.html.twig') }}
+    {{ include('Admin/Voting/Vote/Common/javascript.html.twig') }}
+   
+{% endblock %}

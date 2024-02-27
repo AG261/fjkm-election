@@ -36,9 +36,15 @@ class Vote
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $status = null;
+    
     #[ORM\OneToMany(mappedBy: 'vote', targetEntity: VoteResult::class, orphanRemoval: true)]
     private Collection $voteResults;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $executingVote = null;
+    
     public function __construct()
     {
         $this->voteResults = new ArrayCollection();
@@ -149,6 +155,30 @@ class Vote
                 $voteResult->setVote(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+    
+    public function getExecutingVote(): ?int
+    {
+        return $this->executingVote;
+    }
+
+    public function setExecutingVote(int $executingVote): static
+    {
+        $this->executingVote = $executingVote;
 
         return $this;
     }

@@ -18,7 +18,9 @@
 
     <!-- BEGIN: CSS-->
     {{ include('Admin/Element/stylesheet.html.twig') }}
+    {{ include('Admin/Element/datatable-style.html.twig') }}
     <!-- END: CSS-->
+    {% block stylesheet %} {% endblock %}
 </head>
 <!-- END: Head-->
 <body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
@@ -29,8 +31,19 @@
 
 <!-- BEGIN:  JS-->
 {{ include('Admin/Element/javascript.html.twig') }}
+
+{{ include('Admin/Element/datatable-script.html.twig') }}
+
+<div class="loading-custom hidden">Loading&#8230;</div>
 <!-- END:  JS-->
 <script>
+    
+    
+    initiDataTable("#vote-table-mme", [0, 1, 2], [2, 'desc']) ;
+    initiDataTable("#vote-table-mr", [0, 1, 2], [2, 'desc']) ;
+    exportDatatablePDF();
+    
+
     $(window).on('load', function () {
         if (feather) {
             feather.replace({

@@ -1,2 +1,4 @@
 'The field must be not empty': "Le champ ne doit pas être vide"
 'It is not a valid email address': "Ce n'est pas un adresse mail valide"
+'The value {{ value }} is not a valid integer.': "La valeur {{ value }} n'est pas numéric."
+'Please enter a number': 'Entrer un numéro valide'

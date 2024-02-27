@@ -75,19 +75,6 @@ class UserType extends AbstractType
                 'required' => false,
                 
             ])
-            ->add('phone', TextType::class, [
-                'label' => 'Téléphone',
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Téléphone',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off'
-                ],
-                'required' => false,
-                
-            ])
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
                 'mapped' => false,
@@ -100,21 +87,6 @@ class UserType extends AbstractType
                 ],
                 'required' => false,
             ])            
-            ->add('civility', ChoiceType::class, [
-                'label' => 'Civilité',
-                'choices' => array_flip(UserConstants::USER_CIVILITY_LIST),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
-                'attr' => [
-                    'placeholder' => 'Civilité',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off',
-                    
-                ],
-                
-                'required' => true,
-            ])
             
             ->add('status', ChoiceType::class, [
                 'label' => 'Statut',

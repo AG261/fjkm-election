@@ -1,0 +1,82 @@
+{% extends 'layout_result.html.twig' %}
+
+{% block title %}Résultat des éléctions{% endblock %}
+{% block stylesheet %} 
+    {{ parent() }}
+    {{ include('Result/Common/style.html.twig') }}
+{% endblock %}
+{% block body %}
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Vokatra vonjimaika</a>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="card card-statistics">
+                                <div class="card-header d-none">
+                                    <h4 class="card-title"></h4>
+                                    <div class="d-flex align-items-center">
+                                        
+                                    </div>
+                                </div>
+                                <div class="card-body statistics-body">
+                                    {{ include('Result/Common/resume.html.twig', {'type' : 'mme'}) }}
+                                    
+                                    {{ include('Result/Common/resume.html.twig', {'type' : 'mr'}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h4 class="mb-2"></h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="{# list-group  #}col-md-12 data-container-vote" id="data-container-vote">
+                                    {# data content #}
+                                    
+                                    <div class="col-md-6 float-left data-container-item">
+                                        <legend class="text-primary">Vehivavy</legend>
+                                        
+                                        <span id="vote-table-mme-title" class="d-none">Voka-pifidianana ho an'ny vehivavy</span>
+                                        
+                                        <a href="{{ path('app.admin.voting.vote.export.result', {'type' : 'women'}) }}" target="_blank" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Dika PDF</a>
+                                        
+                                        <div id="data-container-vote-mme"></div>
+                                    </div>
+                                    <div class="col-md-6 float-left data-container-item" >
+                                        <legend class="text-primary">Lehilahy</legend>
+                                        <span id="vote-table-mr-title" class="d-none">Voka-pifidianana ho an'ny lehilahy</span>
+                                        <a href="{{ path('app.admin.voting.vote.export.result', {'type' : 'men'}) }}" target="_blank" data-aria="vote-table-mr" class="btn btn-primary btn-export-pdf ">Dika PDF</a>
+                                        <div id="data-container-vote-table-mr" class="d-none">
+                                            
+                                            
+                                        </div>
+                                        <div id="data-container-vote-mr"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    {#     START : script #}
+    
+    {{ include('Result/Common/javascript.html.twig') }}
+    {#     END : script #}
+{% endblock %}
+
+

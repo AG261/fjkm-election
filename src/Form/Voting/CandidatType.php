@@ -21,17 +21,30 @@ class CandidatType extends AbstractType
     {
         $builder
             ->add('number', TextType::class, [
-                'label' => 'Numéro',
+                'label' => "Numéro à l'éléction",
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
                 ],
                 'attr' => [
-                    'placeholder' => 'Numéro',
+                    'placeholder' => "Numéro à l'éléction",
                     'class' => 'form-control bg-transparent',
                     'autocomplete' => 'off'
                 ],
                 'required' => false,
             ])
+            ->add('numberid', TextType::class, [
+                'label' => "Numéro à l'eglise",
+                'row_attr' => [
+                    'class' => 'fv-row mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => "Numéro à l'eglise",
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off'
+                ],
+                'required' => false,
+            ])
+            /*
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'row_attr' => [
@@ -44,6 +57,7 @@ class CandidatType extends AbstractType
                 ],
                 'required' => false,
             ])
+            */
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
                 'row_attr' => [
@@ -100,7 +114,7 @@ class CandidatType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => "form-control btn btn-primary",
+                    'class' => "form-control btn btn-primary btn-save",
                 ],
                 'row_attr'  => [
                     'class'     => 'col-md-4 mb-8'

@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Constants\Content;
+use App\Manager\CandidatManager;
+use App\Manager\ConfigurationManager;
 use App\Manager\VoteManager;
 use App\Repository\Voting\VoteResultRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,14 +15,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResultController extends AbstractController
 {
     #[Route('/', name: 'app_result')]
-    public function index(): Response
-    {
+    public function index(VoteResultRepository $repository, CandidatManager $candidatManager, ConfigurationManager $configurationManager): Response
+    {   
+        $candidats  = $candidatManager->getCandidatCount();
+        $configuration = $configurationManager->getConfiguration() ;
+        $menResults    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+        $womenResults  = $repository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+
         return $this->render('Result/index.html.twig', [
-            'controller_name' => 'ResultController'
+            'controller_name' => 'ResultController',
+            'candidats'       => $candidats,
+            'menResults'      => $menResults,
+            'womenResults'    => $womenResults
         ]);
     }
 
-    public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager): Response
+    public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager, ConfigurationManager $configurationManager): Response
     {
         $votingCount = $voteManager->getVotingCount();
 
@@ -29,6 +40,23 @@ class ResultController extends AbstractController
             'data' => $data
         ];
 
+        $votingMenCount   = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_MEN]);
+        $votingWomenCount = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_WOMEN]);
+        $configuration    = $configurationManager->getConfiguration() ;
+        
+        $datas   = [] ;
+        $mens    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+        $womenMmes  = $repository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+        $datas = array_merge($datas, $mens) ;
+        $datas = array_merge($datas, $womenMmes) ;
+
+        //$data  = $repository->fetchData();
+        $results = [
+                        'count' => ['men' => $votingMenCount, 'women' => $votingWomenCount],
+                        'data'  => $datas,
+                        
+                  ] ;
+        
         return new JsonResponse(json_encode($results));
     }
 }

@@ -47,18 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $status = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $phone = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created ;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated ;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $civility = null;
-
 
     public function __construct()
     {
@@ -201,19 +194,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
@@ -251,20 +231,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->updated) {
         }
     }
-
-    public function getCivility(): ?string
-    {
-        return $this->civility;
-    }
-
-    public function setCivility(?string $civility): self
-    {
-        $this->civility = $civility;
-
-        return $this;
-    }
-
-    
-
 
 }

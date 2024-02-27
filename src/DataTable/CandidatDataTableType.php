@@ -55,10 +55,16 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
                 ]);
             },
         ])
-        ->add('number', TextColumn::class, [
-            'field' => 'c.number',
+        ->add('numberid', TextColumn::class, [
+            'field' => 'c.numberid',
             'label' => "Numéro",
             'searchable' => true
+        ])
+        ->add('number', TextColumn::class, [
+            'field' => 'c.number',
+            'label' => "Numéro à l'éléction",
+            'searchable' => true,
+            'visible' => false
         ])
 
         ->add('candidat', TextColumn::class, [
@@ -68,7 +74,7 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
             'searchable' => false,
             'render' => function($value, $candidat) {
 
-                return $candidat->getCivility().' '.$candidat->getFirstname().' '.$candidat->getLastname();
+                return trim($candidat->getCivility().' '.$candidat->getFirstname().' '.$candidat->getLastname(), '.');
             }
         ])
 
@@ -100,7 +106,7 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
                 ;
                 
                 if(isset($options['query']) && !empty($options['query'])){
-                    $builder->andWhere('c.firstname LIKE :query OR c.lastname LIKE :query OR c.number LIKE :query')
+                    $builder->andWhere('c.firstname LIKE :query OR c.lastname LIKE :query OR c.number LIKE :query OR c.numberid LIKE :query')
                             ->setParameter('query', '%'.$options['query'].'%');
                 }
 

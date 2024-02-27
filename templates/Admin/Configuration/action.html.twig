@@ -40,7 +40,13 @@
                     <div class="col-md-12 col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Information</h4>
+                                <h4 class="card-title">
+                                    {% if isConfiguration != true %}
+                                        Activité du vote
+                                    {% else %}
+                                        Configuration
+                                    {% endif %}
+                                </h4>
                             </div>
                             <div class="card-body">
                                 {{ form_start(form) }}
@@ -48,14 +54,15 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12">
                                         
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left {% if isConfiguration != true %}d-none{% endif %}">
                                             {{ form_row(form.number_men) }}
                                         </div>
-                                        <div class="col-md-3 float-left">
+                                        <div class="col-md-3 float-left {% if isConfiguration != true %}d-none{% endif %}">
                                             {{ form_row(form.number_women) }}
                                         </div>
-                                        
-                                       
+                                        <div class="col-md-3 float-left {% if isConfiguration == true %}d-none{% endif %}">
+                                            {{ form_row(form.executingVote) }}
+                                        </div>
                                         
                                     </div>
                                     

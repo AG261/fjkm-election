@@ -10,9 +10,11 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +28,7 @@ class VoteType extends AbstractType
     {
         $builder
             
-            ->add('num', TextType::class, [
+            ->add('num', HiddenType::class, [
                 'label' => 'Numéro',
                 'row_attr' => [
                     'class' => 'fv-row mb-2'
@@ -39,41 +41,31 @@ class VoteType extends AbstractType
                 'required' => false,
             ])
             
-            ->add('isDead', ChoiceType::class, [
-                'label' => 'Vote Mort',
-                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
+            ->add('btnVoteOk', ButtonType::class, [
+                'label' => 'Ok, Retour à la liste',
                 'attr' => [
-                    'placeholder' => 'Vote Mort',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off',
-
+                    'class' => "form-control btn btn-success btn-vote-status",
                 ],
-                'required' => false,
+                'row_attr'  => [
+                    'class'     => 'col-md-3 mb-8 float-right mr-5'
+                ],
             ])
-            ->add('isWhite', ChoiceType::class, [
-                'label' => 'Vote Blanc',
-                'choices' => array_flip(Content::VOTE_EXCEPTIONS),
-                'row_attr' => [
-                    'class' => 'fv-row mb-2'
-                ],
+            ->add('btnVoteIncident', ButtonType::class, [
+                'label' => 'Signaler un incident',
                 'attr' => [
-                    'placeholder' => 'Vote Blanc',
-                    'class' => 'form-control bg-transparent',
-                    'autocomplete' => 'off',
-
+                    'class' => "form-control btn btn-warning btn-vote-status",
                 ],
-                'required' => false,
+                'row_attr'  => [
+                    'class'     => 'col-md-3 mb-8 float-right mr-5'
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => "form-control btn btn-primary",
+                    'class' => "form-control btn btn-primary btn-save",
                 ],
                 'row_attr'  => [
-                    'class'     => 'col-md-4 mb-8'
+                    'class'     => 'col-md-4 mb-8 float-right'
                 ],
             ])
         ;
@@ -83,6 +75,8 @@ class VoteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vote::class,
+            'validation_groups'  => ['vote:write'],
+            'cascade_validation' => true,
         ]);
     }
 }

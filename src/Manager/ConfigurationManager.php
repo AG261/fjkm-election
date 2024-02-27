@@ -6,6 +6,7 @@
 
 namespace App\Manager;
 
+use App\Constants\Content;
 use App\Entity\Configuration\Configuration;
 use App\Repository\Configuration\ConfigurationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,6 +37,7 @@ class ConfigurationManager
             $configuration = new Configuration();
             $configuration->setNumberMen(1) ;
             $configuration->setNumberWomen(1) ;
+            $configuration->setExecutingVote(Content::VOTE_IN_PROCESS_MEN) ;
             $this->_entityManager->persist($configuration) ;
             $this->_entityManager->flush() ;
         }

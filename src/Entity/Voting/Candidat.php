@@ -27,7 +27,7 @@ class Candidat
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $firstname = null;
+    private ?string $firstname = '';
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
@@ -44,6 +44,10 @@ class Candidat
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $number = null;
+
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numberid = null;
 
     #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: VoteResult::class)]
     private Collection $voteResults;
@@ -68,7 +72,7 @@ class Candidat
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setFirstname(string $firstname = ''): static
     {
         $this->firstname = $firstname;
 
@@ -131,6 +135,18 @@ class Candidat
     public function setNumber(string $number): static
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getNumberId(): ?string
+    {
+        return $this->numberid;
+    }
+
+    public function setNumberId(string $numberid): static
+    {
+        $this->numberid = $numberid;
 
         return $this;
     }

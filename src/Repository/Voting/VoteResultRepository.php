@@ -24,27 +24,27 @@ class VoteResultRepository extends ServiceEntityRepository
     /**
      * @return VoteResult[] Returns an array of VoteResult objects
      */
-    public function fetchData(): array
+    public function fetchData($_params = []): array
     {
-        return $this->createQueryBuilder('v')
-            ->select('DISTINCT c.id, c.firstname, c.lastname, c.photo, c.number, SUM(CASE WHEN v.isVotedOn = true THEN 1 ELSE 0 END) AS vote_count')
-            ->join('v.candidat', 'c')
-            ->groupBy('c.id')
-            ->orderBy('vote_count', 'DESC')
-            ->getQuery()
-            ->getResult()
+        $query = $this->createQueryBuilder('v')
+                      ->select('DISTINCT c.id, c.civility, c.firstname, c.lastname, c.photo, c.number, c.numberid, SUM(CASE WHEN v.isVotedOn = true THEN 1 ELSE 0 END) AS vote_count')
+                      ->join('v.candidat', 'c') ;
+
+        if(isset($_params['civility']) && !empty($_params['civility'])){
+            $query->andWhere('c.civility = :civility')
+                  ->setParameter('civility', $_params['civility']) ;
+        }
+
+        if(isset($_params['limit']) && $_params['limit'] > 0){
+            $query->setMaxResults($_params['limit']);
+        }
+        
+        $query->groupBy('c.id')
+              ->orderBy('vote_count', 'DESC') ;
+
+        return $query->getQuery()
+               ->getResult()
         ;
     }
-
-//    public function findOneBySomeField($value): ?VoteResult
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
 
 }
