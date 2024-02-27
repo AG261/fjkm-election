@@ -22,13 +22,13 @@ class ResultController extends AbstractController
     public function resultAjax(VoteResultRepository $repository, VoteManager $voteManager): Response
     {
         $votingCount = $voteManager->getVotingCount();
-        
+
         $data = $repository->fetchData();
         $results = [
-                        'count' => $votingCount,
-                        'data'  => $data
-                  ] ;
-        
+            'count' => $votingCount,
+            'data' => $data
+        ];
+
         return new JsonResponse(json_encode($results));
     }
 }
