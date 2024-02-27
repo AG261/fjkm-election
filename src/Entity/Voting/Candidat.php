@@ -49,7 +49,7 @@ class Candidat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $numberid = null;
 
-    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: VoteResult::class)]
+    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: VoteResult::class, cascade: ['remove'])]
     private Collection $voteResults;
 
     public function __construct()

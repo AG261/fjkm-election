@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/voting/vote', name : '.voting.vote')]
 class VoteController extends AbstractController
@@ -54,7 +55,7 @@ class VoteController extends AbstractController
         $user  = $this->getUser() ;
         $roles = $user->getRoles() ;
         
-        if (in_array(UserConstants::USER_ROLE_OPERATOR, $roles) 
+        if (in_array(UserConstants::USER_ROLE_OPERATOR, $roles)
             && (!in_array(UserConstants::USER_ROLE_ADMIN, $roles)
             || !in_array(UserConstants::USER_ROLE_VALIDATOR, $roles))) {
             $route = 'app.admin.voting.vote.new' ;

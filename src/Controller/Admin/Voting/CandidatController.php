@@ -92,7 +92,7 @@ class CandidatController extends AbstractController
     #[Route('/{id}', name: '.show', methods: ['GET'])]
     public function show(Candidat $candidat): Response
     {
-        return $this->render('Admin/voting/candidat/show.html.twig', [
+        return $this->render('Admin/Voting/candidat/show.html.twig', [
             'candidat' => $candidat,
         ]);
     }
@@ -126,6 +126,12 @@ class CandidatController extends AbstractController
     public function delete(Request $request, Candidat $candidat, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$candidat->getId(), $request->request->get('_token'))) {
+
+            $votes = $candidat->getVoteResults();
+            foreach ($votes as $vote) {
+                $candidat->removeVoteResult($vote);
+            }
+
             $entityManager->remove($candidat);
             $entityManager->flush();
         }
