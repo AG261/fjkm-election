@@ -1,6 +1,5 @@
 {% for url in urls %}
-<a class="{# btn btn-warning #}" title={{ url['name'] }} href="{{ path(url['path'], url['params']) }}">
+<a class="mr-1" title={{ url['name'] }} href="{{ path(url['path'], url['params']) }}">
     <i data-feather="{{ url['icon'] }}"></i>
- 
 </a>
 {% endfor %}

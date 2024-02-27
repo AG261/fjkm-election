@@ -85,11 +85,11 @@ class CandidatDataTableType extends AbstractController implements DataTableTypeI
             'searchable' => false,
             'className' => "button",
             'render' => function($value, Candidat $candidat)  use ($options){
-
                 $route    = 'app.admin.voting.candidat.edit' ;
-
+                $deleteRoute    = 'app.admin.voting.candidat.delete' ;
                 $urls = [
                     ['name' => 'Edition', 'icon' => 'edit', 'path' => $route, 'params' => ['id' => $candidat->getId()]],
+                    ['name' => 'Supprimer', 'icon' => 'trash', 'path' => $deleteRoute, 'params' => ['id' => $candidat->getId()]],
                 ];
                 return $this->renderView('Admin/Element/datatable-button.html.twig', [
                     'urls' => $urls

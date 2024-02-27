@@ -1,38 +1,41 @@
-{% extends '../../../base.html.twig' %}
+{% extends 'base-admin.html.twig' %}
 
-{% block title %}Candidat{% endblock %}
+{% block title %}{{ parent() }}Candidat{% endblock %}
 
 {% block body %}
-    <h1>Candidat</h1>
 
-    <table class="table">
-        <tbody>
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <h1>Candidat</h1>
+
+        <table class="table">
+            <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ candidat.id }}</td>
+                <th>Laharana</th>
+                <td>{{ candidat.number }}</td>
             </tr>
             <tr>
-                <th>Firstname</th>
-                <td>{{ candidat.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
+                <th>Anarana feno</th>
                 <td>{{ candidat.lastname }}</td>
             </tr>
             <tr>
-                <th>Civility</th>
+                <th></th>
                 <td>{{ candidat.civility }}</td>
             </tr>
-            <tr>
-                <th>Birthday</th>
-                <td>{{ candidat.birthday ? candidat.birthday|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_voting_candidat_index') }}">back to list</a>
+        <div class="row">
+            <div class="col">
+                <a class="form-control btn btn-primary btn waves-effect waves-float waves-light" href="{{ path('app.admin.voting.candidat.index') }}">Liste</a>
+            </div>
+            <div class="col">
+                <a class="form-control btn btn-info btn waves-effect waves-float waves-light" href="{{ path('app.admin.voting.candidat.edit', {'id': candidat.id}) }}">Editer</a>
+            </div>
+            <div class="col">
+                {{ include('Admin/voting/candidat/_delete_form.html.twig') }}
+            </div>
+        </div>
 
-    <a href="{{ path('app_voting_candidat_edit', {'id': candidat.id}) }}">edit</a>
-
-    {{ include('voting/candidat/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
