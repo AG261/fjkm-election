@@ -127,10 +127,7 @@ class CandidatController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$candidat->getId(), $request->request->get('_token'))) {
 
-            $votes = $candidat->getVoteResults();
-            foreach ($votes as $vote) {
-                $candidat->removeVoteResult($vote);
-            }
+            array_map([$candidat, 'removeVoteResult'], $candidat->getVoteResults()->toArray());
 
             $entityManager->remove($candidat);
             $entityManager->flush();
