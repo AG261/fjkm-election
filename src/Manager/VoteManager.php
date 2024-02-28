@@ -188,7 +188,11 @@ class VoteManager
                 $data['photo'] = $this->_liipImagineCache->generateUrl('upload/profil/'.$photo, 'thumbnail_small_50') ;
             }
             
-            $results[] = $data ;
+            $count = $data['vote_count'] ;
+            if($count > 0){
+                $results[] = $data ;
+            }
+            
         }
         
         return $results;
