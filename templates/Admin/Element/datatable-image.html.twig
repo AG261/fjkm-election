@@ -1,1 +1,1 @@
-<img class="round" src="{{ asset(url) }}" alt="{{ name }}" height="40" width="40">
+<img class="round" src="{{ asset(url) | imagine_filter('thumbnail_small_50') }}" alt="{{ name }}" height="50" width="50">

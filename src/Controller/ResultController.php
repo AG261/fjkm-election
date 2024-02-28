@@ -45,16 +45,15 @@ class ResultController extends AbstractController
         $configuration    = $configurationManager->getConfiguration() ;
         
         $datas   = [] ;
-        $mens    = $repository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
-        $womenMmes  = $repository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+        $mens    = $voteManager->getVotingListResult(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+        $womenMmes  = $voteManager->getVotingListResult(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
         $datas = array_merge($datas, $mens) ;
         $datas = array_merge($datas, $womenMmes) ;
 
         //$data  = $repository->fetchData();
         $results = [
                         'count' => ['men' => $votingMenCount, 'women' => $votingWomenCount],
-                        'data'  => $datas,
-                        
+                        'data'  => $datas
                   ] ;
         
         return new JsonResponse(json_encode($results));

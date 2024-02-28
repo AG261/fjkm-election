@@ -13,10 +13,12 @@ use App\Entity\Voting\VoteResult;
 use App\Manager\ConfigurationManager;
 use App\Repository\Configuration\ConfigurationRepository;
 use App\Repository\Voting\VoteResultRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Spipu\Html2Pdf\Html2Pdf;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,8 @@ class VoteManager
                                 protected ConfigurationManager $_configurationManager,
                                 protected VoteResultRepository $_voteResultRepository,
                                 private readonly Environment $_twig,
-                                private readonly ParameterBagInterface $_parameter
+                                private readonly ParameterBagInterface $_parameter,
+                                private readonly CacheManager $_liipImagineCache
                                 )
     {
     }
@@ -164,6 +167,29 @@ class VoteManager
         $isGood  = $total - $isDead - $isWhite ;
 
         $results = ['total' => $total, 'isGood' => $isGood, 'isDead' => $isDead, 'isWhite' => $isWhite] ;
+        
+        return $results;
+
+    }
+
+    /**
+     * Get result list voting
+     *
+     * @param array $params
+     * @return void
+     */
+    public function getVotingListResult($_params = []){
+
+        $results = [];
+        $datas = $this->_voteResultRepository->fetchData($_params);
+        foreach($datas as $data){
+            $photo = $data['photo'] ;
+            if(!empty($photo)){
+                $data['photo'] = $this->_liipImagineCache->generateUrl('upload/profil/'.$photo, 'thumbnail_small_50') ;
+            }
+            
+            $results[] = $data ;
+        }
         
         return $results;
 

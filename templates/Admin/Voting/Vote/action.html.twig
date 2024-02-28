@@ -96,7 +96,7 @@
                                                                         {% else %}
                                                                             {% set photo = 'images/illustration/no-image.png' %}
                                                                         {% endif %}
-                                                                        <img src="{{ asset(photo ) }}" style="width: 50px" alt="{{ candidat.fullname }}" />
+                                                                        <img src="{{ asset(photo)  | imagine_filter('thumbnail_small_50')  }}" style="width: 50px" alt="{{ candidat.fullname }}" />
                                                                     </div>
                                                                     <div class="canditat-item canditat-item-name">{{ candidat.fullname }}</div>
                                                                 </div>

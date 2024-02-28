@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.16",
         "fakerphp/faker": "^1.23",
+        "liip/imagine-bundle": "^2.12",
         "omines/datatables-bundle": "^0.7.1",
         "spipu/html2pdf": "^5.2",
         "symfony/apache-pack": "^1.0",

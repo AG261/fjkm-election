@@ -40,8 +40,8 @@
 
                         const img = document.createElement('img');
                         var base_url = window.location.origin;
-                        var photo = item.photo != null ? 'upload/profil/'+item.photo : 'images/illustration/no-image.png';
-                        img.src = base_url+`/${photo}`;
+                        var photo = item.photo != null ? item.photo : base_url+'/images/illustration/no-image.png';
+                        img.src = `${photo}`;
                         img.alt = 'User Image';
                         img.classList.add('rounded-circle', 'w-px-50');
 
