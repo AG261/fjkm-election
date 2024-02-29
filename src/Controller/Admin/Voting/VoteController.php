@@ -209,16 +209,29 @@ class VoteController extends AbstractController
     public function exportResultPdf(Request $_request): Response
     {   
         $type   = $_request->get('type', '') ;
-      
+        $nopoint   = $_request->get('nopoint', '') ;
+        
         if(!empty($type)){
 
             $configuration = $this->configurationManager->getConfiguration() ;
+            $reserveCount  = $configuration->getNumberReserve() ;
+
             $results       = [];
             if($type == 'men'){
-                $results    = $this->voteResultRepository->fetchData(['civility' => 'Mr', 'limit' => $configuration->getNumberMen()]);
+                $limit      = $configuration->getNumberMen() + $reserveCount ;
+                $params     = ['civility' => 'Mr', 'limit' => $limit] ;
+                if(!empty($nopoint)){
+                    $params['isWithNullPoint'] = true ;
+                }
+                $results    = $this->voteManager->getVotingListResult($params);
             }
             if($type == 'women'){
-                $results  = $this->voteResultRepository->fetchData(['civility' => 'Mme', 'limit' => $configuration->getNumberWomen()]);
+                $limit      = $configuration->getNumberWomen() + $reserveCount ;
+                $params     = ['civility' => 'Mme', 'limit' => $limit] ;
+                if(!empty($nopoint)){
+                    $params['isWithNullPoint'] = true ;
+                }
+                $results    = $this->voteManager->getVotingListResult($params);
             }
             
             $fileName = $this->voteManager->generateVoteResult($results, $type) ;

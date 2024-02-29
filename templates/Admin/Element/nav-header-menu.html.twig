@@ -20,6 +20,9 @@
                                     {% if is_granted('ROLE_VALIDATOR') %}
                                         {% set fonction = "Validateur "%}
                                     {% endif %}
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        {% set fonction = "Admin"%}
+                                    {% endif %}
                                     {{ fonction }}
                                 </span>
                             </div>

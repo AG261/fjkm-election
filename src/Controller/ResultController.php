@@ -58,7 +58,7 @@ class ResultController extends AbstractController
         $votingMenCount   = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_MEN]);
         $votingWomenCount = $voteManager->getVotingCount(['executingVote' => Content::VOTE_IN_PROCESS_WOMEN]);
         $maxResult        = 0 ;
-        $reserveCount     = 10 ;
+        $reserveCount     = $configuration->getNumberReserve() ;
         $type = $request->get('type', '') ;
         if(empty($type)){
            
@@ -71,8 +71,8 @@ class ResultController extends AbstractController
             $civility   = $type == 'women' ? 'Mme' : 'Mr' ;
             $maxResult  = $type == 'women' ? $configuration->getNumberWomen() : $configuration->getNumberMen() ;
             
-            //$limit      = $maxResult + $reserveCount ;
-            $limit      = $maxResult ;
+            $limit      = $maxResult + $reserveCount ;
+            
             $datas      = $voteManager->getVotingListResult(['civility' => $civility, 'limit' => $limit]);
             
         }

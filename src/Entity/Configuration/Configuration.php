@@ -19,6 +19,10 @@ class Configuration
     #[ORM\Column(nullable: true)]
     private ?int $number_women = null;
 
+    
+    #[ORM\Column(nullable: true)]
+    private ?int $number_reserve = null;
+
     #[ORM\Column(nullable: true)]
     private ?int $executingVote = null;
     
@@ -47,6 +51,18 @@ class Configuration
     public function setNumberWomen(?int $number_women): static
     {
         $this->number_women = $number_women;
+
+        return $this;
+    }
+
+    public function getNumberReserve(): ?int
+    {
+        return $this->number_reserve;
+    }
+
+    public function setNumberReserve(?int $number_reserve): static
+    {
+        $this->number_reserve = $number_reserve;
 
         return $this;
     }

@@ -182,6 +182,8 @@ class VoteManager
 
         $isWithNullPoint = isset($_params['isWithNullPoint']) ? true : false ;
         $results = [];
+        $resultsByPoints = [];
+        
         $datas = $this->_voteResultRepository->fetchData($_params);
         foreach($datas as $data){
             //$voteResultId = 
@@ -194,15 +196,38 @@ class VoteManager
             $count          = $data['vote_count'] ;
             $candidatNumber = $data['number'] ;
             
+            $isDataCorrect = false ;
             if(empty($isWithNullPoint)){
                 if($count > 0){
-                    $results[] = $data ;
+                   
+                    $isDataCorrect = true ;
                 }
             }else{
-                $results[] = $data ;
+                
+                $isDataCorrect = true ;
             }
             
+            if($isDataCorrect == true){
+                $resultsByPoints[$count][] = $data ;
+                
+            }
             
+        }
+
+        //Reorder list by point and candidat number
+        if(count($resultsByPoints) > 0){
+            
+            foreach($resultsByPoints as $point => $resultsByPointData){
+                $voteByPoints = $resultsByPoints[$point] ;
+                $keyValues = array_column($voteByPoints, 'number'); 
+                array_multisort($keyValues, SORT_ASC, $voteByPoints);
+                
+                foreach($voteByPoints as $voteByPointDatas){
+                    $results[] = $voteByPointDatas ;
+                    
+                }
+            }
+
         }
         
         return $results;

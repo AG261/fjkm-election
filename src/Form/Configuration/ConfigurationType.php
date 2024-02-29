@@ -51,6 +51,21 @@ class ConfigurationType extends AbstractType
                 'html5' => true
             ])
 
+            ->add('number_reserve', NumberType::class, [
+                'label' => 'Nombre de candidat en reserve',
+                'row_attr' => [
+                    'class' => 'fv-row mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Nombre de candidat en reserve',
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off',
+                    "min"  => 1,
+                ],
+                'required' => false,
+                'html5' => true
+            ])
+
             ->add('executingVote', ChoiceType::class, [
                 'label' => 'Vote en cours',
                 'choices' => array_flip(Content::VOTE_IN_PROCESS),
