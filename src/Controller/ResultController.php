@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResultController extends AbstractController
 {
-    #[Route('/', name: 'app_result_full', defaults:['type' => 'all', 'nopoint' => false])]
+    #[Route('/', name: 'app_result', defaults:['type' => 'all', 'nopoint' => false])]
     #[Route('/resultat/femmes', name: 'app_result_full_women', defaults:['type' => 'women', 'nopoint' => true])]
     #[Route('/resultat/hommes', name: 'app_result_full_men', defaults:['type' => 'men', 'nopoint' => true])]
     public function index(Request $request, VoteResultRepository $repository, CandidatManager $candidatManager, ConfigurationManager $configurationManager): Response
