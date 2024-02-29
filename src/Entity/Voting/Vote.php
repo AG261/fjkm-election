@@ -21,7 +21,7 @@ class Vote
     private ?string $num = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\Column(nullable: true)]
@@ -74,7 +74,7 @@ class Vote
         return $this->user;
     }
 
-    public function setUser(?User $user): static
+    public function setUser(?User $user = null): static
     {
         $this->user = $user;
 

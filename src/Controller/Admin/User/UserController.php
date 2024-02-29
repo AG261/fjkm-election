@@ -7,6 +7,7 @@ use App\DataTable\UserDataTableType;
 use App\Entity\Account\User;
 use App\Form\UserType;
 use App\Manager\UserManager;
+use App\Repository\Voting\VoteRepository;
 use App\Services\Common\DataTableService ;
 use App\Services\Common\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -228,5 +229,33 @@ class UserController extends AbstractController
         ]);
     }
 
-    
+    #[Route('/delete/{id}', name: '.team.delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager, VoteRepository $voteRepository): Response
+    {
+        $error = false;
+        if ($this->isCsrfTokenValid('delete-user'.$user->getId(), $request->request->get('_token'))) {
+
+            $roles = $user->getRoles() ;
+                
+            //Get all vote with thsi user
+            $votes = $voteRepository->findBy(['user' => $user]) ;
+            if(count($votes) > 0){
+                $error = true;
+                
+            }else{
+                $entityManager->remove($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app.admin.user.team.index', [], Response::HTTP_SEE_OTHER);
+            }
+            
+        }
+
+        return $this->render('Admin/User/delete.html.twig', [
+            'user'  => $user,
+            'error' => $error
+        ]);
+
+        
+    }
 }

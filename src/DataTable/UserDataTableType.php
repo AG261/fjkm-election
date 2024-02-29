@@ -64,10 +64,12 @@ class UserDataTableType extends AbstractController implements DataTableTypeInter
             'className' => "button",
             'render' => function($value, $user)  use ($options){
 
-                $route    = 'app.admin.user.team.edit' ;
+                $route       = 'app.admin.user.team.edit' ;
+                $deleteRoute = 'app.admin.user.team.delete';
 
                 $urls = [
                     ['name' => 'Edition', 'icon' => 'edit', 'path' => $route, 'params' => ['id' => $user->getId()]],
+                    ['name' => 'Supprimer', 'icon' => 'trash', 'path' => $deleteRoute, 'params' => ['id' => $user->getId()]],
                 ];
                 return $this->renderView('Admin/Element/datatable-button.html.twig', [
                     'urls' => $urls
