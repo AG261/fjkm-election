@@ -1,0 +1,131 @@
+{% extends 'layout_result.html.twig' %}
+
+{% block title %}Résultat des éléctions{% endblock %}
+{% block stylesheet %} 
+    {{ parent() }}
+    {{ include('Result/Common/style.html.twig') }}
+
+    <style>
+        .list-group-item{
+            width:100%;
+        }
+        #data-container-vote {
+            height: 500vh;
+            overflow: hidden;
+        }
+
+   
+        @media screen (max-width: 1280px) {
+            .data-container-vote-bloq{
+                flex: 1 1 calc(33.3333% - 20px);
+             }  
+        }
+
+        @media screen (max-width: 1024px) {
+            .data-container-vote-bloq{
+                width: 50%;
+                flex: 1 1 calc(50% - 20px);
+             }
+        }
+
+        @media screen (max-width: 579px) {
+            .data-container-vote-bloq{
+                width: 100%;
+                flex: 1 1 100%;
+             }
+        }
+
+        .data-container-vote-type{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .data-container-vote-bloq{
+            float:left;
+            height: 500vh;
+            width: 25%;
+            flex: 0 1 calc(25% - 20px);
+            
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Vokatra vonjimaika</a>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="card card-statistics">
+                                <div class="card-header d-none">
+                                    <h4 class="card-title"></h4>
+                                    <div class="d-flex align-items-center">
+                                        
+                                    </div>
+                                </div>
+                                <div class="card-body statistics-body">
+                                    {{ include('Result/Common/resume.html.twig', {'type' : civility}) }}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h4 class="mb-2"></h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="{# list-group  #}col-md-12 data-container-vote" id="data-container-vote">
+                                    {# data content #}
+                                    
+                                    <div class="col-md-12 float-left data-container-item">
+                                        <legend class="text-primary">{{ typeName | capitalize }}</legend>
+                                        
+                                        <span id="vote-table-{{ civility }}-title" class="d-none">Voka-pifidianana ho an'ny {{ typeName }}</span>
+                                        
+                                        <a href="{{ path('app.admin.voting.vote.export.result', {'type' : type}) }}" target="_blank" data-aria="vote-table-mme" class="btn btn-primary btn-export-pdf">Dika PDF</a>
+                                     
+                                        <div id="data-container-vote-{{ type }}" class="data-container-vote-type col-md-12 float-left" data-type="{{ type }}">
+                                            <div id="data-container-vote-1" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                            <div id="data-container-vote-2" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                            <div id="data-container-vote-3" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                            <div id="data-container-vote-4" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    {#     START : script #}
+    
+    {{ include('Result/Common/javascript.html.twig') }}
+    {#     END : script #}
+{% endblock %}
+
+
