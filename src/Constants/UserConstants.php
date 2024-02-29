@@ -11,9 +11,10 @@ class UserConstants
   
 
     public const USER_ROLE_LIST   = [
-        self::USER_ROLE_ADMIN      => 'Admin',
-        self::USER_ROLE_OPERATOR => 'Opérateur',
-        self::USER_ROLE_VALIDATOR   => 'Validateur'
+        
+        self::USER_ROLE_OPERATOR    => 'Opérateur',
+        self::USER_ROLE_VALIDATOR   => 'Validateur',
+        self::USER_ROLE_ADMIN       => 'Admin'
     ] ;
 
     //User civility

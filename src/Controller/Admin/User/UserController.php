@@ -114,10 +114,7 @@ class UserController extends AbstractController
         $user = new User();
         
         $form = $this->createForm(UserType::class, $user, ['isClient' => $isClient]);
-        if($isClient == true){
-            $form->get('roles')->setData([UserConstants::USER_ROLE_CUSTOMER]) ;
-           
-        }
+        
         
         $form->handleRequest($_request);
         
@@ -139,7 +136,11 @@ class UserController extends AbstractController
 
             if(empty($error)){
                 
-                
+                $alls    = $_request->request->all() ;
+                $datas   = $alls['user'] ;
+
+                $role    = $datas['roles'] ;
+                $user->setRoles([$role]) ;
                 $user = $this->userManager->savePassword($form, $user, $_request) ;
 
                 $_em->persist($user);
@@ -169,12 +170,17 @@ class UserController extends AbstractController
         if(empty($_user)){
             $_user = $this->getUser();
         }
-
+        
+        $roles = $_user->getRoles();
+        if (($key = array_search('ROLE_USER', $roles)) !== false) {
+            unset($roles[$key]);
+        }
+        
         $form = $this->createForm(UserType::class, $_user, [
             'validation_groups' => ['update'],
             'isProfil'          => $isProfil
         ]);
-
+        $form->get('roles')->setData($roles[0]) ;
 
         $form->handleRequest($_request);
         
@@ -195,7 +201,11 @@ class UserController extends AbstractController
             $form        = $validations['form'];
             
             if(empty($error)){
+                $alls    = $_request->request->all() ;
+                $datas   = $alls['user'] ;
 
+                $role    = $datas['roles'] ;
+                $_user->setRoles([$role]) ;
                 $user = $this->userManager->savePassword($form, $_user, $_request) ;
 
                 $_em->flush();

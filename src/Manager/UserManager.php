@@ -189,8 +189,8 @@ class UserManager {
             $error++;
         }
         
-        $roles   = isset($datas['roles']) ? $datas['roles'] : [];
-        if(count($roles) == 0){
+        $roles   = isset($datas['roles']) ? $datas['roles'] : '';
+        if(empty($roles)){
             
             $_form->get('roles')->addError($roleError);
             $error++;

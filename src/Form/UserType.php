@@ -49,11 +49,13 @@ class UserType extends AbstractType
                 ],
                 'required' => false,
             ])
+            
             ->add('roles', ChoiceType::class, [
                 'choices'  => array_flip(UserConstants::USER_ROLE_LIST),
                 'label'    => 'Fonction',
-                'multiple' => true, 
-                'expanded' => true,
+                //'multiple' => false, 
+                //'expanded' => false,
+                'mapped' => false,
                 'choice_attr' => function ($choice, string $key, mixed $value) use ($options) : array {
 
                     $class    = 'user_'.strtolower($value);
@@ -61,7 +63,17 @@ class UserType extends AbstractType
                     return ['class' => $class];
                 },
                 
+                'row_attr' => [
+                    'class' => 'fv-row mb-2'
+                ],
+                'attr' => [
+                    'placeholder' => 'Statut',
+                    'class' => 'form-control bg-transparent',
+                    'autocomplete' => 'off'
+                ],
+                'required' => true,
             ])
+            
             ->add('email', TextType::class, [
                 'label' => 'E-mail',
                 'row_attr' => [
