@@ -2,6 +2,7 @@
 
 namespace App\Repository\Voting;
 
+use App\Constants\Content;
 use App\Entity\Voting\VoteResult;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,10 +27,20 @@ class VoteResultRepository extends ServiceEntityRepository
      */
     public function fetchData($_params = []): array
     {
+        $sql = 'DISTINCT c.number, c.id, c.civility, c.firstname, c.lastname, c.photo, c.number, c.numberid';
+        $sql .= ', SUM(CASE WHEN (v.isVotedOn = true AND (vt.status = :statusValid OR vt.status = :statusNotVerify)) THEN 1 ELSE 0 END) AS vote_count' ;
+        //$sql .= ', SUM(CASE WHEN (v.isVotedOn = true AND (vt.status = :statusValid OR vt.status = :statusNotVerify) AND vt.isDead = :isNotDead) THEN 1 ELSE 0 END) AS vote_count' ;
         $query = $this->createQueryBuilder('v')
-                      ->select('DISTINCT c.id, c.civility, c.firstname, c.lastname, c.photo, c.number, c.numberid, SUM(CASE WHEN v.isVotedOn = true THEN 1 ELSE 0 END) AS vote_count')
+                      ->select($sql)
+                      ->join('v.vote', 'vt') 
                       ->join('v.candidat', 'c') ;
 
+        $query
+                ->setParameter('statusValid', Content::VOTE_STATUS_VERIFY_VALID) 
+                ->setParameter('statusNotVerify', Content::VOTE_STATUS_NOT_VERIFY) 
+                //->setParameter('isNotDead', false) 
+                ;
+                  
         if(isset($_params['civility']) && !empty($_params['civility'])){
             $query->andWhere('c.civility = :civility')
                   ->setParameter('civility', $_params['civility']) ;

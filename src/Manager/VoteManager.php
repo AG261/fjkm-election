@@ -180,18 +180,28 @@ class VoteManager
      */
     public function getVotingListResult($_params = []){
 
+        $isWithNullPoint = isset($_params['isWithNullPoint']) ? true : false ;
         $results = [];
         $datas = $this->_voteResultRepository->fetchData($_params);
         foreach($datas as $data){
+            //$voteResultId = 
             $photo = $data['photo'] ;
+
             if(!empty($photo)){
                 $data['photo'] = $this->_liipImagineCache->generateUrl('upload/profil/'.$photo, 'thumbnail_small_50') ;
             }
             
-            $count = $data['vote_count'] ;
-            if($count > 0){
+            $count          = $data['vote_count'] ;
+            $candidatNumber = $data['number'] ;
+            
+            if(empty($isWithNullPoint)){
+                if($count > 0){
+                    $results[] = $data ;
+                }
+            }else{
                 $results[] = $data ;
             }
+            
             
         }
         
