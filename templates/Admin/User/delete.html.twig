@@ -59,7 +59,7 @@
                                         {% if error == false %}
                                             <p>Voulez-vous supprimer l'utilisateur?</p>
                                         {% else %}
-                                            <p class="error" >On ne peut pas supprimé cet utilisateur car il est rattaché à une vote</p>
+                                            <p class="error" >On ne peut pas supprimé cet utilisateur car il est rattaché à un vote</p>
                                         {% endif %}
                                         <form method="post" action="{{ path('app.admin.user.team.delete', {'id': user.id}) }}" onsubmit="return confirm('Confirmez-vous la suppréssion définitive?');">
                                             <input type="hidden" name="_token" value="{{ csrf_token('delete-user' ~ user.id) }}">
