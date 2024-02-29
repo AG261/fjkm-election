@@ -208,8 +208,8 @@ class VoteController extends AbstractController
     #[Route('/export-result', name: '.export.result', defaults: [])]
     public function exportResultPdf(Request $_request): Response
     {   
-        $type   = $_request->get('type', '') ;
-        $nopoint   = $_request->get('nopoint', '') ;
+        $type    = $_request->get('type', '') ;
+        $nopoint = $_request->get('nopoint', false) ;
         
         if(!empty($type)){
 
@@ -217,24 +217,20 @@ class VoteController extends AbstractController
             $reserveCount  = $configuration->getNumberReserve() ;
 
             $results       = [];
-            if($type == 'men'){
-                $limit      = $configuration->getNumberMen() + $reserveCount ;
-                $params     = ['civility' => 'Mr', 'limit' => $limit] ;
-                if(!empty($nopoint)){
-                    $params['isWithNullPoint'] = true ;
-                }
-                $results    = $this->voteManager->getVotingListResult($params);
-            }
-            if($type == 'women'){
-                $limit      = $configuration->getNumberWomen() + $reserveCount ;
-                $params     = ['civility' => 'Mme', 'limit' => $limit] ;
-                if(!empty($nopoint)){
-                    $params['isWithNullPoint'] = true ;
-                }
-                $results    = $this->voteManager->getVotingListResult($params);
-            }
+
+            $civility   = $type == 'women' ? 'Mme' : 'Mr' ;
+            $maxResult  = $type == 'women' ? $configuration->getNumberWomen() : $configuration->getNumberMen() ;
             
-            $fileName = $this->voteManager->generateVoteResult($results, $type) ;
+            $limit      = $maxResult + $reserveCount ;
+            $params     = ['civility' => $civility, 'limit' => $limit] ;
+            if(!empty($nopoint)){
+                $params['isWithNullPoint'] = true ;
+                unset($params['limit']);
+            }
+
+            $results    = $this->voteManager->getVotingListResult($params);
+            
+            $fileName = $this->voteManager->generateVoteResult($results, $type, $nopoint) ;
             $file     = $this->getParameter("pdf_upload_dir") . "/" . $fileName;
            
             $response = new Response();

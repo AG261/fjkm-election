@@ -47,6 +47,7 @@ class VoteResultRepository extends ServiceEntityRepository
         }
 
         if(isset($_params['limit']) && $_params['limit'] > 0){
+            
             $query->setMaxResults($_params['limit']);
         }
         

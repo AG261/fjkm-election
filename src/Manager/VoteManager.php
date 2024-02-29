@@ -185,6 +185,7 @@ class VoteManager
         $resultsByPoints = [];
         
         $datas = $this->_voteResultRepository->fetchData($_params);
+        
         foreach($datas as $data){
             //$voteResultId = 
             $photo = $data['photo'] ;
@@ -193,8 +194,7 @@ class VoteManager
                 $data['photo'] = $this->_liipImagineCache->generateUrl('upload/profil/'.$photo, 'thumbnail_small_50') ;
             }
             
-            $count          = $data['vote_count'] ;
-            $candidatNumber = $data['number'] ;
+            $count         = $data['vote_count'] ;
             
             $isDataCorrect = false ;
             if(empty($isWithNullPoint)){
@@ -208,7 +208,7 @@ class VoteManager
             }
             
             if($isDataCorrect == true){
-                $resultsByPoints[$count][] = $data ;
+                $resultsByPoints[($count == 0 ? '##' : $count)][] = $data ;
                 
             }
             
@@ -241,7 +241,7 @@ class VoteManager
      * @param [type] $type
      * @return void
      */
-    public function generateVoteResult($datas = [], $type)
+    public function generateVoteResult($datas = [], $type, $nopoint = false)
     {
 
         
@@ -253,7 +253,8 @@ class VoteManager
             'datas' => $datas,
             'title' => "Voka-pifidianana ho an'ny ".($type == 'women' ? 'vehivavy' : 'lehilahy'),
             //'logo'  => file_get_contents($logo) ,
-            'page' => '1/1'
+            'page' => '1/1',
+            'nopoint' => $nopoint
         ));
         $html2pdf->writeHTML($html);
 

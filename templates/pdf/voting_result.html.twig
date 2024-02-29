@@ -244,8 +244,8 @@
             <div class="block-hr"></div>
            
         </div> #}
-        <h5>{{ title }}</h5>
-        <p><strong>DATY : 03/03/2024</strong></p>
+        <strong>{{ title }}</strong><br><br>
+        {# <p><strong>DATY : 03/03/2024</strong></p> #}
         <div class="mybody">
             <table class="order">
                 <thead>
@@ -267,7 +267,17 @@
                     {% set nbItem = datas | length %}
                     {% set currentLine = 1 %}
                     {% for data in datas %}
-                        {% if data.vote_count > 0 %}
+                        {% set isDataCorrect = false %}
+                        {% if nopoint == false %}
+                            {% if data.vote_count > 0 %}
+                                {% set isDataCorrect = true %}
+                            {% endif %}
+                        {% endif %}
+                        {% if nopoint == true %}
+                            {% set isDataCorrect = true %}
+                        {% endif %}
+
+                        {% if isDataCorrect == true %}
                             <tr {% if currentLine == nbItem %}class="last-item"{% endif %}>
                                 <td class="quantity">{{ data.number }}</td>
                                 <td class="description">{{ data.lastname~''~data.firstname}}</td>
