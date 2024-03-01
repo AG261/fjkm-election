@@ -2,7 +2,8 @@
 
 namespace App\Controller\Admin\Dashboard;
 
-use App\Common\Constants\UserConstants;
+
+use App\Constants\UserConstants;
 use App\Manager\CandidatManager;
 use App\Manager\VoteManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
