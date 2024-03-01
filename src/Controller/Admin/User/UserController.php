@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin\User;
 
-use App\Common\Constants\UserConstants;
+use App\Constants\UserConstants;
 use App\DataTable\UserDataTableType;
 use App\Entity\Account\User;
 use App\Form\UserType;

@@ -2,7 +2,7 @@
 
 namespace App\Form\Voting;
 
-use App\Common\Constants\UserConstants;
+use App\Constants\UserConstants;
 use App\Entity\Voting\Candidat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;

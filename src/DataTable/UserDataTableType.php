@@ -2,7 +2,7 @@
 
 namespace App\DataTable;
 
-use App\Common\Constants\UserConstants;
+use App\Constants\UserConstants;
 use App\Entity\Account\User;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;

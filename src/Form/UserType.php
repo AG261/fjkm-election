@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Common\Constants\UserConstants;
+use App\Constants\UserConstants;
 use App\Entity\Account\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

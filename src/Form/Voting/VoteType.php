@@ -2,8 +2,8 @@
 
 namespace App\Form\Voting;
 
-use App\Common\Constants\UserConstants;
 use App\Constants\Content;
+use App\Constants\UserConstants;
 use App\Entity\Voting\Candidat;
 use App\Entity\Voting\Vote;
 use Doctrine\ORM\EntityRepository;
