@@ -1,16 +1,27 @@
 <script>
     $(function() {
         //POur le cas d'un ajout
-        var voteNum  = $('#vote_num') ;
-        var modalNum = $('#modal-number') ; 
-        
+        var voteNum   = $('#vote_num') ;
+        var modalNum  = $('#modal-number') ; 
+        var regNumber = /^\d{4}$/;
+
         if(voteNum.val() == ''){
                 
                 $('#add-vote-number').modal('show');
                 
+                //On key up number
+                modalNum.on('keyup', function(){
+                        
+                        if(!regNumber.test($(this).val())){
+                                $('.number-error').html('Veulliez entré un numéro valide!').show()  ;
+                        }else{
+                                $('.number-error').html('').hide()  ; 
+                        }
+                });
+
                 //On save number
                 $('#btn-add-number').click(function(){
-                        var regNumber   = /^\d{4}$/;
+                       
                         var modalNumVal = modalNum.val() ;
                         if(modalNumVal == '' || !regNumber.test(modalNumVal)){
                              $('.number-error').html('Veulliez entré un numéro valide!').show()    ;
