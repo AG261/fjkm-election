@@ -6,6 +6,37 @@
     {{ include('Result/Common/style.html.twig') }}
 
     <style>
+
+        .block-resume {
+            width: 10%;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            position: absolute;
+            height: 75vh;
+            background:cornsilk;
+            margin-top:20px;
+        
+        }
+
+        .block-resume:first-child {
+            border-bottom: none;
+        }
+
+        .block-resume .avatar
+        {
+            margin-right: 0.5em !important;
+        }
+
+        .resume-title{
+            display:none;
+        }
+
+        .block-resume-item{
+           width:95%; 
+        }
         .list-group-item{
             width:100%;
             height:48px;
@@ -14,12 +45,12 @@
             min-width: 190px;
         }
         #data-container-vote {
-            height: 250vh;
+            height: 120vh;
             overflow: hidden;
         }
 
         .user-info{
-            width: 50px;
+            width: 85px;
             padding-top: 7%;
             padding-left: 5%;
         }
@@ -55,6 +86,14 @@
             width: 100%;
             text-align: right;
         }
+        .result-bloq-list{
+            margin-left:10px;
+        }
+        .block-resume-item .avatar-content {
+            width: 48px;
+            height: 48px;
+        }
+        
     </style>
 {% endblock %}
 {% block body %}
@@ -64,29 +103,31 @@
         <div class="header-navbar-shadow"></div>
 
         <div class="content-wrapper">
-            <div class="content-header row">
+            {# <div class="content-header row">
                 <a href="javascript:;" class="btn btn-primary waves-effect waves-float waves-light">Vokatra vonjimaika</a>
-            </div>
+            </div> #}
+            {{ include('Result/Common/resume.html.twig', {'type' : civility}) }}
             <div class="content-body">
-                <div class="row">
-                        <div class="col-xl-12 col-md-12 col-12">
-                            <div class="card card-statistics">
-                                <div class="card-header d-none">
-                                    <h4 class="card-title"></h4>
-                                    <div class="d-flex align-items-center">
-                                        
-                                    </div>
-                                </div>
-                                <div class="card-body statistics-body">
-                                    {{ include('Result/Common/resume.html.twig', {'type' : civility}) }}
+                {# <div class="row">
+                    <div class="col-xl-12 col-md-12 col-12">
+                        <div class="card card-statistics">
+                            <div class="card-header d-none">
+                                <h4 class="card-title"></h4>
+                                <div class="d-flex align-items-center">
                                     
                                 </div>
                             </div>
+                            <div class="card-body statistics-body">
+                                
+                                
+                            </div>
                         </div>
                     </div>
+                </div> #}
+
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10">
+                    <div class="col-10 result-bloq-list">
                         <h4 class="mb-2"></h4>
                         <div class="card">
                             <div class="card-body">
