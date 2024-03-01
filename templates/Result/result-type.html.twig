@@ -8,13 +8,53 @@
     <style>
         .list-group-item{
             width:100%;
+            height:48px;
+            margin-bottom: 5px;
+            padding:0px;
+            min-width: 190px;
         }
         #data-container-vote {
             height: 250vh;
             overflow: hidden;
         }
 
-        
+        .user-info{
+            width: 50px;
+            padding-top: 7%;
+            padding-left: 5%;
+        }
+
+        .user-avatar{
+            margin: 0px 15px;
+
+        }
+
+        .data-container-vote-type .data-container-vote-bloq {
+            float: left;
+            height: 500vh;
+            width: 15%;
+            flex: 0 1 calc(5% - 20px);
+        }
+
+        .w-px-50 {
+            width: 45px !important;
+            height: 45px!important;
+            margin-top: 3px;
+        }
+
+        .add-btn .badge {
+            font-size: 33px;
+            font-weight: bold;
+            height: 47px;
+            margin: auto;
+            padding: 11px;
+            width: 100%;
+        }
+
+        .add-btn{
+            width: 100%;
+            text-align: right;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -71,6 +111,12 @@
                                             
                                             </div>
                                             <div id="data-container-vote-4" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                            <div id="data-container-vote-5" class="data-container-vote-bloq">
+                                            
+                                            </div>
+                                            <div id="data-container-vote-6" class="data-container-vote-bloq">
                                             
                                             </div>
                                         </div>

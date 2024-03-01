@@ -186,7 +186,25 @@ class VoteManager
         
         $datas = $this->_voteResultRepository->fetchData($_params);
         
-        foreach($datas as $data){
+        $configuration = $this->_configurationManager->getConfiguration() ;
+        $limitMen      = $configuration->getNumberMen() ;
+        $limitWomen    = $configuration->getNumberWomen() ;
+        $limitReserve  = $configuration->getNumberReserve();
+        
+        $civility        = isset($_params['civility']) ? $_params['civility'] : '' ;
+        $numReserveStart = 0;
+        $numReserveEnd   = 0;
+        if(!empty($civility)){
+            if($civility == 'Mr'){
+                $numReserveStart = $limitMen ;
+                $numReserveEnd   = $numReserveStart + $limitReserve - 1;
+            }else{
+                $numReserveStart = $limitWomen ;
+                $numReserveEnd   = $numReserveStart + $limitReserve - 1;
+            }
+        }
+        
+        foreach($datas as $key => $data){
             //$voteResultId = 
             $photo = $data['photo'] ;
 
@@ -217,17 +235,35 @@ class VoteManager
         //Reorder list by point and candidat number
         if(count($resultsByPoints) > 0){
             
+            $resultPoints = [] ;
             foreach($resultsByPoints as $point => $resultsByPointData){
                 $voteByPoints = $resultsByPoints[$point] ;
                 $keyValues = array_column($voteByPoints, 'number'); 
                 array_multisort($keyValues, SORT_ASC, $voteByPoints);
                 
                 foreach($voteByPoints as $voteByPointDatas){
-                    $results[] = $voteByPointDatas ;
+                    $resultPoints[] = $voteByPointDatas ;
                     
                 }
             }
 
+            foreach($resultPoints as $key => $resultDatas){
+
+                $classReserve = 'elected';
+                if($key >= $numReserveStart && $key <= $numReserveEnd){
+                    $classReserve = 'reserve';
+                }
+
+                if($key > $numReserveEnd){
+                    $classReserve = 'not-elected';
+                }
+                
+                $resultDatas['key'] = $key ;
+                $resultDatas['type'] = $classReserve ;
+                
+                $results[] = $resultDatas ;
+                
+            }
         }
         
         return $results;

@@ -6,7 +6,7 @@
            
             // Fetch data every 1 minute
             setInterval(function(){
-                fetchDataType(type, false);
+                //fetchDataType(type, false);
             }, 30 * 1000);
 
             // Fetch data initially
@@ -19,7 +19,7 @@
           
             // Fetch data every 1 minute
             setInterval(function(){
-                fetchData(type, true);
+                //fetchData(type, true);
             }, 30 * 1000);
 
             // Fetch data initially
@@ -131,11 +131,16 @@
                     const container2  = document.getElementById('data-container-vote-2');
                     const container3  = document.getElementById('data-container-vote-3');
                     const container4  = document.getElementById('data-container-vote-4');
+                    const container5  = document.getElementById('data-container-vote-4');
+                    const container6  = document.getElementById('data-container-vote-6');
 
                     container1.innerHTML  = '';
                     container2.innerHTML  = '';
                     container3.innerHTML  = '';
                     container4.innerHTML  = '';
+                    container5.innerHTML  = '';
+                    container6.innerHTML  = '';
+
                     results      = Array.isArray(result) ? result : JSON.parse(result);
                     data         = results['data'];
                     countMen     = results['count']['men'];
@@ -147,7 +152,7 @@
                     addResumeBlock('mme', countWomen) ;
 
                     var num           = 0; 
-                    var numMax        = 25;
+                    var numMax        = 15;
                     var containerNum  = 1;
                     var count         = data.length; 
                     var dataLast      = data.slice(-reserveCount); 
@@ -162,6 +167,11 @@
                                 num          = 0 ;
 
                             }
+
+                            if(item.type == 'reserve'){
+                                containerNum = 6 ;
+                            }
+
                             var containerName = 'data-container-vote-'+containerNum;
                             document.getElementById(containerName).appendChild(a);
                             num = num + 1 ;
@@ -176,14 +186,9 @@
         }
 
         /**
-        * Mapping data to HTML
+        * Mapping data image to HTML
         **/
-        function mappingDataToHtmlByType(_item, _isFull){
-            item = _item ;
-
-            const a = document.createElement('a');
-            a.href = '#';
-            a.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'align-items-center');
+        function mappingDataImageToHtmlByType(_item, _isFull){
 
             const img = document.createElement('img');
             var base_url = window.location.origin;
@@ -192,6 +197,26 @@
             img.alt = 'User Image';
             img.classList.add('rounded-circle', 'w-px-50');
 
+            return img ;
+        }
+
+        /**
+        * Mapping data to HTML
+        **/
+        function mappingDataToHtmlByType(_item, _isFull){
+            item = _item ;
+
+            const a = document.createElement('a');
+            a.href = '#';
+            
+            a.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'align-items-center');
+            if(_item.type != ''){
+                a.classList.add(_item.type);
+                a.classList.add(_item.key);
+            }
+            
+            img = mappingDataImageToHtmlByType(_item, _isFull) ;
+            
             const div1 = document.createElement('div');
             div1.classList.add('w-100');
 
@@ -207,8 +232,13 @@
             const small = document.createElement('small');
             //const smallNum = document.createElement('smallNum');
 
-            small.textContent = `Laharana : ${item.number}`; // Assuming 13 minutes is dynamic
-            //smallNum.textContent = `Numéro à l'élection : ${item.number}`; // Assuming 13 minutes is dynamic
+            candidatNumber = `Laharana : ${item.number}`;
+            if(_isFull == false){
+                candidatNumber = `${item.number}`;
+            }
+            small.textContent = candidatNumber; 
+
+
             const user_status = document.createElement('div');
             user_status.classList.add('user-status');
             const span = document.createElement('span');
@@ -217,11 +247,12 @@
             small2.textContent = '';
 
             user_status.appendChild(span);
-            user_status.appendChild(small2);
+            user_status.appendChild(small2);           
 
             if(_isFull == true){
                 user_info.appendChild(h6);
             }
+
             user_info.appendChild(small);
             user_info.appendChild(user_status);
 
@@ -235,6 +266,13 @@
             add_btn.appendChild(button);
 
             div2.appendChild(user_info);
+            if(_isFull == false){
+                const user_avatar = document.createElement('div');
+                user_avatar.classList.add('user-avatar');
+                user_avatar.appendChild(img);
+                div2.appendChild(user_avatar);
+                
+            }
             div2.appendChild(add_btn);
 
             div1.appendChild(div2);
