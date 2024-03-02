@@ -57,6 +57,18 @@ class VoteDataTableType extends AbstractController implements DataTableTypeInter
                 return $responsible->getFullName();
             }
         ])
+        ->add('Civility', TextColumn::class, [
+            'label' => "Lahy / Vavy",
+            'searchable' => false,
+            'render' => function($value, Vote $vote) {
+                $executingVote = $vote->getExecutingVote() ;
+                $value = 'Vavy' ;
+                if (Content::VOTE_IN_PROCESS_MEN === $executingVote){
+                    $value = 'Lahy' ;
+                }
+                return $value;
+            }
+        ])
         
         ->add('status', TextColumn::class, [
             'field' => 'v.status',
