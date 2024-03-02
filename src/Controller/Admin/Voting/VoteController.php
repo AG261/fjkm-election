@@ -101,7 +101,7 @@ class VoteController extends AbstractController
         $civility      = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
         $voteType      = $configuration->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'femmes' : 'hommes';
         $params        = ['civility' => $civility];
-        $candidates = $entityManager->getRepository(Candidat::class)->findBy($params);
+        $candidates = $entityManager->getRepository(Candidat::class)->findBy($params, ['number' => 'ASC']);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $vote->setStatus(Content::VOTE_STATUS_NOT_VERIFY) ;

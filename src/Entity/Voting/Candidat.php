@@ -42,8 +42,8 @@ class Candidat
     #[ORM\Column]
     private ?int $status = 1;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $number = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $number = null;
 
     
     #[ORM\Column(length: 255, nullable: true)]
@@ -127,12 +127,12 @@ class Candidat
         return $this;
     }
 
-    public function getNumber(): ?string
+    public function getNumber(): ?int
     {
         return $this->number;
     }
 
-    public function setNumber(string $number): static
+    public function setNumber(int $number): static
     {
         $this->number = $number;
 
