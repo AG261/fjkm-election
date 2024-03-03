@@ -135,7 +135,7 @@ class VoteController extends AbstractController
 
         $civility      = $vote->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'Mme' : 'Mr';
         $params        = ['civility' => $civility];
-        $candidates    = $entityManager->getRepository(Candidat::class)->findBy($params);
+        $candidates    = $entityManager->getRepository(Candidat::class)->findBy($params, ['number'=>'ASC']);
         $voteType      = $vote->getExecutingVote() == Content::VOTE_IN_PROCESS_WOMEN ? 'femmes' : 'hommes';
         
         if ($form->isSubmitted() && $form->isValid()) {
